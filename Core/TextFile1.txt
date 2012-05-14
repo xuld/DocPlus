@@ -88,3 +88,44 @@
             get;
             private set;
         }
+
+
+
+		
+
+/// <summary>
+/// 数据访问层。
+/// </summary>
+public static class DataAccess {
+
+    public static int ExecuteNonQuery(string sql) {
+
+        using(OleDbConnection conn = new OleDbConnection(ConnectionString)) {
+            conn.Open();
+            var command = conn.CreateCommand();
+            command.CommandText = sql;
+            return command.ExecuteNonQuery();
+        }
+
+    }
+
+    public static object[] ExecuteArray(string sql) {
+
+        using(OleDbConnection conn = new OleDbConnection(ConnectionString)) {
+            conn.Open();
+            var command = conn.CreateCommand();
+            command.CommandText = sql;
+            var reader = command.ExecuteReader();
+
+            if(reader.Read()) {
+                object[] r = new object[reader.FieldCount];
+                reader.GetValues(r);
+
+                return r;
+            }
+        }
+
+        return null;
+    }
+
+}

@@ -7,6 +7,27 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Javascript", "Javascript\Javascript.csproj", "{8C736F03-B28D-46B7-97F0-6DDAE27F7585}"
 EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ShareApp", "ShareApp\", "{C96EE6DE-BB70-48A9-80C0-5E5C721F7DF8}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv3.5"
+		Debug.AspNetCompiler.VirtualPath = "/ShareApp"
+		Debug.AspNetCompiler.PhysicalPath = "ShareApp\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\ShareApp\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/ShareApp"
+		Release.AspNetCompiler.PhysicalPath = "ShareApp\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\ShareApp\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "46184"
+		DefaultWebSiteLanguage = "Visual C#"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +68,16 @@ Global
 		{8C736F03-B28D-46B7-97F0-6DDAE27F7585}.Release|Mixed Platforms.Build.0 = Release|x86
 		{8C736F03-B28D-46B7-97F0-6DDAE27F7585}.Release|x86.ActiveCfg = Release|x86
 		{8C736F03-B28D-46B7-97F0-6DDAE27F7585}.Release|x86.Build.0 = Release|x86
+		{C96EE6DE-BB70-48A9-80C0-5E5C721F7DF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C96EE6DE-BB70-48A9-80C0-5E5C721F7DF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C96EE6DE-BB70-48A9-80C0-5E5C721F7DF8}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{C96EE6DE-BB70-48A9-80C0-5E5C721F7DF8}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{C96EE6DE-BB70-48A9-80C0-5E5C721F7DF8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{C96EE6DE-BB70-48A9-80C0-5E5C721F7DF8}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{C96EE6DE-BB70-48A9-80C0-5E5C721F7DF8}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{C96EE6DE-BB70-48A9-80C0-5E5C721F7DF8}.Release|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{C96EE6DE-BB70-48A9-80C0-5E5C721F7DF8}.Release|Mixed Platforms.Build.0 = Debug|Any CPU
+		{C96EE6DE-BB70-48A9-80C0-5E5C721F7DF8}.Release|x86.ActiveCfg = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
