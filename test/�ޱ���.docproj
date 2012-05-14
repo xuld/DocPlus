@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="1.0" DisplayName="Javascript 文档">
+  <ItemGroup>
+    <Item>D:\Projects\DocPlus\test\js\class.js</Item>
+    <Item>D:\Projects\DocPlus\test\js\enum.js</Item>
+    <Item>D:\Projects\DocPlus\test\js\escapes.js</Item>
+    <Item>D:\Projects\DocPlus\test\js\exception.js</Item>
+    <Item>D:\Projects\DocPlus\test\js\extend.js</Item>
+    <Item>D:\Projects\DocPlus\test\js\fn.js</Item>
+    <Item>D:\Projects\DocPlus\test\js\global.js</Item>
+    <Item>D:\Projects\DocPlus\test\js\ignore.js</Item>
+    <Item>D:\Projects\DocPlus\test\js\interface.js</Item>
+    <Item>D:\Projects\DocPlus\test\js\member.js</Item>
+    <Item>D:\Projects\DocPlus\test\js\name.js</Item>
+    <Item>D:\Projects\DocPlus\test\js\namespace.js</Item>
+    <Item>D:\Projects\DocPlus\test\js\see.js</Item>
+    <Item>D:\Projects\DocPlus\test\js\since.js</Item>
+    <Item>D:\Projects\DocPlus\test\js\singleton.js</Item>
+    <Item>D:\Projects\DocPlus\test\js\summary.js</Item>
+    <Item>D:\Projects\DocPlus\test\js\test.js</Item>
+    <Item>D:\Projects\DocPlus\test\js\type.js</Item>
+    <Item>D:\Projects\DocPlus\test\js\access.js</Item>
+    <Item>D:\Projects\DocPlus\test\js\attribute.js</Item>
+    <Item>D:\Projects\DocPlus\test\js\category.js</Item>
+    <item>D:\Projects\DocPlus\test\js\category.js</item>
+  </ItemGroup>
+  <PropertyGroup />
+</Project>

@@ -4,3 +4,14 @@ obj
 
 # mstest test results
 TestResults
+
+*~
+~*
+_notes
+Thumbs.db
+.settings
+.DS_Store
+.svn
+*.diff
+*.patch
+*.suo

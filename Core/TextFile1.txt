@@ -1,0 +1,90 @@
+﻿
+
+        /// <summary>
+        /// 添加要解析的文件夹。
+        /// </summary>
+        /// <param name="path">目标位置。</param>
+        /// <returns>已成功添加的文件数。</returns>
+        int AddDirectroy(string path);
+
+        /// <summary>
+        /// 批量添加要解析的文件。
+        /// </summary>
+        /// <param name="path">目标位置。</param>
+        /// <returns>已成功添加的文件数。</returns>
+        int AddFile(string path);
+
+        /// <summary>
+        /// 添加要解析的文件。
+        /// </summary>
+        /// <param name="path">目标文件的位置。</param>
+        /// <returns>已成功添加的文件数。</returns>
+        int AddFiles(IEnumerable<string> path);
+
+
+
+		
+
+        /// <summary>
+        /// 批量添加要解析的文件。
+        /// </summary>
+        /// <param name="path">目标位置。</param>
+        /// <returns>已成功添加的文件数。</returns>
+        public virtual int AddFile(string path) {
+            if(!Items.Contains(path))
+                Items.Add(path);
+            return 1;
+        }
+
+        /// <summary>
+        /// 添加要解析的文件。
+        /// </summary>
+        /// <param name="path">目标文件的位置。</param>
+        /// <returns>已成功添加的文件数。</returns>
+        public virtual int AddFiles(IEnumerable<string> path) {
+            int num = 0;
+            foreach(string s in path) {
+                num += AddFile(s);
+            }
+
+            return num;
+        }
+
+        /// <summary>
+        /// 添加要解析的文件夹。
+        /// </summary>
+        /// <param name="path">目标位置。</param>
+        /// <returns>已成功添加的文件数。</returns>
+        public virtual int AddDirectroy(string path) {
+
+            int num = 0;
+            foreach(string s in System.IO.Directory.GetFiles(path, "*" + DefaultExt, System.IO.SearchOption.AllDirectories)) {
+                num = num + AddFile(s);
+            }
+
+            return num;
+        }
+
+
+		
+
+        /// <summary>
+        /// 获取当前的项目文件地址。
+        /// </summary>
+        string ProjectPath {
+            get;
+        }
+
+
+
+		
+		
+
+        /// <summary>
+        /// 获取当前的项目文件地址。
+        /// </summary>
+        /// <value></value>
+        public string ProjectPath {
+            get;
+            private set;
+        }
