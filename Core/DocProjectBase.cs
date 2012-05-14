@@ -241,19 +241,6 @@ namespace DocPlus.Core {
         [DisplayName("文档编码")]
         public Encoding OutputEncoding { get; set; }
 
-        /// <summary>
-        /// 获取或设置系统变量定义。
-        /// </summary>
-        [Category("系统变量")]
-        [Description("定义一些Javascript内置成员的文件。")]
-        [Editor(typeof(FileNameEditor), typeof(UITypeEditor))]
-        [DefaultValue("define.js")]
-        [DisplayName("预定义文件")]
-        public string SystemDefine {
-            get;
-            set;
-        }
-
         [Description("生成网页使用的模板位置。")]
         [DefaultValue("templates")]
         [DisplayName("文件夹")]

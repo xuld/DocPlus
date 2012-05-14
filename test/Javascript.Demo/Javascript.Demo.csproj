@@ -5,20 +5,21 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{8C736F03-B28D-46B7-97F0-6DDAE27F7585}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{785D69A9-3338-4436-97EF-1761699D0069}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DocPlus.Javascript</RootNamespace>
-    <AssemblyName>DocPlus.Javascript</AssemblyName>
+    <RootNamespace>DocPlus.Javascript.Demo</RootNamespace>
+    <AssemblyName>Javascript.Demo</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\bin\Debug\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -36,58 +37,66 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CorePlus.Core, Version=5.0.0.0, Culture=neutral, PublicKeyToken=8603a0abf2518793, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\CorePlus\bin\Debug\CorePlus.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="CorePlus.Logging, Version=5.0.0.0, Culture=neutral, PublicKeyToken=8603a0abf2518793, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\CorePlus\bin\Debug\CorePlus.Logging.dll</HintPath>
+    <Reference Include="CorePlus.Core">
+      <HintPath>..\..\..\CorePlus\bin\Debug\CorePlus.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Design" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API\DocParser.cs" />
-    <Compile Include="API\DocProject.cs" />
-    <Compile Include="Doc\Variant\GlobalConfigs.cs" />
-    <Compile Include="Doc\Variant\Map.cs" />
-    <Compile Include="Doc\Variant\MemberType.cs" />
-    <Compile Include="Doc\Variant\Scope.cs" />
-    <Compile Include="Doc\Variant\VariantMap.cs" />
-    <Compile Include="Doc\Variant\CommentNode.cs" />
-    <Compile Include="Doc\ErrorNumber.cs" />
-    <Compile Include="Doc\Variant\JavaCommentParser.cs" />
-    <Compile Include="Doc\DocAstVistor.cs" />
-    <Compile Include="Doc\DocMerger.cs" />
-    <Compile Include="Doc\Variant\NativeType.cs" />
-    <Compile Include="Doc\Variant\Variant.cs" />
-    <Compile Include="Doc\Variant\VariantAttribute.cs" />
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\CorePlus\CorePlus\Api\Api\Api.csproj">
+    <ProjectReference Include="..\..\..\CorePlus\CorePlus\Api\Api\Api.csproj">
       <Project>{EF769E26-12EB-4AC5-8FA6-8CD74FD9128F}</Project>
       <Name>Api</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\CorePlus\CorePlus\JavascriptParser\JavascriptParser\JavascriptParser.csproj">
+    <ProjectReference Include="..\..\..\CorePlus\CorePlus\JavascriptParser\JavascriptParser\JavascriptParser.csproj">
       <Project>{139ACF17-8ACC-41E4-8145-FF99AFCBB2EF}</Project>
       <Name>JavascriptParser</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Core\Core.csproj">
+    <ProjectReference Include="..\..\Core\Core.csproj">
       <Project>{E7B70917-888C-48EE-B8BB-140A84838FB7}</Project>
       <Name>Core</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="_bak\" />
+    <ProjectReference Include="..\..\Javascript\Javascript.csproj">
+      <Project>{8C736F03-B28D-46B7-97F0-6DDAE27F7585}</Project>
+      <Name>Javascript</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

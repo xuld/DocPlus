@@ -28,6 +28,16 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ShareApp", "ShareApp\", "{C
 		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Javascript.Test", "Test\Javascript.Test\Javascript.Test.csproj", "{26EA4DD9-65F1-4739-9052-186A5BCBC665}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Javascript.Demo", "Test\Javascript.Demo\Javascript.Demo.csproj", "{785D69A9-3338-4436-97EF-1761699D0069}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{C78B9F3A-2F63-4308-8BD8-3B397E7A0255}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App", "App", "{93D71A95-2C88-4D97-841A-208F07325DF9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DocParser", "DocParser", "{D88D4262-1E43-4A26-8C4F-7B7A27D8576A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -78,8 +88,36 @@ Global
 		{C96EE6DE-BB70-48A9-80C0-5E5C721F7DF8}.Release|Mixed Platforms.ActiveCfg = Debug|Any CPU
 		{C96EE6DE-BB70-48A9-80C0-5E5C721F7DF8}.Release|Mixed Platforms.Build.0 = Debug|Any CPU
 		{C96EE6DE-BB70-48A9-80C0-5E5C721F7DF8}.Release|x86.ActiveCfg = Debug|Any CPU
+		{26EA4DD9-65F1-4739-9052-186A5BCBC665}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{26EA4DD9-65F1-4739-9052-186A5BCBC665}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{26EA4DD9-65F1-4739-9052-186A5BCBC665}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{26EA4DD9-65F1-4739-9052-186A5BCBC665}.Debug|x86.ActiveCfg = Debug|x86
+		{26EA4DD9-65F1-4739-9052-186A5BCBC665}.Debug|x86.Build.0 = Debug|x86
+		{26EA4DD9-65F1-4739-9052-186A5BCBC665}.Release|Any CPU.ActiveCfg = Release|x86
+		{26EA4DD9-65F1-4739-9052-186A5BCBC665}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{26EA4DD9-65F1-4739-9052-186A5BCBC665}.Release|Mixed Platforms.Build.0 = Release|x86
+		{26EA4DD9-65F1-4739-9052-186A5BCBC665}.Release|x86.ActiveCfg = Release|x86
+		{26EA4DD9-65F1-4739-9052-186A5BCBC665}.Release|x86.Build.0 = Release|x86
+		{785D69A9-3338-4436-97EF-1761699D0069}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{785D69A9-3338-4436-97EF-1761699D0069}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{785D69A9-3338-4436-97EF-1761699D0069}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{785D69A9-3338-4436-97EF-1761699D0069}.Debug|x86.ActiveCfg = Debug|x86
+		{785D69A9-3338-4436-97EF-1761699D0069}.Debug|x86.Build.0 = Debug|x86
+		{785D69A9-3338-4436-97EF-1761699D0069}.Release|Any CPU.ActiveCfg = Release|x86
+		{785D69A9-3338-4436-97EF-1761699D0069}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{785D69A9-3338-4436-97EF-1761699D0069}.Release|Mixed Platforms.Build.0 = Release|x86
+		{785D69A9-3338-4436-97EF-1761699D0069}.Release|x86.ActiveCfg = Release|x86
+		{785D69A9-3338-4436-97EF-1761699D0069}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{26EA4DD9-65F1-4739-9052-186A5BCBC665} = {C78B9F3A-2F63-4308-8BD8-3B397E7A0255}
+		{785D69A9-3338-4436-97EF-1761699D0069} = {C78B9F3A-2F63-4308-8BD8-3B397E7A0255}
+		{B38929F9-E202-4268-901C-B4155EA48D26} = {93D71A95-2C88-4D97-841A-208F07325DF9}
+		{C96EE6DE-BB70-48A9-80C0-5E5C721F7DF8} = {93D71A95-2C88-4D97-841A-208F07325DF9}
+		{E7B70917-888C-48EE-B8BB-140A84838FB7} = {D88D4262-1E43-4A26-8C4F-7B7A27D8576A}
+		{8C736F03-B28D-46B7-97F0-6DDAE27F7585} = {D88D4262-1E43-4A26-8C4F-7B7A27D8576A}
 	EndGlobalSection
 EndGlobal
