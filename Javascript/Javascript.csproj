@@ -55,21 +55,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API\DocParser.cs" />
-    <Compile Include="API\DocProject.cs" />
-    <Compile Include="Doc\Variant\GlobalConfigs.cs" />
-    <Compile Include="Doc\Variant\Map.cs" />
-    <Compile Include="Doc\Variant\MemberType.cs" />
-    <Compile Include="Doc\Variant\Scope.cs" />
-    <Compile Include="Doc\Variant\VariantMap.cs" />
-    <Compile Include="Doc\Variant\CommentNode.cs" />
-    <Compile Include="Doc\ErrorNumber.cs" />
-    <Compile Include="Doc\Variant\JavaCommentParser.cs" />
-    <Compile Include="Doc\DocAstVistor.cs" />
-    <Compile Include="Doc\DocMerger.cs" />
-    <Compile Include="Doc\Variant\NativeType.cs" />
-    <Compile Include="Doc\Variant\Variant.cs" />
-    <Compile Include="Doc\Variant\VariantAttribute.cs" />
+    <Compile Include="Markdown.cs" />
+    <Compile Include="Parser\DocParser.cs" />
+    <Compile Include="DocProject.cs" />
+    <Compile Include="Parser\Variant\GlobalConfigs.cs" />
+    <Compile Include="Parser\Variant\Map.cs" />
+    <Compile Include="Parser\Variant\MemberType.cs" />
+    <Compile Include="Parser\Variant\Scope.cs" />
+    <Compile Include="Parser\Variant\VariantMap.cs" />
+    <Compile Include="Parser\Variant\CommentNode.cs" />
+    <Compile Include="Parser\ErrorNumber.cs" />
+    <Compile Include="Parser\Variant\JavaCommentParser.cs" />
+    <Compile Include="Parser\DocAstVistor.cs" />
+    <Compile Include="Parser\DocMerger.cs" />
+    <Compile Include="Parser\Variant\NativeType.cs" />
+    <Compile Include="Parser\Variant\Variant.cs" />
+    <Compile Include="Parser\Variant\VariantAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -86,9 +87,7 @@
       <Name>Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="_bak\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

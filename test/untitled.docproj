@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="1.0" DisplayName="Javascript 文档">
+  <ItemGroup>
+    <Item>D:\Projects\DocPlus\test\js\access.js</Item>
+    <Item>D:\Projects\DocPlus\test\js\attribute.js</Item>
+    <Item>D:\Projects\DocPlus\test\js\type.js</Item>
+  </ItemGroup>
+  <PropertyGroup />
+</Project>

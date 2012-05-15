@@ -43,6 +43,12 @@ namespace DocPlus.Core {
         void Error(string source, int line, string message, int errNo);
 
         /// <summary>
+        /// 输出一个错误信息。
+        /// </summary>
+        /// <param name="e">引发错误的原始异常。</param>
+        void Error(System.Exception e);
+
+        /// <summary>
         /// 输出一个警告信息。
         /// </summary>
         /// <param name="source">错误源文件。</param>
@@ -77,7 +83,6 @@ namespace DocPlus.Core {
         /// 报告生成已完成。
         /// </summary>
         void Complete();
-
     }
 
 }

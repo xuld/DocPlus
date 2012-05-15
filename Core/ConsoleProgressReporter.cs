@@ -52,6 +52,17 @@ namespace DocPlus.Core {
         }
 
         /// <summary>
+        /// 输出一个错误信息。
+        /// </summary>
+        /// <param name="e">引发错误的原始异常。</param>
+        public void Error(System.Exception e) {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(e.Message);
+            Console.WriteLine(e.StackTrace);
+            Console.ResetColor();
+        }
+
+        /// <summary>
         /// 输出一个警告信息。
         /// </summary>
         /// <param name="source">错误源文件。</param>

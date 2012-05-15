@@ -32,7 +32,6 @@ namespace DocPlus.Javascript {
 
         public DocMerger(DocProject project) {
             _project = project;
-
             ApiDoc = new ApiDoc() { Language = "Javascript" };
         }
 

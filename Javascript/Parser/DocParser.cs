@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using DocPlus.Core;
 using CorePlus.Parser.Javascript;
-using CorePlus.IO;
 using CorePlus.Api;
+using System.IO;
 
 namespace DocPlus.Javascript {
 
@@ -275,10 +272,18 @@ namespace DocPlus.Javascript {
         /// </summary>
         /// <returns></returns>
         public ApiDoc Build() {
-            //for (int i = 0; i < _project.Items.Count; i++) {
-            //    ParseFile(_project.Items[i], _project.GetFilePath(i));
-            //}
 
+            for(int i = 0; i < _project.Items.Count; i++) {
+                string name = _project.Items[i];
+                if(Directory.Exists(name)) {
+                    foreach(string s in Directory.GetFiles(name, "*.js", SearchOption.AllDirectories)) {
+                        ParseFile(s.Substring(name.Length), s);
+                    }
+                } else {
+                    ParseFile(Path.GetFileName(name), name);
+                }
+            }
+            
             _docMerger.Parse(_docAstVistor.Global);
 
             return _docMerger.ApiDoc;

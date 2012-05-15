@@ -51,7 +51,7 @@ namespace DocPlus.GUI {
             set {
                 _currentPath = value;
                 if (_currentPath == null) {
-                    Text = SystemManager.Title;
+                    Text = CurrentProject == null ? SystemManager.Title : ("无标题 - " + SystemManager.Title);
                 } else {
                     SystemManager.AddRecentFile(value);
                     Text = _currentPath + " - " + SystemManager.Title;
@@ -164,7 +164,9 @@ namespace DocPlus.GUI {
         }
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e) {
+            CurrentProject.ProgressReporter.Start();
             CurrentProject.Build();
+            CurrentProject.ProgressReporter.Complete();
         }
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
@@ -173,6 +175,7 @@ namespace DocPlus.GUI {
             } else if (e.Error == null) {
                 Hint("全部生成完成。");
             } else {
+                CurrentProject.ProgressReporter.Error(e.Error);
                 Hint("生成失败。");
             }
 
@@ -243,6 +246,7 @@ namespace DocPlus.GUI {
             miFile.HideDropDown();
             CloseProject();
             CurrentProject = SystemManager.CreateProject((string)e.ClickedItem.Tag);
+            CurrentPath = null;
         }
 
         private void miOpenProject_Click(object sender, EventArgs e) {
@@ -381,7 +385,11 @@ namespace DocPlus.GUI {
             UpdateList();
 
             if(lbFiles.Items.Count > 0) {
-                lbFiles.SelectedIndex = a;
+                if(lbFiles.Items.Count > a) {
+                    lbFiles.SelectedIndex = a;
+                } else {
+                    lbFiles.SelectedIndex = lbFiles.Items.Count - 1;
+                }
             }
 
 

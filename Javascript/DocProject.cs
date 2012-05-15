@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using DocPlus.Core;
 using System.ComponentModel;
-using CorePlus.Api;
-using System.Windows.Forms.Design;
 using System.Drawing.Design;
+using System.Windows.Forms.Design;
+using CorePlus.Api;
+using DocPlus.Core;
 
 namespace DocPlus.Javascript {
 
