@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Text;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Drawing.Design;
-using System.Windows.Forms.Design;
 using System.IO;
-using System.Collections.Specialized;
+using System.Text;
+using System.Windows.Forms.Design;
 using System.Xml;
 
 namespace DocPlus.Core {
@@ -91,7 +91,6 @@ namespace DocPlus.Core {
         protected DocProjectBase() {
             Items = new List<string>();
             ProgressReporter = ConsoleProgressReporter.Instance;
-            OpenIfSuccess = true;
         }
 
         /// <summary>
@@ -206,49 +205,6 @@ namespace DocPlus.Core {
 
         protected void SetValue(string key, Encoding value) {
             _vals[key] = value.CodePage.ToString();
-        }
-
-        #endregion
-
-        #region 配置
-
-        /// <summary>
-        /// 获取或设置是否在生成成功后打开文件。
-        /// </summary>
-        [Category("软件")]
-        [Description("是否在生成成功后打开。")]
-        [DefaultValue(true)]
-        [DisplayName("生成后打开")]
-        public bool OpenIfSuccess { get; set; }
-
-        /// <summary>
-        /// 获取或设置输入文件的编码。
-        /// </summary>
-        [Category("软件")]
-        [Description("软件会自动分析文件编码，但如果自动分析结果不正确，您可以手动指定。")]
-        [TypeConverter(typeof(EncodingConverter))]
-        [DefaultValue(null)]
-        [DisplayName("编码")]
-        public Encoding Encoding { get; set; }
-
-        /// <summary>
-        /// 获取或设置输入文件的编码。
-        /// </summary>
-        [Category("软件")]
-        [Description("软件会自动分析文件编码，但如果自动分析结果不正确，您可以手动指定。")]
-        [TypeConverter(typeof(EncodingConverter))]
-        [DefaultValue(null)]
-        [DisplayName("文档编码")]
-        public Encoding OutputEncoding { get; set; }
-
-        [Description("生成网页使用的模板位置。")]
-        [DefaultValue("templates")]
-        [DisplayName("文件夹")]
-        [Editor(typeof(System.Windows.Forms.Design.FolderNameEditor), typeof(UITypeEditor))]
-        [Category("网页")]
-        public string TemplateName {
-            get;
-            set;
         }
 
         #endregion

@@ -40,6 +40,9 @@
     <Reference Include="CorePlus.Core">
       <HintPath>..\..\..\CorePlus\bin\Debug\CorePlus.Core.dll</HintPath>
     </Reference>
+    <Reference Include="CorePlus.Json">
+      <HintPath>..\..\..\CorePlus\Output\CorePlus.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />

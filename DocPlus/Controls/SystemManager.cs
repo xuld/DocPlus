@@ -86,6 +86,16 @@ namespace DocPlus.GUI {
             return null;
         }
 
+        /// <summary>
+        /// 开始编译项目。
+        /// </summary>
+        /// <param name="project">要生成的项目。</param>
+        public static void BuildProject(IDocProject project) {
+            project.ProgressReporter.Start();
+            project.Build();
+            project.ProgressReporter.Complete();
+        }
+
         #endregion
 
         #region 对话框

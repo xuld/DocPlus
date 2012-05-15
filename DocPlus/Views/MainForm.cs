@@ -164,9 +164,7 @@ namespace DocPlus.GUI {
         }
 
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e) {
-            CurrentProject.ProgressReporter.Start();
-            CurrentProject.Build();
-            CurrentProject.ProgressReporter.Complete();
+            SystemManager.BuildProject(CurrentProject);
         }
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
@@ -335,20 +333,15 @@ namespace DocPlus.GUI {
                     return;
             }
 
-            miSaveProject_Click(sender, e);
-
-            if (CurrentPath == null) {
-                Hint("项目未保存。操作已被取消。");
-                return;
-            }
-
             if (CurrentProject.Items.Count == 0) {
-                Hint("未添加任何文件。");
+                Hint("未添加任何文件。操作被取消。");
                 return;
             }
 
-            if (CurrentProject.TargetPath == null)
-                CurrentProject.TargetPath = Path.ChangeExtension(CurrentPath, ".api");
+            if(CurrentProject.TargetPath == null) {
+                Hint("未指定文档生成输出位置。操作被取消。");
+                return;
+            }
 
             miCancel.Enabled = true;
             miOutput.Checked = true;

@@ -140,52 +140,52 @@ namespace MarkdownSharp
         /// <summary>
         /// Create a new Markdown instance using default options
         /// </summary>
-        public Markdown() : this(false)
+        public Markdown()  // : this(false)
         {
         }
 
-        /// <summary>
-        /// Create a new Markdown instance and optionally load options from a configuration
-        /// file. There they should be stored in the appSettings section, available options are:
-        /// 
-        ///     Markdown.StrictBoldItalic (true/false)
-        ///     Markdown.EmptyElementSuffix (">" or " />" without the quotes)
-        ///     Markdown.LinkEmails (true/false)
-        ///     Markdown.AutoNewLines (true/false)
-        ///     Markdown.AutoHyperlink (true/false)
-        ///     Markdown.EncodeProblemUrlCharacters (true/false) 
-        ///     
-        /// </summary>
-        public Markdown(bool loadOptionsFromConfigFile)
-        {
-            if (!loadOptionsFromConfigFile) return;
+        ///// <summary>
+        ///// Create a new Markdown instance and optionally load options from a configuration
+        ///// file. There they should be stored in the appSettings section, available options are:
+        ///// 
+        /////     Markdown.StrictBoldItalic (true/false)
+        /////     Markdown.EmptyElementSuffix (">" or " />" without the quotes)
+        /////     Markdown.LinkEmails (true/false)
+        /////     Markdown.AutoNewLines (true/false)
+        /////     Markdown.AutoHyperlink (true/false)
+        /////     Markdown.EncodeProblemUrlCharacters (true/false) 
+        /////     
+        ///// </summary>
+        //public Markdown(bool loadOptionsFromConfigFile)
+        //{
+        //    if (!loadOptionsFromConfigFile) return;
 
-            var settings = ConfigurationManager.AppSettings;
-            foreach (string key in settings.Keys)
-            {
-                switch (key)
-                {
-                    case "Markdown.AutoHyperlink":
-                        _autoHyperlink = Convert.ToBoolean(settings[key]);
-                        break;
-                    case "Markdown.AutoNewlines":
-                        _autoNewlines = Convert.ToBoolean(settings[key]);
-                        break;
-                    case "Markdown.EmptyElementSuffix":
-                        _emptyElementSuffix = settings[key];
-                        break;
-                    case "Markdown.EncodeProblemUrlCharacters":
-                        _encodeProblemUrlCharacters = Convert.ToBoolean(settings[key]);
-                        break;
-                    case "Markdown.LinkEmails":
-                        _linkEmails = Convert.ToBoolean(settings[key]);
-                        break;
-                    case "Markdown.StrictBoldItalic":
-                        _strictBoldItalic = Convert.ToBoolean(settings[key]);
-                        break;
-                }
-            }
-        }
+        //    var settings = ConfigurationManager.AppSettings;
+        //    foreach (string key in settings.Keys)
+        //    {
+        //        switch (key)
+        //        {
+        //            case "Markdown.AutoHyperlink":
+        //                _autoHyperlink = Convert.ToBoolean(settings[key]);
+        //                break;
+        //            case "Markdown.AutoNewlines":
+        //                _autoNewlines = Convert.ToBoolean(settings[key]);
+        //                break;
+        //            case "Markdown.EmptyElementSuffix":
+        //                _emptyElementSuffix = settings[key];
+        //                break;
+        //            case "Markdown.EncodeProblemUrlCharacters":
+        //                _encodeProblemUrlCharacters = Convert.ToBoolean(settings[key]);
+        //                break;
+        //            case "Markdown.LinkEmails":
+        //                _linkEmails = Convert.ToBoolean(settings[key]);
+        //                break;
+        //            case "Markdown.StrictBoldItalic":
+        //                _strictBoldItalic = Convert.ToBoolean(settings[key]);
+        //                break;
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// Create a new Markdown instance and set the options from the MarkdownOptions object.

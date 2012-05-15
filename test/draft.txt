@@ -1,0 +1,132 @@
+
+顶级:
+
+@projectDescription Summary 项目描述
+@license Summary 表示代码的协议
+@version Summary 表示版本
+@fileOverview Summary 文件描述
+@file Summary 表示当前文件
+@progma Option Value 表示需要的类。
+
+
+成员类型:
+
+@class [Name] Summay 指示这是一个类。
+@enum [Name] 指示这是枚举。
+@interface  [Name] 指示这是一个接口。
+@member [Name] 指示这是一个成员。
+@property [{Type}] [Name] 指示这是一个属性。
+@field [{Type}] [Name] 指示这是一个字段。
+@method [Name] 指示这是一个方法。
+@event [{Type}] [Name] 指示当前类的事件。
+@getter [{Type}] [Name] 指示这是一个只读属性。
+@setter [{Type}] [Name] 指示这是一个只写属性。
+@constructor [Name]  指示这是构造函数。
+@config {Type} [Name] 指示这是类的配置成员。
+
+
+修饰符
+
+访问说明
+@public 指示公开
+@private 指示一个类或函数是私有的。
+@protected 指示保护。
+@internal 指示内部。
+
+
+类型额外说明
+@final 指示一个函数是不能覆盖的。
+@static 指示一个类是静态的。
+@abstract 指示一个类是抽象的。
+@virtual 指示一个类是抽象的。
+@const 指示一个值是常量值。
+@override 指示一个值覆盖的。
+
+
+
+@system 指示系统成员。
+@ignore 忽略有这个标记注释。
+
+类型说明
+@author Summary 指示代码的作者 
+
+
+@namespace [Name] 指示名字空间。
+@requires Link 表示需要的类。
+
+@alias
+
+
+类
+
+
+@extends  Name 指示一个类派生了另一个类。
+@implements  Name 指示一个类派生了另一个类。
+
+
+
+公共
+@summary Summary 简介。
+@remark Summary 备注。
+@example Summary 示例。
+@syntax Summary 手动指定语法。
+@category Name 手动指定类别。
+@type {Type} 表示成员类型。
+@value Value 表示成员默认值。
+
+@name Name 名字。
+@memberOf Name 指示这是一个成员。
+
+@see Link  指向一个文件的链接。
+@seealso Link 指向一个文件的链接。
+
+@since [Summary] 指示自指定的版本提供。
+@deprecated [Summary] 指示一个函数已经废弃。
+
+--@xml Summary 插入  XML 文档。
+--@doc Link 手动指定文档。
+--@include Link 文档解析载入。
+
+
+@return [{Type}] [Summary]  返回  。
+
+参数类型
+@param {Type} Name Summary 表示参数。如果是可选参数加上 [Name] ,如果是 随机参数 名字为 ... 如果有默认值， 使用 Name=Value 多类型使用任意符号分开
+--@config {Type} [Name][=value] 指示参数中对象的值，  只能在@param后面使用。
+
+
+异常类型
+@exception {Type} [Summary]     描述函数可能抛出的异常的类型，  只能在@throws后面使用。
+
+
+链接
+{@link Link}   指向一个文件的链接
+{@code [{Type}] [<<<] [Summary] [>>>] } 指示中间是一段代码
+
+
+
+
+
+
+特殊字符
+@{   表示字符 {
+@@   表示字符 @
+@}   表示字符 }
+@*   表示字符 *
+@/   表示字符 /
+@<  表示字符 &lt;
+@> 表示字符 &gt;
+
+
+
+链接
+
+Namespace#Class#Method
+http://...
+Namespace::Class::Method
+Namespace.Class.Method
+
+
+
+@define a b  定义注释的别名
+@define {boolean} {Boolean}

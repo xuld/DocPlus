@@ -4,6 +4,7 @@ using System.Drawing.Design;
 using System.Windows.Forms.Design;
 using CorePlus.Api;
 using DocPlus.Core;
+using System.Text;
 
 namespace DocPlus.Javascript {
 
@@ -49,6 +50,39 @@ namespace DocPlus.Javascript {
         #endregion
 
         #region 解析配置
+
+        #region 解析模板
+
+        /// <summary>
+        /// 获取或设置是否在生成成功后打开文件。
+        /// </summary>
+        [Category("软件")]
+        [Description("是否在生成成功后打开。")]
+        [DefaultValue(true)]
+        [DisplayName("生成后打开")]
+        public bool OpenIfSuccess { get; set; }
+
+        /// <summary>
+        /// 获取或设置输入文件的编码。
+        /// </summary>
+        [Category("软件")]
+        [Description("软件会自动分析文件编码，但如果自动分析结果不正确，您可以手动指定。")]
+        [TypeConverter(typeof(EncodingConverter))]
+        [DefaultValue(null)]
+        [DisplayName("编码")]
+        public Encoding Encoding { get; set; }
+
+        [Description("生成网页使用的模板位置。")]
+        [DefaultValue("templates")]
+        [DisplayName("文件夹")]
+        [Editor(typeof(System.Windows.Forms.Design.FolderNameEditor), typeof(UITypeEditor))]
+        [Category("网页")]
+        public string TemplateName {
+            get;
+            set;
+        }
+
+        #endregion
 
         /// <summary>
         /// 获取或设置系统变量定义。
@@ -104,12 +138,6 @@ namespace DocPlus.Javascript {
         }
 
         internal string CurrentFile {
-            get {
-                return CurrentSource.Path;
-            }
-        }
-
-        internal Source CurrentSource {
             get;
             set;
         }
@@ -180,9 +208,13 @@ namespace DocPlus.Javascript {
 
         #endregion
 
+        /// <summary>
+        /// 初始化 <see cref="DocPlus.Javascript.DocProject"/> 类的新实例。
+        /// </summary>
         public DocProject() {
             NewLine = Environment.NewLine;
             EnableClosure = AutoCreateFunctionParam = EnableAutoCreateComment = UseNamingRules = true;
+            OpenIfSuccess = true;
         }
 
         /// <summary>
@@ -190,9 +222,13 @@ namespace DocPlus.Javascript {
         /// </summary>
         public override void Build() {
 
-            ApiDoc api = new DocParser(this).Build();
+            DocParser parser = new DocParser(this);
 
-            api.Save(TargetPath);
+            parser.Build();
+
+           // ApiDoc api = new DocParser(this).Build();
+
+           // api.Save(TargetPath);
 
                 //IDocParser parser = GetDocParser();
 

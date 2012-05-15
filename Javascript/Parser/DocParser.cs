@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using CorePlus.Parser.Javascript;
-using CorePlus.Api;
 using System.IO;
+using CorePlus.Parser.Javascript;
+using System.Collections.Specialized;
 
 namespace DocPlus.Javascript {
 
@@ -100,6 +100,11 @@ namespace DocPlus.Javascript {
         Queue<Variant> _comments = new Queue<Variant>();
 
         /// <summary>
+        /// 解析的源文件缓存。
+        /// </summary>
+        NameValueCollection _files = new NameValueCollection();
+
+        /// <summary>
         /// 解析Javascript语法的解释器。
         /// </summary>
         Parser _parser;
@@ -119,6 +124,11 @@ namespace DocPlus.Javascript {
         /// </summary>
         DocMerger _docMerger;
 
+        /// <summary>
+        /// 目前正在解析的源文件地址。
+        /// </summary>
+        string _currentSource;
+
         #endregion
 
         #region 属性
@@ -132,68 +142,17 @@ namespace DocPlus.Javascript {
             }
         }
 
-        /// <summary>
-        /// 获取当前解析的文档。
-        /// </summary>
-        public ApiDoc ApiDoc {
-            get {
-                return _docMerger.ApiDoc;
-            }
-        }
-
         #endregion
 
         #region 方法
 
-        void CreateNewSource(string file) {
-
-            _project.CurrentSource = _docMerger.ApiDoc.CreateSource();
-            _project.CurrentSource.Path = file;
-        }
-
-        void ProcessGlobalConfigs() {
-            var options = _docCommentParser.GlobalConfigs;
-            var s = _project.CurrentSource;
-
-            if(options.ContainsKey(CommentNode.Author)) {
-                s.Author = options[CommentNode.Author];
-                options.Remove(CommentNode.Author);
-            }
-
-            if(options.ContainsKey(CommentNode.FileOverview)) {
-                s.FileOverview = options[CommentNode.FileOverview];
-                options.Remove(CommentNode.FileOverview);
-            }
-
-            if(options.ContainsKey(CommentNode.ProjectDescription)) {
-                _docMerger.ApiDoc.ProjectDescription = _docMerger.ApiDoc.CreateSummary(options[CommentNode.ProjectDescription]);
-                options.Remove(CommentNode.ProjectDescription);
-            }
-
-            if(options.ContainsKey(CommentNode.License)) {
-                s.License = options[CommentNode.License];
-                options.Remove(CommentNode.License);
-            }
-
-            if(options.ContainsKey(CommentNode.Copyright)) {
-                s.Copyright = options[CommentNode.Copyright];
-                options.Remove(CommentNode.Copyright);
-            }
-
-            if(options.ContainsKey(CommentNode.Version)) {
-                s.Version = options[CommentNode.Version];
-                options.Remove(CommentNode.Version);
-            }
-
-        }
-
         void ApplyIgnores() {
-            var options = _docCommentParser.GlobalConfigs;
-            var g = _docAstVistor.Global;
+            //var options = _docCommentParser.GlobalConfigs;
+            //var g = _docAstVistor.Global;
 
-            foreach(string s in options.Ignores) {
-                g.GetOrCreateNamespace(s).Ignore = true;
-            }
+            //foreach(string s in options.Ignores) {
+            //    g.GetOrCreateNamespace(s).Ignore = true;
+            //}
         }
 
         /// <summary>
@@ -221,7 +180,7 @@ namespace DocPlus.Javascript {
                 throw new System.Exception("因为有语法错误，所以文档解析已停止");
             }
 
-            VariantMap map = new VariantMap(_comments);
+            VariantMap map = new VariantMap(_comments.ToArray());
 
             // 进行文档解析。
             _docAstVistor.Parse(script, map);
@@ -234,18 +193,25 @@ namespace DocPlus.Javascript {
         /// <param name="path">解析的文件绝对位置。</param>
         public void ParseFile(string file, string path) {
 
+            if(_files[file] == null) {
+                _files[file] = path;
+            } else {
+                int i = 0;
+                while(_files[file + "_" + (++i)] != null) ;
+
+                file += i;
+                _files[file] = path;
+            }
+
+            _currentSource = path;
+
             _project.ProgressReporter.Write(">> {0}", file);
 
-            CreateNewSource(file);
             _comments.Clear();
 
             // 解析语法树。
             Script script = _parser.ParseFile(path, _project.Encoding);
 
-
-
-
-            ProcessGlobalConfigs();
             ParseScript(script);
 
 
@@ -256,7 +222,7 @@ namespace DocPlus.Javascript {
         /// </summary>
         /// <param name="sourceCode">解析的代码。</param>
         public void ParseString(string sourceCode) {
-            _project.CurrentSource = _docMerger.ApiDoc.CurrentSource;
+            _currentSource = String.Empty;
 
             _comments.Clear();
 
@@ -271,7 +237,7 @@ namespace DocPlus.Javascript {
         /// 编译整个项目。
         /// </summary>
         /// <returns></returns>
-        public ApiDoc Build() {
+        public void Build() {
 
             for(int i = 0; i < _project.Items.Count; i++) {
                 string name = _project.Items[i];
@@ -283,10 +249,9 @@ namespace DocPlus.Javascript {
                     ParseFile(Path.GetFileName(name), name);
                 }
             }
-            
-            _docMerger.Parse(_docAstVistor.Global);
 
-            return _docMerger.ApiDoc;
+            _docMerger.Parse(_docAstVistor.Global, _files);
+
         }
 
         #endregion
@@ -315,6 +280,10 @@ namespace DocPlus.Javascript {
                 _owner.ProgressReporter.Warning(_owner.CurrentFile, startLocation.Line, message, ErrorNumber.SyntaxWarning);
             }
 
+            public void Clear() {
+                ErrorCount = WarningCount = 0;
+            }
+
             public int WarningCount {
                 get;
                 set;
@@ -323,15 +292,6 @@ namespace DocPlus.Javascript {
             public int ErrorCount {
                 get;
                 set;
-            }
-
-            #endregion
-
-            #region IErrorReporter 成员
-
-
-            public void Clear() {
-                ErrorCount = WarningCount = 0;
             }
 
             #endregion
@@ -357,7 +317,7 @@ namespace DocPlus.Javascript {
 
             if (token.LiteralBuffer.Length > 0 && token.LiteralBuffer[0] == '*') {
                 Variant v = _docCommentParser.Parse(token);
-                v.Source = _project.CurrentSource;
+                v.Source = _currentSource;
                 _comments.Enqueue(v);
             }
         }

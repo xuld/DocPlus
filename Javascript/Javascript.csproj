@@ -40,9 +40,16 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\CorePlus\bin\Debug\CorePlus.Core.dll</HintPath>
     </Reference>
+    <Reference Include="CorePlus.Json">
+      <HintPath>..\..\CorePlus\Output\CorePlus.Json.dll</HintPath>
+    </Reference>
     <Reference Include="CorePlus.Logging, Version=5.0.0.0, Culture=neutral, PublicKeyToken=8603a0abf2518793, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\CorePlus\bin\Debug\CorePlus.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="JavascriptParser, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\CorePlus\Output\JavascriptParser.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -56,38 +63,38 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Markdown.cs" />
+    <Compile Include="Parser\CommentNode\ParamCommentNode.cs" />
+    <Compile Include="Parser\CommentNode\ReturnCommentNode.cs" />
+    <Compile Include="Parser\CommentNode\StringCommentNode.cs" />
+    <Compile Include="Parser\Variant1\Scope.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Parser\Variant\JavaCommentParser.cs" />
+    <Compile Include="Parser\Variant\JavaCommentParser.Parsers.cs" />
+    <Compile Include="Parser\Variant\NodeNames.cs" />
+    <Compile Include="Parser\CommentNode\ICommentNode.cs" />
+    <Compile Include="Parser\Variant\Variant.cs" />
+    <Compile Include="Parser\DocMerger.cs" />
     <Compile Include="Parser\DocParser.cs" />
     <Compile Include="DocProject.cs" />
     <Compile Include="Parser\Variant\GlobalConfigs.cs" />
     <Compile Include="Parser\Variant\Map.cs" />
-    <Compile Include="Parser\Variant\MemberType.cs" />
-    <Compile Include="Parser\Variant\Scope.cs" />
-    <Compile Include="Parser\Variant\VariantMap.cs" />
-    <Compile Include="Parser\Variant\CommentNode.cs" />
-    <Compile Include="Parser\ErrorNumber.cs" />
-    <Compile Include="Parser\Variant\JavaCommentParser.cs" />
+    <Compile Include="Parser\Variant\ErrorNumber.cs" />
     <Compile Include="Parser\DocAstVistor.cs" />
-    <Compile Include="Parser\DocMerger.cs" />
-    <Compile Include="Parser\Variant\NativeType.cs" />
-    <Compile Include="Parser\Variant\Variant.cs" />
-    <Compile Include="Parser\Variant\VariantAttribute.cs" />
+    <Compile Include="Parser\Variant\VariantAttribute.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Parser\Variant\VariantMap.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\CorePlus\CorePlus\Api\Api\Api.csproj">
-      <Project>{EF769E26-12EB-4AC5-8FA6-8CD74FD9128F}</Project>
-      <Name>Api</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\CorePlus\CorePlus\JavascriptParser\JavascriptParser\JavascriptParser.csproj">
-      <Project>{139ACF17-8ACC-41E4-8145-FF99AFCBB2EF}</Project>
-      <Name>JavascriptParser</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Core\Core.csproj">
       <Project>{E7B70917-888C-48EE-B8BB-140A84838FB7}</Project>
       <Name>Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

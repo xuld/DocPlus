@@ -9,7 +9,7 @@ using System.Diagnostics;
 namespace DocPlus.Javascript {
 
     /// <summary>
-    /// 遍历语法树生成文档的工具。
+    /// 遍历语法树生成文档的工具。通过遍历语法树自动填充注释。
     /// </summary>
     /// <remarks>
     /// 全部文档生成的算法都在此类。
@@ -407,7 +407,7 @@ namespace DocPlus.Javascript {
         ///// <param name="name">名字。</param>
         ///// <param name="member">可能的类型。</param>
         ///// <returns>注释。</returns>
-        //Comment GetCommentFor(CorePlus.Parser.Javascript.Node node, string name = null, CommentNode member = null) {
+        //Comment GetCommentFor(CorePlus.Parser.Javascript.Node node, string name = null, CommentNodeNames member = null) {
         //    return FillComment(GetCommentFor(node), name, member);
         //}
 
@@ -428,7 +428,7 @@ namespace DocPlus.Javascript {
         ///// <param name="name">名字。</param>
         ///// <param name="member">类型。</param>
         ///// <returns>分析后的新注释，肯能等于 <paramref name="dc"/> 。</returns>
-        //Comment FillComment(Comment dc, string name = null, CommentNode member = null) {
+        //Comment FillComment(Comment dc, string name = null, CommentNodeNames member = null) {
         //    if (dc == null || dc.Ignore)
         //        dc = new Comment();
 
@@ -729,7 +729,7 @@ namespace DocPlus.Javascript {
         ////}
 
         ////static bool IsParentSetter(Variant variant) {
-        ////    return GetTopLeval(variant.Comment.Member) == CommentNode.Namespace;
+        ////    return GetTopLeval(variant.Comment.Member) == CommentNodeNames.Namespace;
         ////}
 
         /////// <summary>
@@ -741,20 +741,20 @@ namespace DocPlus.Javascript {
         /////// 方法、属性、字段、配置、构造函数、事件 的上级成员是 类。
         /////// 类、枚举、名字空间 的上级成员是 名字空间。
         /////// </remarks>
-        ////static CommentNode GetTopLeval(CommentNode node) {
+        ////static CommentNodeNames GetTopLeval(CommentNodeNames node) {
         ////    if (node == null)
         ////        return null;
-        ////    if (node == CommentNode.Property || node == CommentNode.Method ||
-        ////        node == CommentNode.Field || node == CommentNode.Event ||
-        ////        node == CommentNode.Constructor || node == CommentNode.Config || node == CommentNode.Getter || node == CommentNode.Setter) {
-        ////        return CommentNode.Class;
+        ////    if (node == CommentNodeNames.Property || node == CommentNodeNames.Method ||
+        ////        node == CommentNodeNames.Field || node == CommentNodeNames.Event ||
+        ////        node == CommentNodeNames.Constructor || node == CommentNodeNames.Config || node == CommentNodeNames.Getter || node == CommentNodeNames.Setter) {
+        ////        return CommentNodeNames.Class;
         ////    }
 
-        ////    //  else if (node == CommentNode.Class || node == CommentNode.Namespace || node == CommentNode.Enum) {
-        ////    //    return CommentNode.Namespace;
+        ////    //  else if (node == CommentNodeNames.Class || node == CommentNodeNames.Namespace || node == CommentNodeNames.Enum) {
+        ////    //    return CommentNodeNames.Namespace;
         ////    //}
 
-        ////    return CommentNode.Namespace;
+        ////    return CommentNodeNames.Namespace;
         ////}
 
         /////// <summary>
@@ -796,7 +796,7 @@ namespace DocPlus.Javascript {
         /////// <param name="name">名字。</param>
         /////// <param name="type">类型。</param>
         /////// <returns>刚添加的变量。</returns>
-        ////Variant AddVariant(ref Comment dc, string name = null, CommentNode member = null) {
+        ////Variant AddVariant(ref Comment dc, string name = null, CommentNodeNames member = null) {
 
         ////    if (dc == null || dc.Ignore)
         ////        dc = new Comment();
@@ -847,7 +847,7 @@ namespace DocPlus.Javascript {
         /////// <param name="dc"></param>
         /////// <returns></returns>
         ////bool CheckNamespace(Comment dc) {
-        ////    if (dc != null && !dc.Processed && GetTopLeval(dc.Member) == CommentNode.Namespace) {
+        ////    if (dc != null && !dc.Processed && GetTopLeval(dc.Member) == CommentNodeNames.Namespace) {
 
 
 
@@ -878,10 +878,10 @@ namespace DocPlus.Javascript {
         ////bool HandleNamespaceSetter(Comment dc) {
 
         ////    // 获取上级。
-        ////    CommentNode topLeval = GetTopLeval(dc.Member);
+        ////    CommentNodeNames topLeval = GetTopLeval(dc.Member);
 
         ////    // 如果上级是 namespace， 说明以下成员可作为此成员的成员。 如 class
-        ////    if (topLeval == CommentNode.Namespace) {
+        ////    if (topLeval == CommentNodeNames.Namespace) {
 
 
         ////        // 不存在名字。表示清空空间。
@@ -938,26 +938,6 @@ namespace DocPlus.Javascript {
         //#endregion
 
         #endregion
-
-        //#region 执行
-
-        ///////// <summary>
-        ///////// 返回指定类型的变量。
-        ///////// </summary>
-        ///////// <param name="type">类型。</param>
-        //////void Return(string type, object value = null) {
-        //////    ReturnType = type;
-        //////}
-
-        /////// <summary>
-        /////// 返回指定类型的变量。
-        /////// </summary>
-        /////// <param name="type">类型。</param>
-        ////void Return(Variant variant) {
-        ////    //ReturnType = type;
-        ////}
-
-        //#endregion
 
         #region 初始化和配置
 
@@ -1293,7 +1273,7 @@ namespace DocPlus.Javascript {
         public void VisitNewExpression(NewExpression newExpression) {
 
             //     Comment dc = GetCommentFor(newExpression.Expression);
-            //    AutoFillNodeType(CommentNode.Class);
+            //    AutoFillNodeType(CommentNodeNames.Class);
 
             //VisitExpression(newExpression.Expression);
 

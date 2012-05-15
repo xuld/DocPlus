@@ -15,33 +15,8 @@ namespace DocPlus.Javascript {
 
         int _index;
 
-        public VariantMap(Queue<Variant> comments) {
-
-          _cache = comments.ToArray();
-
-            //_cache = new Variant[comments.Count];
-
-            //Variant c;
-
-            //int i = 0;
-            //while (comments.Count > 0) {
-            //    c = comments.Dequeue();
-            //    // Console.WriteLine(c.ToString());
-
-            //    _cache[i] = new Variant(c);
-
-            //    _cache[i].StartLocation = c.StartLocation;
-            //    _cache[i].EndLocation = c.EndLocation;
-            //    _cache[i].DisplayName = c.DisplayName;
-
-            //    if (c.Member == CommentNode.Namespace || c.Member == CommentNode.Class) {
-            //        _cache[i].NamespaceSetter = c.DisplayName;
-            //        if(c.Member == CommentNode.Class)
-            //        _cache[i].MemberType = MemberType.Class;
-            //    }
-            //    i++;
-
-            //}
+        public VariantMap(Variant[] comments) {
+          _cache = comments;
         }
 
         /// <summary>
