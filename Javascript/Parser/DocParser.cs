@@ -85,7 +85,7 @@ namespace DocPlus.Javascript {
     /// <para>类内部含一个 <see cref="CorePlus.Parser.Javascript.IErrorReporter"/> 的实现。用于将解析器错误转发到 <see cref="JavaScriptDocParser.ProgressReporter"/> 。</para>
     /// 
     /// </remarks>
-    public class DocParser :ICommentParser {
+    class DocParser :ICommentParser {
 
         #region 字段
 
@@ -98,11 +98,6 @@ namespace DocPlus.Javascript {
         /// 当前全部注释节点。
         /// </summary>
         Queue<Variant> _comments = new Queue<Variant>();
-
-        /// <summary>
-        /// 解析的源文件缓存。
-        /// </summary>
-        NameValueCollection _files = new NameValueCollection();
 
         /// <summary>
         /// 解析Javascript语法的解释器。
@@ -134,26 +129,25 @@ namespace DocPlus.Javascript {
         #region 属性
 
         /// <summary>
-        /// 获取当前解析的变量树。
+        /// 获取正在处理的项目配置。
         /// </summary>
-        public Variant Global {
+        public DocProject Project {
             get {
-                return _docAstVistor.Global;
+                return _project;
             }
+        }
+
+        /// <summary>
+        /// 获取当前解析的最终文档数据。
+        /// </summary>
+        public DocData Data {
+            get;
+            set;
         }
 
         #endregion
 
         #region 方法
-
-        void ApplyIgnores() {
-            //var options = _docCommentParser.GlobalConfigs;
-            //var g = _docAstVistor.Global;
-
-            //foreach(string s in options.Ignores) {
-            //    g.GetOrCreateNamespace(s).Ignore = true;
-            //}
-        }
 
         /// <summary>
         /// 初始化 <see cref="DocPlus.Javascript.DocParser"/> 类的新实例。
@@ -166,24 +160,7 @@ namespace DocPlus.Javascript {
             _docCommentParser = new JavaCommentParser(_project);
             _docAstVistor = new DocAstVistor(_project);
             _docMerger = new DocMerger(_project);
-        }
-
-        /// <summary>
-        /// 解析一个文件。
-        /// </summary>
-        /// <param name="file"></param>
-        /// <param name="path"></param>
-        void ParseScript(Script script) {
-
-            // 如果不允许语法错误，则解析停止。
-            if(_parser.ErrorCount > 0 && !_project.SkipSyntaxError) {
-                throw new System.Exception("因为有语法错误，所以文档解析已停止");
-            }
-
-            VariantMap map = new VariantMap(_comments.ToArray());
-
-            // 进行文档解析。
-            _docAstVistor.Parse(script, map);
+            Data = new DocData();
         }
 
         /// <summary>
@@ -191,16 +168,25 @@ namespace DocPlus.Javascript {
         /// </summary>
         /// <param name="file">解析的文件名称。</param>
         /// <param name="path">解析的文件绝对位置。</param>
-        public void ParseFile(string file, string path) {
+        public void ParseFile(string path) {
+            ParseFile(path, Path.GetFileName(path));
+        }
 
-            if(_files[file] == null) {
-                _files[file] = path;
+        /// <summary>
+        /// 解析一个文件。
+        /// </summary>
+        /// <param name="path">解析的文件绝对位置。</param>
+        /// <param name="file">解析的文件名称。</param>
+        public void ParseFile(string path, string file) {
+
+            if(Data.Files[file] == null) {
+                Data.Files[file] = path;
             } else {
                 int i = 0;
-                while(_files[file + "_" + (++i)] != null) ;
+                while (Data.Files[file + "_" + (++i)] != null) ;
 
                 file += i;
-                _files[file] = path;
+                Data.Files[file] = path;
             }
 
             _currentSource = path;
@@ -234,23 +220,24 @@ namespace DocPlus.Javascript {
         }
 
         /// <summary>
-        /// 编译整个项目。
+        /// 底层实现一个文件的解析。
         /// </summary>
-        /// <returns></returns>
-        public void Build() {
+        /// <param name="script">解析的脚本块。</param>
+        void ParseScript(Script script) {
 
-            for(int i = 0; i < _project.Items.Count; i++) {
-                string name = _project.Items[i];
-                if(Directory.Exists(name)) {
-                    foreach(string s in Directory.GetFiles(name, "*.js", SearchOption.AllDirectories)) {
-                        ParseFile(s.Substring(name.Length), s);
-                    }
-                } else {
-                    ParseFile(Path.GetFileName(name), name);
-                }
+            // 如果不允许语法错误，则解析停止。
+            if (_parser.ErrorCount > 0 && !_project.SkipSyntaxError) {
+                throw new System.Exception("因为有语法错误，所以文档解析已停止");
             }
 
-            _docMerger.Parse(_docAstVistor.Global, _files);
+            // 获取语法分析返回的注释列表。
+            VariantMap map = new VariantMap(_comments.ToArray());
+
+            // 进行文档解析。
+           // _docAstVistor.Parse(script, map);
+
+            // 文档合成。
+            _docMerger.Parse(map);
 
         }
 
@@ -323,7 +310,6 @@ namespace DocPlus.Javascript {
         }
 
         #endregion
-
 
     }
 }

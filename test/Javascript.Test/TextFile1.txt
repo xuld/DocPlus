@@ -344,3 +344,108 @@ namespace DocPlus.Parser.Javascript {
                 RootPath = value.RootPath;
             }
         }
+
+		
+
+        #region 子变量
+
+        Dictionary<string, Variant> _children;
+
+        Dictionary<string, Variant> Children {
+            get {
+                if(_children == null) {
+                    _children = new Dictionary<string, Variant>();
+                }
+
+                return _children;
+            }
+        }
+
+        public void Add(string key, Variant value) {
+            Children.Add(key, value);
+        }
+
+        public bool ContainsKey(string key) {
+            return _children == null ? false : _children.ContainsKey(key);
+        }
+
+        public new ICollection<string> Keys {
+            get {
+                return Children.Keys;
+            }
+        }
+
+        public bool Remove(string key) {
+            if(_children != null)
+                return _children.Remove(key);
+
+            return false;
+        }
+
+        bool IDictionary<string, Variant>.TryGetValue(string key, out Variant value) {
+            return Children.TryGetValue(key, out value);
+        }
+
+        public ICollection<Variant> Values {
+            get {
+                return Children.Values;
+            }
+        }
+
+        /// <summary>
+        /// 获取或设置当前变量内的子变量。
+        /// </summary>
+        /// <param name="name">变量名。</param>
+        /// <returns>变量实例。</returns>
+        public Variant this[string key] {
+            get {
+                if(_children == null)
+                    return null;
+
+                Variant t;
+                return _children.TryGetValue(key, out t) ? t : null;
+            }
+            set {
+                Children[key] = value;
+            }
+        }
+
+        void IDictionary<string, Variant>.Add(KeyValuePair<string, Variant> item) {
+            ((IDictionary<string, Variant>)Children).Add(item);
+        }
+
+        public void Clear() {
+            if(_children != null) {
+                _children.Clear();
+            }
+        }
+
+        bool IDictionary<string, Variant>.Contains(KeyValuePair<string, Variant> item) {
+            return ((IDictionary<string, Variant>)Children).Contains(item);
+        }
+
+        void IDictionary<string, Variant>.CopyTo(KeyValuePair<string, Variant>[] array, int arrayIndex) {
+            ((IDictionary<string, Variant>)Children).CopyTo(array, arrayIndex);
+        }
+
+        bool IDictionary<string, Variant>.IsReadOnly {
+            get {
+                return ((IDictionary<string, Variant>)Children).IsReadOnly;
+            }
+        }
+
+        bool IDictionary<string, Variant>.Remove(KeyValuePair<string, Variant> item) {
+            return ((IDictionary<string, Variant>)Children).Remove(item);
+        }
+
+        public new IEnumerator<KeyValuePair<string, Variant>> GetEnumerator() {
+            return Children.GetEnumerator();
+        }
+
+        public new int Count {
+            get {
+                return _children == null ? 0 : _children.Count;
+            }
+        }
+
+        #endregion

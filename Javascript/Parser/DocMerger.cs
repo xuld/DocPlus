@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using DocPlus.Core;
-using System.IO;
-using CorePlus.Parser.Javascript;
 using System.Collections.Specialized;
+using System.IO;
+using System.Text;
+using CorePlus.Parser.Javascript;
+using DocPlus.Core;
 
 namespace DocPlus.Javascript {
 
     /// <summary>
-    /// 分析变量，解析得到 <see cref="ApiDoc"/> 实例。
+    /// 分析变量，解析得到最终的文档。
     /// </summary>
     public class DocMerger {
-
+        
         /// <summary>
         /// 正在处理的项目配置。
         /// </summary>
@@ -22,20 +22,21 @@ namespace DocPlus.Javascript {
             _project = project;
         }
 
+        Variant scope;
+
         /// <summary>
         /// 解析一个变量树。
         /// </summary>
         /// <param name="scope"></param>
-        public void Parse(Variant scope, NameValueCollection value) {
+        public void Parse(VariantMap variantMap) {
 
-            scope.Remove("this");
-            scope.Remove("window");
-            ParseChildren(scope, null);
         }
 
         void ParseChildren(Variant obj, bool? isStatic) {
 
 
+         //   scope.Remove("this");
+         //   scope.Remove("window");
         }
     }
 }

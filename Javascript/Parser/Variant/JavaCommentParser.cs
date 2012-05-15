@@ -16,9 +16,9 @@ namespace DocPlus.Javascript {
         #region 共享的变量
 
         /// <summary>
-        /// 当前解析所属的项目。
+        /// 当前解析所属的解析器。
         /// </summary>
-        DocProject _project;
+        DocParser _parser;
 
         /// <summary>
         /// 内部使用的缓存。
@@ -49,12 +49,12 @@ namespace DocPlus.Javascript {
 
         #region 全局
 
-        GlobalConfigs _globalConfigs = new GlobalConfigs();
+        GlobalData _globalConfigs = new GlobalData();
 
         /// <summary>
         /// 获取当前文档解析得到的全局配置对象。
         /// </summary>
-        public GlobalConfigs GlobalConfigs {
+        public GlobalData GlobalConfigs {
             get {
                 return _globalConfigs;
             }
@@ -83,19 +83,19 @@ namespace DocPlus.Javascript {
         #region 警告和错误
 
         void Error(string message) {
-            _project.ProgressReporter.Error(_project.CurrentFile, _line, message, 0);
+            _parser.ProgressReporter.Error(_parser.CurrentFile, _line, message, 0);
         }
 
         void Warning(string message) {
-            _project.ProgressReporter.Warning(_project.CurrentFile, _line, message, 0);
+            _parser.ProgressReporter.Warning(_parser.CurrentFile, _line, message, 0);
         }
 
         void Error(string message, params object[] args) {
-            _project.ProgressReporter.Error(_project.CurrentFile, _line, String.Format(message, args), 0);
+            _parser.ProgressReporter.Error(_parser.CurrentFile, _line, String.Format(message, args), 0);
         }
 
         void Warning(string message, params object[] args) {
-            _project.ProgressReporter.Warning(_project.CurrentFile, _line, String.Format(message, args), 0);
+            _parser.ProgressReporter.Warning(_parser.CurrentFile, _line, String.Format(message, args), 0);
         }
 
         /// <summary>
@@ -114,14 +114,9 @@ namespace DocPlus.Javascript {
         /// <summary>
         /// 初始化 <see cref="DocPlus.DocParser.Javascript.JavaCommentParser"/> 的新实例。
         /// </summary>
-        public JavaCommentParser(DocProject project) {
-            _project = project;
-            AddDefaultTypes();
+        public JavaCommentParser(DocParser parser) {
+            _parser = parser;
             InitNodes();
-            if(_project.AutoCreateParamComment) {
-                _paramsTypes = new Dictionary<string, string[]>();
-                AddSystemDefautParam();
-            }
         }
 
         /// <summary>
@@ -708,7 +703,7 @@ namespace DocPlus.Javascript {
         }
 
         string[] FillParamType(string[] r, bool autoCreateParam) {
-            if(_project.AutoCreateParamComment) {
+            if(_parser.AutoCreateParamComment) {
                 if(r[0].Length == 0 && !String.IsNullOrEmpty(r[1])) {
 
                     if(_paramsTypes.ContainsKey(r[1])) {

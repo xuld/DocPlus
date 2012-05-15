@@ -47,11 +47,11 @@ public class query : IHttpHandler {
             conn.Open();
             var command = conn.CreateCommand();
             command.CommandText = "INSERT INTO [Comments]([Url], [Contact], [Content], [DateTime], [IP]) VALUES(@Url, @Contact, @Content, @DateTime)";
-            command.Parameters.Add("@Url", context.Request.QueryString["url"] ?? String.Empty);
-            command.Parameters.Add("@Contact", context.Request.QueryString["contact"] ?? String.Empty);
-            command.Parameters.Add("@Content", context.Request.QueryString["content"]);
-            command.Parameters.Add("@DateTime", DateTime.Now.ToOADate());
-            command.Parameters.Add("@IP", context.Request.UserHostAddress ?? String.Empty);
+            command.Parameters.AddWithValue("@Url", context.Request.QueryString["url"] ?? String.Empty);
+            command.Parameters.AddWithValue("@Contact", context.Request.QueryString["contact"] ?? String.Empty);
+            command.Parameters.AddWithValue("@Content", context.Request.QueryString["content"]);
+            command.Parameters.AddWithValue("@DateTime", DateTime.Now.ToOADate());
+            command.Parameters.AddWithValue("@IP", context.Request.UserHostAddress ?? String.Empty);
             
             int r = command.ExecuteNonQuery();
             if(r > 0) {
@@ -75,7 +75,7 @@ public class query : IHttpHandler {
             conn.Open();
             var command = conn.CreateCommand();
             command.CommandText = "SELECT * FROM [Comments] WHERE [Url]=@Url ORDER BY [DateTime]";
-            command.Parameters.Add("@Url", context.Request.QueryString["url"] ?? String.Empty);
+            command.Parameters.AddWithValue("@Url", context.Request.QueryString["url"] ?? String.Empty);
             var reader = command.ExecuteReader();
             System.Text.StringBuilder sb = new System.Text.StringBuilder();
             

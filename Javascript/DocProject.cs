@@ -2,9 +2,10 @@
 using System.ComponentModel;
 using System.Drawing.Design;
 using System.Windows.Forms.Design;
-using CorePlus.Api;
 using DocPlus.Core;
 using System.Text;
+using System.IO;
+using System.Collections.Generic;
 
 namespace DocPlus.Javascript {
 
@@ -209,73 +210,57 @@ namespace DocPlus.Javascript {
         #endregion
 
         /// <summary>
+        /// 获取合并时需要忽略的成员名的集合。
+        /// </summary>
+        public List<string> Ignores {
+            get;
+            private set;
+        }
+
+        /// <summary>
         /// 初始化 <see cref="DocPlus.Javascript.DocProject"/> 类的新实例。
         /// </summary>
         public DocProject() {
             NewLine = Environment.NewLine;
             EnableClosure = AutoCreateFunctionParam = EnableAutoCreateComment = UseNamingRules = true;
             OpenIfSuccess = true;
+            Ignores = new List<string>();
+        }
+
+        /// <summary>
+        /// 解析当前文档的数据，并返回一个 <see cref="DocData"/> 实例。
+        /// </summary>
+        /// <returns></returns>
+        public DocData Parse() {
+
+            DocParser parser = new DocParser(this);
+            
+            for(int i = 0; i < Items.Count; i++) {
+                string name = Items[i];
+                if(Directory.Exists(name)) {
+                    foreach(string s in Directory.GetFiles(name, "*.js", SearchOption.AllDirectories)) {
+                        parser.ParseFile(s.Substring(name.Length), s);
+                    }
+                } else {
+                    parser.ParseFile(name);
+                }
+            }
+
+            // 应用忽略列表。
+            foreach (string t in Ignores) {
+                parser.Data.Variants.Remove(t);
+            }
+
+            return parser.Data;
+
         }
 
         /// <summary>
         /// 开始编译整个文档。
         /// </summary>
         public override void Build() {
-
-            DocParser parser = new DocParser(this);
-
-            parser.Build();
-
-           // ApiDoc api = new DocParser(this).Build();
-
-           // api.Save(TargetPath);
-
-                //IDocParser parser = GetDocParser();
-
-                //_parser.Reset();
-
-                //_parser.Settings = _cfg;
-
-                //_parser.ProgressReporter.Clear();
-
-                //_parser.ProgressReporter.Write("启用生成 >> " + _cfg.SavePath);
-
-                //try {
-
-                //    _parser.NewDocument();
-
-                //    if (!String.IsNullOrEmpty(_cfg.SystemDefine)) {
-                //        string p = FileHelper.GetFullPath(_cfg.SystemDefine);
-                //        if (FileHelper.ExistsFile(p))
-                //            ParseFile(p);
-                //    }
-
-                //    foreach (string file in lbFiles.Items) {
-                //        ParseFile(file);
-                //    }
-
-
-                //    _parser.ProgressReporter.Write("正在合成...");
-
-                //    _parser.SaveDocument();
-
-                //    _parser.ProgressReporter.Write("正在保存...");
-
-                //    _parser.Document.Save(_cfg.SavePath, _cfg.OutputEncoding ?? Encoding.Default);
-
-                //    _parser.ProgressReporter.Success("生成完成 >> " + _cfg.SavePath);
-
-                //} catch (Exception e) {
-
-                //    SaveState();
-                //    OnError(e);
-
-                //    return;
-                //}
-
-                //View();
-
-                //SaveState();
+            DocData data = Parse();
+            new DocGenerator(this).Generate(data);
         }
 
     }

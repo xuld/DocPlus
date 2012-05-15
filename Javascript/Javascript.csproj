@@ -66,6 +66,8 @@
     <Compile Include="Parser\CommentNode\ParamCommentNode.cs" />
     <Compile Include="Parser\CommentNode\ReturnCommentNode.cs" />
     <Compile Include="Parser\CommentNode\StringCommentNode.cs" />
+    <Compile Include="Parser\DocData.cs" />
+    <Compile Include="Parser\DocGenerator.cs" />
     <Compile Include="Parser\Variant1\Scope.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -77,7 +79,6 @@
     <Compile Include="Parser\DocMerger.cs" />
     <Compile Include="Parser\DocParser.cs" />
     <Compile Include="DocProject.cs" />
-    <Compile Include="Parser\Variant\GlobalConfigs.cs" />
     <Compile Include="Parser\Variant\Map.cs" />
     <Compile Include="Parser\Variant\ErrorNumber.cs" />
     <Compile Include="Parser\DocAstVistor.cs" />

@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using CorePlus.Parser.Javascript;
+using System.Collections;
 
 namespace DocPlus.Javascript {
 
     /// <summary>
     /// 存储注释在源文件的位置。
     /// </summary>
-    public sealed class VariantMap {
+    public sealed class VariantMap: IEnumerable {
 
         Variant[] _cache;
 
@@ -165,5 +166,13 @@ namespace DocPlus.Javascript {
             return false;
         }
 
+
+        #region IEnumerable 成员
+
+        public IEnumerator GetEnumerator() {
+            return _cache.GetEnumerator();
+        }
+
+        #endregion
     }
 }
