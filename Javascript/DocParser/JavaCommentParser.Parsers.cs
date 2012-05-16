@@ -149,15 +149,20 @@ namespace DocPlus.Javascript {
         #region 通用
 
         void ParseString() {
-            UpdateString(_currentNodeName, ReadText());
+            string value = ReadText();
+            if (value.Length > 0) {
+                UpdateString(_currentNodeName, value);
+            }
         }
 
         MarkdownSharp.Markdown _md = new MarkdownSharp.Markdown();
 
         void ParseRichText() {
             string value = ReadText();
-           value = _md.Transform(value);
-            UpdateString(_currentNodeName, value);
+            if (value.Length > 0) {
+                value = _md.Transform(value);
+                UpdateString(_currentNodeName, value);
+            }
         }
 
         /// <summary>
@@ -331,7 +336,7 @@ namespace DocPlus.Javascript {
 
         void ParseIgnore() {
             string value = ReadNameAndEnsureEmpty();
-            if(value != null)
+            if(value.Length == 0)
                 _currentComment.Ignore = true;
             else {
                 _parser.Ignores.Add(value);
@@ -348,7 +353,7 @@ namespace DocPlus.Javascript {
 
         void ParseName() {
             string value = ReadNameAndEnsureEmpty();
-            if(value != null) {
+            if(value.Length > 0) {
                 UpdateName(_currentNodeName, value);
             } else {
                 MissContent();
@@ -367,7 +372,7 @@ namespace DocPlus.Javascript {
             }
 
             string value = ReadType();
-            if(value != null) {
+            if(value.Length > 0) {
                 EnsureEmpty();
 
                 UpdateString(NodeNames.Type, value);

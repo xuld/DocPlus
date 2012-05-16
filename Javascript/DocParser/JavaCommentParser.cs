@@ -84,7 +84,7 @@ namespace DocPlus.Javascript {
         }
 
         void Redefined() {
-            Error("重复的标签: {0}", _currentNodeName);
+            Error("重复的标签: @{0}", _currentNodeName);
         }
 
         /// <summary>
@@ -93,9 +93,9 @@ namespace DocPlus.Javascript {
         /// <param name="nodeNameBefore">发生冲突的标签名。</param>
         void Redefined(string nodeNameBefore) {
             if(nodeNameBefore == _currentNodeName) {
-                Error("重复的标签: {0}", _currentNodeName);
+                Error("重复的标签: @{0}", _currentNodeName);
             } else {
-                Error("标签 {0} 和 {1} 不能同时使用，已忽略标签 {1}", nodeNameBefore, _currentNodeName);
+                Error("标签 @{0} 和 @{1} 不能同时使用，已忽略标签 {1}", nodeNameBefore, _currentNodeName);
             }
         }
 
@@ -637,7 +637,9 @@ namespace DocPlus.Javascript {
                 Redefined();
             }
 
-            _currentComment[nodeName] = value;
+            if (value != null && value.Length > 0) {
+                _currentComment[nodeName] = value;
+            }
         }
 
         void UpdateName(string nodeName, string value) {
@@ -666,31 +668,19 @@ namespace DocPlus.Javascript {
         #region 底层更新的封装
 
         void TryUpdateString(string nodeName) {
-            string value = ReadText();
-            if(value.Length > 0) {
-                UpdateString(nodeName, value);
-            }
+            UpdateString(nodeName, ReadText());
         }
 
         void TryUpdateName() {
-            string value = ReadName();
-            if(value != null) {
-                UpdateName("name", value);
-            }
+            UpdateName(NodeNames.Name, ReadName());
         }
 
         void TryUpdateType() {
-            string value = ReadType();
-            if(value != null) {
-                UpdateString(NodeNames.Type, value);
-            }
+            UpdateString(NodeNames.Type, ReadType());
         }
 
         void TryUpdateDefaultValue() {
-            string value = ReadDefaultValue();
-            if(value != null) {
-                UpdateString(NodeNames.Value, value);
-            }
+            UpdateString(NodeNames.Value, ReadDefaultValue());
         }
 
         #endregion

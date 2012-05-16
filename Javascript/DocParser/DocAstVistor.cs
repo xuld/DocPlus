@@ -50,9 +50,38 @@ namespace DocPlus.Javascript {
             set;
         }
 
-        DocComment CurrentFunctionNode {
-            get;
-            set;
+        Stack<DocComment> _function = new Stack<DocComment>();
+
+        Stack<DocComment> _object = new Stack<DocComment>();
+
+        void PushFunction(DocComment docComment) {
+            _function.Push(docComment);
+        }
+
+        DocComment CurrentFunction {
+            get {
+                return _function.Count > 0 ? _function.Peek() : null;
+            }
+        }
+
+        void PopFunction() {
+            if (_function.Count > 0)
+                _function.Pop();
+        }
+
+        void PushObject(DocComment docComment) {
+            _object.Push(docComment);
+        }
+
+        DocComment CurrentObject {
+            get {
+                return _object.Count > 0 ? _object.Peek() : null;
+            }
+        }
+
+        void PopObject() {
+            if (_object.Count > 0)
+                _object.Pop();
         }
 
         bool GetNext(Location location, out DocComment dc) {
@@ -132,7 +161,20 @@ namespace DocPlus.Javascript {
         }
 
         private void Process(DocComment dc) {
+            dc.Parent = CurrentObject;
+        }
 
+        void Assign(Node node, string name, Expression value) {
+            DocComment dc = GetDocCommentBy(node);
+            if (dc != null) {
+                dc.Parent = CurrentObject;
+                AutoFillName(dc, name);
+                if (value is ObjectLiteral)
+                    PushObject(dc);
+                VisitExpression(value);
+                PopObject();
+                AutoFillTypeByReturnValue(dc);
+            }
         }
 
         /// <summary>
@@ -164,7 +206,7 @@ namespace DocPlus.Javascript {
                         dc.AutoFill(NodeNames.Type, "Array");
                     } else if(ReturnValue is NullLiteral) {
                         dc.AutoFill(NodeNames.Value, "null");
-                    } else if(ReturnValue is RegExpLiteral) {
+                    } else if (ReturnValue is RegExpLiteral) {
                         dc.AutoFill(NodeNames.Type, "RegExp");
                         dc.AutoFill(NodeNames.Value, ((RegExpLiteral)ReturnValue).ToString());
                     } else if(ReturnValue is FunctionExpression) {
@@ -323,8 +365,10 @@ namespace DocPlus.Javascript {
 
             }
 
-
+            if (assignmentExpression.Value is ObjectLiteral)
+                PushObject(dc);
             VisitExpression(assignmentExpression.Value);
+            PopObject();
 
             AutoFillTypeByReturnValue(dc);
         }
@@ -426,11 +470,13 @@ namespace DocPlus.Javascript {
 
         public void VisitFunctionExpression(FunctionExpression functionExpression) {
 
-            DocComment dc = CurrentFunctionNode = GetDocCommentBy(functionExpression);
+            DocComment dc = GetDocCommentBy(functionExpression);
+            PushFunction(dc);
             AutoFillName(dc,  functionExpression.Name);
 
             VisitStatements(functionExpression.Statements);
             ProcessCommentIn(functionExpression);
+            PopFunction();
         }
 
         public void VisitFunctionCallExpression(FunctionCallExpression functionCallExpression) {
@@ -502,7 +548,7 @@ namespace DocPlus.Javascript {
         }
 
         public void VisitProperty(ObjectLiteral.Property property) {
-            AutoFillName(GetDocCommentBy(property), property.Key.Value);
+            Assign(property, property.Key.Value, property.Value);
         }
 
         public void VisitPropertyCallExpression(PropertyCallExpression propertyCallExpression) {
@@ -518,7 +564,20 @@ namespace DocPlus.Javascript {
         public void VisitReturnStatement(ReturnStatement returnStatement) {
             VisitExpression(returnStatement.Expression);
 
-            AutoFillTypeByReturnValue(CurrentFunctionNode);
+            DocComment currentFunction = CurrentFunction;
+
+            if (currentFunction != null) {
+
+                if (currentFunction[NodeNames.Return] == null) {
+                    currentFunction[NodeNames.Return] = new ReturnCommentNode();
+                }
+
+                currentFunction.Type = null;
+                AutoFillTypeByReturnValue(currentFunction);
+
+                ((ReturnCommentNode)currentFunction[NodeNames.Return]).Type = currentFunction.Type;
+                currentFunction.Type = "Function";
+            }
         }
 
         public void VisitSemicolon(Semicolon semicolon) {
@@ -543,12 +602,12 @@ namespace DocPlus.Javascript {
         public void VisitThrowStatement(ThrowStatement throwStatement) {
             VisitExpression(throwStatement.Expression);
 
-            if(CurrentFunctionNode != null && ReturnValue is string) {
+            if(CurrentFunction != null && ReturnValue is string) {
 
-                ParamCommentNode p = (ParamCommentNode)CurrentFunctionNode[NodeNames.Exception];
+                ParamCommentNode p = (ParamCommentNode)CurrentFunction[NodeNames.Exception];
 
                 if(p == null) {
-                    CurrentFunctionNode[NodeNames.Exception] = p = new ParamCommentNode();
+                    CurrentFunction[NodeNames.Exception] = p = new ParamCommentNode();
                 }
 
                 p.Add((string)ReturnValue, "String");
@@ -633,17 +692,7 @@ namespace DocPlus.Javascript {
         }
 
         public void VisitVariableDeclaration(VariableDeclaration variableDeclaration) {
-
-            DocComment dc = GetDocCommentBy(variableDeclaration);
-
-            AutoFillName(dc, variableDeclaration.Name.Name);
-
-            if(variableDeclaration.Initialiser != null) {
-                VisitExpression(variableDeclaration.Initialiser);
-            } else {
-                ReturnValue = null;
-            }
-            AutoFillTypeByReturnValue(dc);
+            Assign(variableDeclaration, variableDeclaration.Name.Name, variableDeclaration.Initialiser ?? new UndefinedExpression());
         }
 
         public void VisitVariableStatement(VariableStatement variableStatement) {
