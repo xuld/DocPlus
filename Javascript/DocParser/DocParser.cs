@@ -217,6 +217,18 @@ namespace DocPlus.Javascript {
 
         }
 
+        public DocComment[] GetComments(string sourceCode) {
+            _currentSource = String.Empty;
+
+            _comments.Clear();
+
+            // 解析语法树。
+            Script script = _parser.ParseString(sourceCode);
+
+            // 获取语法分析返回的注释列表。
+            return _comments.ToArray();
+        }
+
         /// <summary>
         /// 解析字符串中的代码。
         /// </summary>
@@ -240,7 +252,9 @@ namespace DocPlus.Javascript {
 
             // 如果不允许语法错误，则解析停止。
             if (_parser.ErrorCount > 0 && !_project.SkipSyntaxError) {
-                throw new System.Exception("因为有语法错误，所以文档解析已停止");
+                _project.ProgressReporter.Error(null, -1, "因为有语法错误，所以文档解析已停止", 3);
+
+                return;
             }
 
             // 获取语法分析返回的注释列表。
@@ -269,14 +283,17 @@ namespace DocPlus.Javascript {
             #region IErrorReporter 成员
 
             public void Error(string message, Location startLocation, Location endLocation) {
+                ErrorCount++;
                 _owner.Project.ProgressReporter.Error(_owner.CurrentSource, startLocation.Line, message, ErrorNumber.SyntaxError);
             }
 
             public void Warning(string message, Location startLocation, Location endLocation) {
+                WarningCount++;
                 _owner.Project.ProgressReporter.Warning(_owner.CurrentSource, startLocation.Line, message, ErrorNumber.SyntaxWarning);
             }
 
             public void WarningStrict(string message, Location startLocation, Location endLocation) {
+                WarningCount++;
                 _owner.Project.ProgressReporter.Warning(_owner.CurrentSource, startLocation.Line, message, ErrorNumber.SyntaxWarning);
             }
 

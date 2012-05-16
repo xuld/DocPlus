@@ -88,10 +88,6 @@
       <Project>{EF769E26-12EB-4AC5-8FA6-8CD74FD9128F}</Project>
       <Name>Api</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\CorePlus\CorePlus\JavascriptParser\JavascriptParser\JavascriptParser.csproj">
-      <Project>{139ACF17-8ACC-41E4-8145-FF99AFCBB2EF}</Project>
-      <Name>JavascriptParser</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Core\Core.csproj">
       <Project>{E7B70917-888C-48EE-B8BB-140A84838FB7}</Project>
       <Name>Core</Name>

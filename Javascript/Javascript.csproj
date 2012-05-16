@@ -65,7 +65,6 @@
     <Compile Include="DocParser\Markdown.cs" />
     <Compile Include="CommentNode\ParamCommentNode.cs" />
     <Compile Include="CommentNode\ReturnCommentNode.cs" />
-    <Compile Include="CommentNode\StringCommentNode.cs" />
     <Compile Include="DocParser\DocData.cs" />
     <Compile Include="DocParser\DocGenerator.cs" />
     <Compile Include="DocParser\JavaCommentParser.cs" />

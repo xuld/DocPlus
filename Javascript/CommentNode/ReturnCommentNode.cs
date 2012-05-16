@@ -20,5 +20,9 @@ namespace DocPlus.Javascript {
         public string ToJson() {
             return "\"return\"";
         }
+
+        public override string ToString() {
+            return String.Concat("{", Type, "} ", Summary);
+        }
     }
 }

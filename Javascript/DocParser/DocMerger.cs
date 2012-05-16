@@ -26,7 +26,8 @@ namespace DocPlus.Javascript {
 
         void AutoFillMemberOf() {
 
-            string currentNamespace = "window";
+            // 如果启用了作用域模式，则默认为 null，全局成员已经被标记为 window 成员。
+            string currentNamespace = _parser.Project.EnableClosure ? null : "window";
             bool currentNamespaceIsClass = false;
 
             for(int i = 0; i < _docCommentMap.Length; i++) {
@@ -34,40 +35,66 @@ namespace DocPlus.Javascript {
                 DocComment dc = _docCommentMap[i];
 
                 string memberType = dc.MemberType;
+                bool isType = false;
 
-                if(memberType == "Class"){
+                if (dc.NamespaceSetter != null) {
+                    if (dc.NamespaceSetter.Length == 0) {
+                        currentNamespace = dc.FullName;
+                    } else {
+                        currentNamespace = dc.NamespaceSetter;
+                    }
+                    currentNamespaceIsClass = false;
+                }else if(memberType == "class"){
                     currentNamespace = dc.FullName;
                     currentNamespaceIsClass = !dc.IsStatic;
-                } else if(memberType == "Enum" || memberType == "Interface" || memberType == "Namespace"){
+                    isType = true;
+                } else if (memberType == "enum" || memberType == "interface") {
                     currentNamespace = dc.FullName;
                     currentNamespaceIsClass = false;
+                    isType = true;
 
-                // 只有不存在 MemberOf 的时候才填充。
-                } else if(dc.MemberOf == null){
-                    if(currentNamespaceIsClass) {
-                        if(dc.IsStatic) {
-                            dc.MemberOf = currentNamespace;
+                    // 只有不存在 MemberOf 的时候才填充。
+                } else {
+                    if (memberType == "member") {
+                        if (dc.Type == "Function" || dc[NodeNames.Param] != null || dc[NodeNames.Return] != null) {
+                            dc.MemberType = memberType = "method";
                         } else {
-                            dc.MemberOf = currentNamespace + ".prototype";
+                            dc.MemberType = memberType = "field";
                         }
-                    } else {
-                        dc.MemberOf = currentNamespace;
+                    }
+
+                    if (dc.MemberOf == null) {
+                        string parentNamspace = currentNamespace;
+                        bool parentIsClass = currentNamespaceIsClass;
+                        if (dc.Parent != null) {
+                            parentNamspace = dc.Parent.FullName;
+                            parentIsClass = dc.Parent.MemberType == "class";
+                        } 
+                        
+                        if (parentIsClass) {
+                            if (dc.IsStatic) {
+                                dc.MemberOf = parentNamspace;
+                            } else {
+                                dc.MemberOf = parentNamspace + ".prototype";
+                            }
+                        } else {
+                            dc.MemberOf = parentNamspace;
+                        }
                     }
                 }
 
-            }
 
+                if (dc.Name != null) {
 
-        }
+                    if (isType || !String.IsNullOrEmpty(dc.MemberOf)) {
+                        _parser.Data.DocComments[dc.FullName] = dc;
+                    }
 
-        void SubmitDocComments() {
-            
-
-            foreach(DocComment dc in _docCommentMap){
-                if(dc.MemberOf != null) {
-                    _parser.Data.DocComments[dc.FullName] = dc;
                 }
+
+
             }
+
 
         }
 
@@ -83,9 +110,6 @@ namespace DocPlus.Javascript {
             foreach(string t in _parser.Ignores) {
                 _parser.Data.DocComments.Remove(t);
             }
-
-
-            SubmitDocComments();
         }
     }
 }

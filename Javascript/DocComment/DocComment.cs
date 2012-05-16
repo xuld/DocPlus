@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.Specialized;
 using CorePlus.Parser.Javascript;
+using System.Text;
 
 namespace DocPlus.Javascript {
 
@@ -157,8 +158,26 @@ namespace DocPlus.Javascript {
 
         #endregion
 
+        /// <summary>
+        /// 返回表示当前 <see cref="T:System.Object"/> 的 <see cref="T:System.String"/>。
+        /// </summary>
+        /// <returns>
+        /// 	<see cref="T:System.String"/>，表示当前的 <see cref="T:System.Object"/>。
+        /// </returns>
+        public override string ToString() {
+            StringBuilder sb = new StringBuilder();
+            foreach (string key in this) {
+                sb.Append('@');
+                sb.Append(key);
+                sb.Append(' ');
+                sb.Append(this[key]);
+                sb.AppendLine();
+            }
 
-        public object MemberOf {
+            return sb.ToString();
+        }
+
+        public string MemberOf {
             get {
                 return (string)this[NodeNames.MemberOf];
             }
@@ -196,6 +215,8 @@ namespace DocPlus.Javascript {
         }
 
         public string NamespaceSetter { get; set; }
+
+        public DocComment Parent { get; set; }
 
         public bool Ignore { get; set; }
     }
