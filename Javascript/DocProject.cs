@@ -138,11 +138,6 @@ namespace DocPlus.Javascript {
             set;
         }
 
-        internal string CurrentFile {
-            get;
-            set;
-        }
-
         #endregion
 
         #region DocAstVistor
@@ -210,21 +205,12 @@ namespace DocPlus.Javascript {
         #endregion
 
         /// <summary>
-        /// 获取合并时需要忽略的成员名的集合。
-        /// </summary>
-        public List<string> Ignores {
-            get;
-            private set;
-        }
-
-        /// <summary>
         /// 初始化 <see cref="DocPlus.Javascript.DocProject"/> 类的新实例。
         /// </summary>
         public DocProject() {
             NewLine = Environment.NewLine;
             EnableClosure = AutoCreateFunctionParam = EnableAutoCreateComment = UseNamingRules = true;
             OpenIfSuccess = true;
-            Ignores = new List<string>();
         }
 
         /// <summary>
@@ -244,11 +230,6 @@ namespace DocPlus.Javascript {
                 } else {
                     parser.ParseFile(name);
                 }
-            }
-
-            // 应用忽略列表。
-            foreach (string t in Ignores) {
-                parser.Data.Variants.Remove(t);
             }
 
             return parser.Data;

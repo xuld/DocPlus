@@ -1,0 +1,2863 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ApiDoc</name>
+    </assembly>
+    <members>
+        <member name="T:DocPlus.ApiDoc.SeeAlso">
+            <summary>
+            表示一个参考。
+            </summary>
+        </member>
+        <member name="T:DocPlus.ApiDoc.Cref">
+            <summary>
+            表示一个可链接的元素。
+            </summary>
+        </member>
+        <member name="T:DocPlus.ApiDoc.Node">
+            <summary>
+            表示文档的一个节点。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Node.ReadAttributes(DocPlus.ApiDoc.DocReader)">
+            <summary>
+            当被子类重写时，实现读取一个节点的所有属性。
+            </summary>
+            <param name="reader">一个 <see cref="T:DocPlus.ApiDoc.DocReader"/> 实例，表示读取的目标。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Node.ReadChildNodes(DocPlus.ApiDoc.DocReader)">
+            <summary>
+            当被子类重写时，实现读取一个节点的子节点。
+            </summary>
+            <param name="reader">一个 <see cref="T:DocPlus.ApiDoc.DocReader"/> 实例，表示读取的目标。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Node.WriteAttributes(DocPlus.ApiDoc.DocWriter)">
+            <summary>
+            当被子类重写时，实现写入一个节点所有属性。
+            </summary>
+            <param name="writer">一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例，表示写入的目标。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Node.WriteChildNodes(DocPlus.ApiDoc.DocWriter)">
+            <summary>
+            当被子类重写时，实现写入一个节点的子节点。
+            </summary>
+            <param name="writer">一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例，表示写入的目标。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Node.#ctor">
+            <summary>
+            避免创建节点的新类型。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Node.Accept(DocPlus.ApiDoc.INodeVisitor)">
+            <summary>
+            使用一个 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 访问当前节点，并返回一个字符串。
+            </summary>
+            <param name="visitor">一个实现了 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 接口的类实例，表示一个访问工具。</param>
+            <returns>一个字符串，表示访问后的结果描述。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Node.Read(DocPlus.ApiDoc.DocReader)">
+            <summary>
+            从一个 <see cref="T:DocPlus.ApiDoc.DocReader"/> 实例读取读取当前节点的全部数据。
+            </summary>
+            <param name="reader">一个 <see cref="T:DocPlus.ApiDoc.DocReader"/> 实例，表示读取的目标。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Node.Write(DocPlus.ApiDoc.DocWriter)">
+            <summary>
+            写入当前节点的数据到一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例。
+            </summary>
+            <param name="writer">一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例，表示写入的目标。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Node.CloneNode">
+            <summary>
+            创建并返回当前节点的副本。
+            </summary>
+            <returns>新创建的节点的实例，该节点包含的信息和原节点相同。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Node.ToString">
+            <summary>
+            返回表示当前 <see cref="T:System.Object"/> 的 <see cref="T:System.String"/>。
+            </summary>
+            <returns>
+            	<see cref="T:System.String"/>，表示当前的 <see cref="T:System.Object"/>。
+            </returns>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Node.NodeName">
+            <summary>
+            获取当前节点的名字。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Node.OwnerDocument">
+            <summary>
+            获取当前节点的所在文档。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Cref.#ctor">
+            <summary>
+            初始化 <see cref="T:DocPlus.ApiDoc.Cref"/> 的新实例。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Cref.ReadAttributes(DocPlus.ApiDoc.DocReader)">
+            <summary>
+            当被子类重写时，实现读取一个节点的所有属性。
+            </summary>
+            <param name="reader">一个 <see cref="T:DocPlus.ApiDoc.DocReader"/> 实例，表示读取的目标。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Cref.ReadChildNodes(DocPlus.ApiDoc.DocReader)">
+            <summary>
+            当被子类重写时，实现读取一个节点的子节点。
+            </summary>
+            <param name="reader">一个 <see cref="T:DocPlus.ApiDoc.DocReader"/> 实例，表示读取的目标。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Cref.WriteAttributes(DocPlus.ApiDoc.DocWriter)">
+            <summary>
+            当被子类重写时，实现写入一个节点所有属性。
+            </summary>
+            <param name="writer">一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例，表示写入的目标。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Cref.WriteChildNodes(DocPlus.ApiDoc.DocWriter)">
+            <summary>
+            当被子类重写时，实现写入一个节点的子节点。
+            </summary>
+            <param name="writer">一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例，表示写入的目标。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Cref.ToString">
+            <summary>
+            返回表示当前 <see cref="T:System.Object"/> 的 <see cref="T:System.String"/>。
+            </summary>
+            <returns>
+            	<see cref="T:System.String"/>，表示当前的 <see cref="T:System.Object"/>。
+            </returns>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Cref.Text">
+            <summary>
+            获取或设置当前文本。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Cref.Href">
+            <summary>
+            获取或设置链接地址。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.SeeAlso.#ctor">
+            <summary>
+            初始化 <see cref="T:DocPlus.ApiDoc.SeeAlso"/> 的新实例。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.SeeAlso.Accept(DocPlus.ApiDoc.INodeVisitor)">
+            <summary>
+            使用一个 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 访问当前节点，并返回一个字符串。
+            </summary>
+            <param name="visitor">一个实现了 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 接口的类实例，表示一个访问工具。</param>
+            <returns>一个字符串，表示访问后的结果描述。</returns>
+        </member>
+        <member name="P:DocPlus.ApiDoc.SeeAlso.NodeName">
+            <summary>
+            获取当前节点的名字。
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:DocPlus.ApiDoc.ParamOrReturn">
+            <summary>
+            表示一个参数或返回说明节点。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.ParamOrReturn.#ctor">
+            <summary>
+            初始化 <see cref="T:DocPlus.ApiDoc.ParamOrReturn"/> 的新实例。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.ParamOrReturn.ReadAttributes(DocPlus.ApiDoc.DocReader)">
+            <summary>
+            当被子类重写时，实现读取一个节。
+            </summary>
+            <param name="reader">读取工具。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.ParamOrReturn.ReadChildNodes(DocPlus.ApiDoc.DocReader)">
+            <summary>
+            当被子类重写时，实现读取一个节点的子节点。
+            </summary>
+            <param name="reader">一个 <see cref="T:DocPlus.ApiDoc.DocReader"/> 实例，表示读取的目标。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.ParamOrReturn.WriteAttributes(DocPlus.ApiDoc.DocWriter)">
+            <summary>
+            当被子类重写时，实现写入一个节点。
+            </summary>
+            <param name="writer">写入工具。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.ParamOrReturn.WriteChildNodes(DocPlus.ApiDoc.DocWriter)">
+            <summary>
+            当被子类重写时，实现写入一个节点的子节点。
+            </summary>
+            <param name="writer">一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例，表示写入的目标。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.ParamOrReturn.ToString">
+            <summary>
+            返回表示当前 <see cref="T:System.Object"/> 的 <see cref="T:System.String"/>。
+            </summary>
+            <returns>
+            	<see cref="T:System.String"/>，表示当前的 <see cref="T:System.Object"/>。
+            </returns>
+        </member>
+        <member name="P:DocPlus.ApiDoc.ParamOrReturn.Summary">
+            <summary>
+            获取或设置说明。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.ParamOrReturn.Type">
+            <summary>
+            获取或设置类型。
+            </summary>
+        </member>
+        <member name="T:DocPlus.ApiDoc.Set`1">
+            <summary>
+            表示一个集合。
+            </summary>
+            <typeparam name="T">任何节点。</typeparam>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Set`1.Write(DocPlus.ApiDoc.DocWriter)">
+            <summary>
+            写入全部节点的数据到一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例。
+            </summary>
+            <param name="writer">一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例，表示写入的目标。</param>
+        </member>
+        <member name="T:DocPlus.ApiDoc.RichText">
+            <summary>
+            表示一个富文本。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.RichText.#ctor">
+            <summary>
+            初始化 <see cref="T:DocPlus.ApiDoc.RichText"/> 的新实例。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.RichText.ReadChildNodes(DocPlus.ApiDoc.DocReader)">
+            <summary>
+            当被子类重写时，实现读取一个节点的子节点。
+            </summary>
+            <param name="reader">一个 <see cref="T:DocPlus.ApiDoc.DocReader"/> 实例，表示读取的目标。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.RichText.WriteChildNodes(DocPlus.ApiDoc.DocWriter)">
+            <summary>
+            当被子类重写时，实现写入一个节点的子节点。
+            </summary>
+            <param name="writer">一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例，表示写入的目标。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.RichText.ToString">
+            <summary>
+            返回表示当前 <see cref="T:System.Object"/> 的 <see cref="T:System.String"/>。
+            </summary>
+            <returns>
+            	<see cref="T:System.String"/>，表示当前的 <see cref="T:System.Object"/>。
+            </returns>
+        </member>
+        <member name="P:DocPlus.ApiDoc.RichText.Text">
+            <summary>
+            获取或设置当前文本。
+            </summary>
+        </member>
+        <member name="T:DocPlus.ApiDoc.Param">
+            <summary>
+            表示一个参数。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Param.#ctor">
+            <summary>
+            初始化 <see cref="T:DocPlus.ApiDoc.Param"/> 的新实例。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Param.ReadAttributes(DocPlus.ApiDoc.DocReader)">
+            <summary>
+            当被子类重写时，实现读取一个节。
+            </summary>
+            <param name="reader">读取工具。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Param.WriteAttributes(DocPlus.ApiDoc.DocWriter)">
+            <summary>
+            当被子类重写时，实现写入一个节点。
+            </summary>
+            <param name="writer">写入工具。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Param.Accept(DocPlus.ApiDoc.INodeVisitor)">
+            <summary>
+            使用一个 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 访问当前节点，并返回一个字符串。
+            </summary>
+            <param name="visitor">一个实现了 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 接口的类实例，表示一个访问工具。</param>
+            <returns>一个字符串，表示访问后的结果描述。</returns>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Param.NodeName">
+            <summary>
+            获取当前节点的名字。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Param.Name">
+            <summary>
+            获取或设置名字。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Param.DefaultValue">
+            <summary>
+            获取或设置默认值。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Param.IsOptional">
+            <summary>
+            获取或设置此参数是否有默认。
+            </summary>
+        </member>
+        <member name="T:DocPlus.ApiDoc.Example">
+            <summary>
+            表示备注。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Example.#ctor">
+            <summary>
+            初始化 <see cref="T:DocPlus.ApiDoc.Summary"/> 的新实例。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Example.Accept(DocPlus.ApiDoc.INodeVisitor)">
+            <summary>
+            使用一个 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 访问当前节点，并返回一个字符串。
+            </summary>
+            <param name="visitor">一个实现了 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 接口的类实例，表示一个访问工具。</param>
+            <returns>一个字符串，表示访问后的结果描述。</returns>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Example.NodeName">
+            <summary>
+            获取当前节点的名字。
+            </summary>
+        </member>
+        <member name="T:DocPlus.ApiDoc.Struct">
+            <summary>
+            表示一个结构。
+            </summary>
+        </member>
+        <member name="T:DocPlus.ApiDoc.StructOrClass">
+            <summary>
+            表示结构或类。
+            </summary>
+        </member>
+        <member name="T:DocPlus.ApiDoc.Type">
+            <summary>
+            表示一个类型的成员。如类，结构等。
+            </summary>
+        </member>
+        <member name="T:DocPlus.ApiDoc.Member">
+            <summary>
+            表示一个成员。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Member.#ctor">
+            <summary>
+            初始化 <see cref="T:DocPlus.ApiDoc.Member"/> 的新实例。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Member.GetMemberByName(System.String)">
+            <summary>
+            获取子成员。
+            </summary>
+            <param name="ns">成员的名字，成员之间的关系使用"."隔开，如 System.Data。</param>
+            <returns>成员。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Member.ReadAttributes(DocPlus.ApiDoc.DocReader)">
+            <summary>
+            当遇到读取函数无法处理的节点时，运行本函数。
+            </summary>
+            <param name="reader">读取器。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Member.ReadChildNode(DocPlus.ApiDoc.DocReader)">
+            <summary>
+            当被子类重写时，实现读取一个节点的一个子节点。
+            </summary>
+            <param name="reader">一个 <see cref="T:DocPlus.ApiDoc.DocReader"/> 实例，表示读取的目标。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Member.ReadChildNodes(DocPlus.ApiDoc.DocReader)">
+            <summary>
+            当被子类重写时，实现读取一个节点的子节点。
+            </summary>
+            <param name="reader">一个 <see cref="T:DocPlus.ApiDoc.DocReader"/> 实例，表示读取的目标。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Member.WriteAttributes(DocPlus.ApiDoc.DocWriter)">
+            <summary>
+            写入 Member 所有的成员到一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例。
+            </summary>
+            <param name="writer">一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Member.WriteChildNodes(DocPlus.ApiDoc.DocWriter)">
+            <summary>
+            当被子类重写时，实现写入一个节点的子节点。
+            </summary>
+            <param name="writer">一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例，表示写入的目标。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Member.ToString">
+            <summary>
+            返回表示当前 <see cref="T:System.Object"/> 的 <see cref="T:System.String"/>。
+            </summary>
+            <returns>
+            	<see cref="T:System.String"/>，表示当前的 <see cref="T:System.Object"/>。
+            </returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Member.TryRead(DocPlus.ApiDoc.Document,DocPlus.ApiDoc.DocReader)">
+            <summary>
+            尝试读取一个成员。
+            </summary>
+            <param name="ownerDocument">定义属于的文档。</param>
+            <param name="reader">读取器。</param>
+            <returns>如果读到了，则返回 true。否则返回 false 。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Member.CompareTo(DocPlus.ApiDoc.Member)">
+            <summary>
+            比较两个成员。
+            </summary>
+            <param name="other">成员。</param>
+            <returns>差别。</returns>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Member.Name">
+            <summary>
+            获取或设置名字。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Member.MemberAccess">
+            <summary>
+            获取或设置成员的访问修饰符。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Member.MemberAttribute">
+            <summary>
+            获取或设置成员的属性。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Member.Deprecated">
+            <summary>
+            获取或设置过时的版本。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Member.Since">
+            <summary>
+            获取或设置从某版本开始可用。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Member.Ignore">
+            <summary>
+            获取或设置是否忽略此成员。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Member.Id">
+            <summary>
+            获取或设置成员的号。
+            </summary>
+            <remarks>
+            这个序号为了支持 Link 找到此成员。
+            默认 Id 为 -1。
+            </remarks>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Member.SourceId">
+            <summary>
+            获取或设置当前成员的源文件。
+            </summary>
+            <value>如果不存在于任何源文件，则值为 null。</value>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Member.PlatformId">
+            <summary>
+            获取或设置当前成员的支持平台。
+            </summary>
+            <value>默认 0。否则是平台 ID 的位或结果。</value>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Member.Source">
+            <summary>
+            获取或设置当前成员的源。
+            </summary>
+            <value>如果不存在于任何源，则值为 null。</value>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Member.SourceLine">
+            <summary>
+            获取或设置当前成员在源文件的行号。
+            </summary>
+            <value>如果不存在于任何源文件，则值为 -1。</value>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Member.Popularity">
+            <summary>
+            获取或设置当前成员受欢迎程度。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Member.Category">
+            <summary>
+            获取或设置成员的类别。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Member.Summary">
+            <summary>
+            获取或设置说明。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Member.Syntax">
+            <summary>
+            获取或设置语法。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Member.Remark">
+            <summary>
+            获取或设置备注。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Member.Example">
+            <summary>
+            获取或设置示例。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Member.See">
+            <summary>
+            获取或设置参考。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Member.SeeAlso">
+            <summary>
+            获取或设置另参考。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Member.Parent">
+            <summary>
+            获取或设置包含此成员的集合。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Member.IsStatic">
+            <summary>
+            获取或设置一个值，该值指示当前成员是否是静态成员。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Member.FullName">
+            <summary>
+            获取当前成员的全名。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Type.#ctor">
+            <summary>
+            初始化 <see cref="T:DocPlus.ApiDoc.Type"/> 的新实例。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Type.ReadChildNode(DocPlus.ApiDoc.DocReader)">
+            <summary>
+            当被子类重写时，实现读取一个节点的一个子节点。
+            </summary>
+            <param name="reader">一个 <see cref="T:DocPlus.ApiDoc.DocReader"/> 实例，表示读取的目标。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Type.WriteChildNodes(DocPlus.ApiDoc.DocWriter)">
+            <summary>
+            写入到一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例。
+            </summary>
+            <param name="writer">一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Type.GetMembers(System.Boolean,System.Boolean)">
+            <summary>
+            获取当前类型的全部成员。
+            </summary>
+            <param name="includeExtends">是否包含继承的成员。</param>
+            <param name="allowDumps">是否允许重名的成员。</param>
+            <returns>集合的成员。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Type.GetEnumerator">
+            <summary>
+            返回一个循环访问集合的枚举数。
+            </summary>
+            <returns>
+            可用于循环访问集合的 <see cref="T:System.Collections.IEnumerator"/> 对象。
+            </returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Type.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            返回一个循环访问集合的枚举数。
+            </summary>
+            <returns>
+            可用于循环访问集合的 <see cref="T:System.Collections.IEnumerator"/> 对象。
+            </returns>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Type.Extends">
+            <summary>
+            获取当前类型的所有继承类。
+            </summary>
+        </member>
+        <member name="T:DocPlus.ApiDoc.IMemberConatiner">
+            <summary>
+            表示父成员。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.IMemberConatiner.GetMemberByName(System.String)">
+            <summary>
+            获取指定表达式的成员。
+            </summary>
+            <param name="ns">名字。</param>
+            <returns>成员。</returns>
+        </member>
+        <member name="P:DocPlus.ApiDoc.IMemberConatiner.Name">
+            <summary>
+            获取当前成员的名字。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.IMemberConatiner.FullName">
+            <summary>
+            获取当前成员的全名。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.IMemberConatiner.Members">
+            <summary>
+            获取当前成员下的全部成员。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.StructOrClass.#ctor">
+            <summary>
+            初始化 <see cref="T:DocPlus.ApiDoc.StructOrClass"/> 的新实例。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.StructOrClass.ReadChildNode(DocPlus.ApiDoc.DocReader)">
+            <summary>
+            当遇到读取函数无法处理的节点时，运行本函数。
+            </summary>
+            <param name="reader">读取器。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.StructOrClass.WriteChildNodes(DocPlus.ApiDoc.DocWriter)">
+            <summary>
+            写入到一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例。
+            </summary>
+            <param name="writer">一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.StructOrClass.GetEnumerator">
+            <summary>
+            返回一个循环访问集合的枚举数。
+            </summary>
+            <returns>
+            可用于循环访问集合的 <see cref="T:System.Collections.IEnumerator"/> 对象。
+            </returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.StructOrClass.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            返回一个循环访问集合的枚举数。
+            </summary>
+            <returns>
+            可用于循环访问集合的 <see cref="T:System.Collections.IEnumerator"/> 对象。
+            </returns>
+        </member>
+        <member name="P:DocPlus.ApiDoc.StructOrClass.Members">
+            <summary>
+            获取全部成员。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.StructOrClass.Constructors">
+            <summary>
+            获取构造函数。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Struct.#ctor">
+            <summary>
+            初始化 <see cref="T:DocPlus.ApiDoc.Struct"/> 的新实例。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Struct.Accept(DocPlus.ApiDoc.INodeVisitor)">
+            <summary>
+            使用一个 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 访问当前节点，并返回一个字符串。
+            </summary>
+            <param name="visitor">一个实现了 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 接口的类实例，表示一个访问工具。</param>
+            <returns>一个字符串，表示访问后的结果描述。</returns>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Struct.NodeName">
+            <summary>
+            获取当前节点的名字。
+            </summary>
+        </member>
+        <member name="T:DocPlus.ApiDoc.Interface">
+            <summary>
+            表示接口。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Interface.#ctor">
+            <summary>
+            初始化 <see cref="T:DocPlus.ApiDoc.Interface"/> 的新实例。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Interface.Accept(DocPlus.ApiDoc.INodeVisitor)">
+            <summary>
+            使用一个 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 访问当前节点，并返回一个字符串。
+            </summary>
+            <param name="visitor">一个实现了 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 接口的类实例，表示一个访问工具。</param>
+            <returns>一个字符串，表示访问后的结果描述。</returns>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Interface.NodeName">
+            <summary>
+            获取当前节点的名字。
+            </summary>
+        </member>
+        <member name="T:DocPlus.ApiDoc.Event">
+            <summary>
+            表示一个事件。
+            </summary>
+        </member>
+        <member name="T:DocPlus.ApiDoc.Method">
+            <summary>
+            表示方法。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Method.#ctor">
+            <summary>
+            初始化 <see cref="T:DocPlus.ApiDoc.Method"/> 的新实例。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Method.ReadChildNode(DocPlus.ApiDoc.DocReader)">
+            <summary>
+            当遇到读取函数无法处理的节点时，运行本函数。
+            </summary>
+            <param name="reader">读取器。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Method.WriteChildNodes(DocPlus.ApiDoc.DocWriter)">
+            <summary>
+            写入到一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例。
+            </summary>
+            <param name="writer">一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Method.Accept(DocPlus.ApiDoc.INodeVisitor)">
+            <summary>
+            使用一个 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 访问当前节点，并返回一个字符串。
+            </summary>
+            <param name="visitor">一个实现了 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 接口的类实例，表示一个访问工具。</param>
+            <returns>一个字符串，表示访问后的结果描述。</returns>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Method.NodeName">
+            <summary>
+            获取当前节点的名字。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Method.Returns">
+            <summary>
+            获取或设置返回值。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Method.Exceptions">
+            <summary>
+            获取或设置可引发的异常。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Method.Params">
+            <summary>
+            获取当前方法的全部参数。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Event.#ctor">
+            <summary>
+            初始化 <see cref="T:DocPlus.ApiDoc.Event"/> 的新实例。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Event.Accept(DocPlus.ApiDoc.INodeVisitor)">
+            <summary>
+            使用一个 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 访问当前节点，并返回一个字符串。
+            </summary>
+            <param name="visitor">一个实现了 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 接口的类实例，表示一个访问工具。</param>
+            <returns>一个字符串，表示访问后的结果描述。</returns>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Event.NodeName">
+            <summary>
+            获取当前节点的名字。
+            </summary>
+        </member>
+        <member name="T:DocPlus.ApiDoc.Summary">
+            <summary>
+            表示备注。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Summary.#ctor">
+            <summary>
+            初始化 <see cref="T:DocPlus.ApiDoc.Summary"/> 的新实例。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Summary.Accept(DocPlus.ApiDoc.INodeVisitor)">
+            <summary>
+            把成员渲染至文档渲染工具。
+            </summary>
+            <param name="visitor">渲染工具。</param>
+            <returns>结果。</returns>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Summary.NodeName">
+            <summary>
+            获取当前节点的名字。
+            </summary>
+        </member>
+        <member name="T:DocPlus.ApiDoc.MemberAccess">
+            <summary>
+            成员的访问修饰符。
+            </summary>
+        </member>
+        <member name="F:DocPlus.ApiDoc.MemberAccess.Default">
+            <summary>
+            默认。
+            </summary>
+        </member>
+        <member name="F:DocPlus.ApiDoc.MemberAccess.Public">
+            <summary>
+            公开。
+            </summary>
+        </member>
+        <member name="F:DocPlus.ApiDoc.MemberAccess.Protected">
+            <summary>
+            保护。
+            </summary>
+        </member>
+        <member name="F:DocPlus.ApiDoc.MemberAccess.Private">
+            <summary>
+            私有。
+            </summary>
+        </member>
+        <member name="F:DocPlus.ApiDoc.MemberAccess.Internal">
+            <summary>
+            内部。
+            </summary>
+        </member>
+        <member name="F:DocPlus.ApiDoc.MemberAccess.ProtectedInternal">
+            <summary>
+            保护内部。
+            </summary>
+        </member>
+        <member name="F:DocPlus.ApiDoc.MemberAccess.Namespace">
+            <summary>
+            在指定的名字空间访问。
+            </summary>
+        </member>
+        <member name="F:DocPlus.ApiDoc.MemberAccess.Package">
+            <summary>
+            包。
+            </summary>
+        </member>
+        <member name="T:DocPlus.ApiDoc.Url">
+            <summary>
+            用于文档内跳转的链接。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Url.#ctor">
+            <summary>
+            初始化 <see cref="T:DocPlus.ApiDoc.Url"/> 的新实例。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Url.#ctor(System.String)">
+            <summary>
+            初始化 <see cref="T:DocPlus.ApiDoc.Url"/> 的新实例。
+            </summary>
+            <param name="cref">源字符串。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Url.ToString">
+            <summary>
+            返回表示当前 <see cref="T:System.Object"/> 的 <see cref="T:System.String"/>。
+            </summary>
+            <returns>
+            	<see cref="T:System.String"/>，表示当前的 <see cref="T:System.Object"/>。
+            </returns>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Url.RawUrl">
+            <summary>
+            获取或设置当前地址的源字符串。
+            </summary>
+        </member>
+        <member name="T:DocPlus.ApiDoc.Return">
+            <summary>
+            表示一个返回说明节点。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Return.#ctor">
+            <summary>
+            初始化 <see cref="T:DocPlus.ApiDoc.Return"/> 的新实例。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Return.Accept(DocPlus.ApiDoc.INodeVisitor)">
+            <summary>
+            使用一个 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 访问当前节点，并返回一个字符串。
+            </summary>
+            <param name="visitor">一个实现了 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 接口的类实例，表示一个访问工具。</param>
+            <returns>一个字符串，表示访问后的结果描述。</returns>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Return.NodeName">
+            <summary>
+            获取当前节点的名字。
+            </summary>
+        </member>
+        <member name="T:DocPlus.ApiDoc.INodeVisitor">
+            <summary>
+            节点树遍历工具所必须支持的方法接口。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.INodeVisitor.VisitClass(DocPlus.ApiDoc.Class)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Class"/> 实例。
+            </summary>
+            <param name="class">要访问的 <see cref="T:DocPlus.ApiDoc.Class"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.INodeVisitor.VisitConfig(DocPlus.ApiDoc.Config)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Config"/> 实例。
+            </summary>
+            <param name="config">要访问的 <see cref="T:DocPlus.ApiDoc.Config"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.INodeVisitor.VisitConstructor(DocPlus.ApiDoc.Constructor)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Constructor"/> 实例。
+            </summary>
+            <param name="constructor">要访问的 <see cref="T:DocPlus.ApiDoc.Constructor"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.INodeVisitor.VisitDelegate(DocPlus.ApiDoc.Delegate)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Delegate"/> 实例。
+            </summary>
+            <param name="delegate">要访问的 <see cref="T:DocPlus.ApiDoc.Delegate"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.INodeVisitor.VisitDocument(DocPlus.ApiDoc.Document)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Document"/> 实例。
+            </summary>
+            <param name="document">要访问的 <see cref="T:DocPlus.ApiDoc.Document"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.INodeVisitor.VisitDynatic(DocPlus.ApiDoc.Dynatic)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Dynatic"/> 实例。
+            </summary>
+            <param name="dynatic">要访问的 <see cref="T:DocPlus.ApiDoc.Dynatic"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.INodeVisitor.VisitEnum(DocPlus.ApiDoc.Enum)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Enum"/> 实例。
+            </summary>
+            <param name="enum">要访问的 <see cref="T:DocPlus.ApiDoc.Enum"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.INodeVisitor.VisitEnumMember(DocPlus.ApiDoc.EnumMember)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.EnumMember"/> 实例。
+            </summary>
+            <param name="enumMember">要访问的 <see cref="T:DocPlus.ApiDoc.EnumMember"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.INodeVisitor.VisitEvent(DocPlus.ApiDoc.Event)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Event"/> 实例。
+            </summary>
+            <param name="event">要访问的 <see cref="T:DocPlus.ApiDoc.Event"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.INodeVisitor.VisitExample(DocPlus.ApiDoc.Example)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Example"/> 实例。
+            </summary>
+            <param name="example">要访问的 <see cref="T:DocPlus.ApiDoc.Example"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.INodeVisitor.VisitException(DocPlus.ApiDoc.Exception)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Exception"/> 实例。
+            </summary>
+            <param name="exception">要访问的 <see cref="T:DocPlus.ApiDoc.Exception"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.INodeVisitor.VisitExtends(DocPlus.ApiDoc.Extends)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Extends"/> 实例。
+            </summary>
+            <param name="extends">要访问的 <see cref="T:DocPlus.ApiDoc.Extends"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.INodeVisitor.VisitField(DocPlus.ApiDoc.Field)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Field"/> 实例。
+            </summary>
+            <param name="field">要访问的 <see cref="T:DocPlus.ApiDoc.Field"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.INodeVisitor.VisitInterface(DocPlus.ApiDoc.Interface)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Interface"/> 实例。
+            </summary>
+            <param name="interface">要访问的 <see cref="T:DocPlus.ApiDoc.Interface"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.INodeVisitor.VisitLink(DocPlus.ApiDoc.Link)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Link"/> 实例。
+            </summary>
+            <param name="link">要访问的 <see cref="T:DocPlus.ApiDoc.Link"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.INodeVisitor.VisitMethod(DocPlus.ApiDoc.Method)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Method"/> 实例。
+            </summary>
+            <param name="method">要访问的 <see cref="T:DocPlus.ApiDoc.Method"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.INodeVisitor.VisitNamespace(DocPlus.ApiDoc.Namespace)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Namespace"/> 实例。
+            </summary>
+            <param name="namespace">要访问的 <see cref="T:DocPlus.ApiDoc.Namespace"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.INodeVisitor.VisitParam(DocPlus.ApiDoc.Param)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Param"/> 实例。
+            </summary>
+            <param name="param">要访问的 <see cref="T:DocPlus.ApiDoc.Param"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.INodeVisitor.VisitPlatform(DocPlus.ApiDoc.Platform)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Platform"/> 实例。
+            </summary>
+            <param name="platform">要访问的 <see cref="T:DocPlus.ApiDoc.Platform"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.INodeVisitor.VisitProperty(DocPlus.ApiDoc.Property)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Property"/> 实例。
+            </summary>
+            <param name="property">要访问的 <see cref="T:DocPlus.ApiDoc.Property"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.INodeVisitor.VisitRemark(DocPlus.ApiDoc.Remark)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Remark"/> 实例。
+            </summary>
+            <param name="remark">要访问的 <see cref="T:DocPlus.ApiDoc.Remark"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.INodeVisitor.VisitReturn(DocPlus.ApiDoc.Return)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Return"/> 实例。
+            </summary>
+            <param name="return">要访问的 <see cref="T:DocPlus.ApiDoc.Return"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.INodeVisitor.VisitSee(DocPlus.ApiDoc.See)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.See"/> 实例。
+            </summary>
+            <param name="see">要访问的 <see cref="T:DocPlus.ApiDoc.See"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.INodeVisitor.VisitSeeAlso(DocPlus.ApiDoc.SeeAlso)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.SeeAlso"/> 实例。
+            </summary>
+            <param name="seeAlso">要访问的 <see cref="T:DocPlus.ApiDoc.SeeAlso"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.INodeVisitor.VisitSource(DocPlus.ApiDoc.Source)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Source"/> 实例。
+            </summary>
+            <param name="source">要访问的 <see cref="T:DocPlus.ApiDoc.Source"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.INodeVisitor.VisitStruct(DocPlus.ApiDoc.Struct)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Struct"/> 实例。
+            </summary>
+            <param name="struct">要访问的 <see cref="T:DocPlus.ApiDoc.Struct"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.INodeVisitor.VisitSummary(DocPlus.ApiDoc.Summary)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Summary"/> 实例。
+            </summary>
+            <param name="summary">要访问的 <see cref="T:DocPlus.ApiDoc.Summary"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.INodeVisitor.VisitSyntax(DocPlus.ApiDoc.Syntax)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Syntax"/> 实例。
+            </summary>
+            <param name="syntax">要访问的 <see cref="T:DocPlus.ApiDoc.Syntax"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="T:DocPlus.ApiDoc.Property">
+            <summary>
+            表示属性。
+            </summary>
+        </member>
+        <member name="T:DocPlus.ApiDoc.Field">
+            <summary>
+            表示一个字段。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Field.#ctor">
+            <summary>
+            初始化 <see cref="T:DocPlus.ApiDoc.Field"/> 的新实例。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Field.ReadAttributes(DocPlus.ApiDoc.DocReader)">
+            <summary>
+            当被子类重写时，实现读取一个节。
+            </summary>
+            <param name="reader">读取工具。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Field.WriteAttributes(DocPlus.ApiDoc.DocWriter)">
+            <summary>
+            写入到一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例。
+            </summary>
+            <param name="writer">一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Field.Accept(DocPlus.ApiDoc.INodeVisitor)">
+            <summary>
+            使用一个 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 访问当前节点，并返回一个字符串。
+            </summary>
+            <param name="visitor">一个实现了 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 接口的类实例，表示一个访问工具。</param>
+            <returns>一个字符串，表示访问后的结果描述。</returns>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Field.NodeName">
+            <summary>
+            获取当前节点的名字。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Field.Type">
+            <summary>
+            获取或设置类型。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Field.DefaultValue">
+            <summary>
+            获取或设置字段的默认值。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Property.#ctor">
+            <summary>
+            初始化 <see cref="T:DocPlus.ApiDoc.Property"/> 的新实例。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Property.ReadAttributes(DocPlus.ApiDoc.DocReader)">
+            <summary>
+            当被子类重写时，实现读取一个节。
+            </summary>
+            <param name="reader">读取工具。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Property.WriteAttributes(DocPlus.ApiDoc.DocWriter)">
+            <summary>
+            写入到一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例。
+            </summary>
+            <param name="writer">一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Property.WriteChildNodes(DocPlus.ApiDoc.DocWriter)">
+            <summary>
+            当被子类重写时，实现写入一个节点的子节点。
+            </summary>
+            <param name="writer">一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例，表示写入的目标。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Property.Accept(DocPlus.ApiDoc.INodeVisitor)">
+            <summary>
+            把成员渲染至文档渲染工具。
+            </summary>
+            <param name="visitor">渲染工具。</param>
+            <returns>结果。</returns>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Property.NodeName">
+            <summary>
+            获取当前节点的名字。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Property.Exceptions">
+            <summary>
+            获取或设置可引发的异常。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Property.PropertyAccess">
+            <summary>
+            获取或设置成员类型。
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:DocPlus.ApiDoc.Enum">
+            <summary>
+            表示一个枚举。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Enum.#ctor">
+            <summary>
+            初始化 <see cref="T:DocPlus.ApiDoc.Enum"/> 的新实例。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Enum.ReadChildNode(DocPlus.ApiDoc.DocReader)">
+            <summary>
+            当遇到读取函数无法处理的节点时，运行本函数。
+            </summary>
+            <param name="reader">读取器。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Enum.WriteChildNodes(DocPlus.ApiDoc.DocWriter)">
+            <summary>
+            写入到一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例。
+            </summary>
+            <param name="writer">一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Enum.Accept(DocPlus.ApiDoc.INodeVisitor)">
+            <summary>
+            使用一个 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 访问当前节点，并返回一个字符串。
+            </summary>
+            <param name="visitor">一个实现了 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 接口的类实例，表示一个访问工具。</param>
+            <returns>一个字符串，表示访问后的结果描述。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Enum.GetEnumerator">
+            <summary>
+            返回一个循环访问集合的枚举数。
+            </summary>
+            <returns>
+            可用于循环访问集合的 <see cref="T:System.Collections.IEnumerator"/> 对象。
+            </returns>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Enum.NodeName">
+            <summary>
+            获取当前节点的名字。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Enum.Members">
+            <summary>
+            获取全部成员。
+            </summary>
+        </member>
+        <member name="T:DocPlus.ApiDoc.Exception">
+            <summary>
+            表示一个异常。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Exception.#ctor">
+            <summary>
+            初始化 <see cref="T:DocPlus.ApiDoc.Exception"/> 的新实例。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Exception.Accept(DocPlus.ApiDoc.INodeVisitor)">
+            <summary>
+            使用一个 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 访问当前节点，并返回一个字符串。
+            </summary>
+            <param name="visitor">一个实现了 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 接口的类实例，表示一个访问工具。</param>
+            <returns>一个字符串，表示访问后的结果描述。</returns>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Exception.NodeName">
+            <summary>
+            获取当前节点的名字。
+            </summary>
+        </member>
+        <member name="T:DocPlus.ApiDoc.Constructor">
+            <summary>
+            表示一个构造函数。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Constructor.#ctor">
+            <summary>
+            初始化 <see cref="T:DocPlus.ApiDoc.Constructor"/> 的新实例。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Constructor.Accept(DocPlus.ApiDoc.INodeVisitor)">
+            <summary>
+            使用一个 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 访问当前节点，并返回一个字符串。
+            </summary>
+            <param name="visitor">一个实现了 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 接口的类实例，表示一个访问工具。</param>
+            <returns>一个字符串，表示访问后的结果描述。</returns>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Constructor.NodeName">
+            <summary>
+            获取当前节点的名字。
+            </summary>
+        </member>
+        <member name="T:DocPlus.ApiDoc.Remark">
+            <summary>
+            表示备注。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Remark.#ctor">
+            <summary>
+            初始化 <see cref="T:DocPlus.ApiDoc.Remark"/> 的新实例。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Remark.Accept(DocPlus.ApiDoc.INodeVisitor)">
+            <summary>
+            使用一个 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 访问当前节点，并返回一个字符串。
+            </summary>
+            <param name="visitor">一个实现了 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 接口的类实例，表示一个访问工具。</param>
+            <returns>一个字符串，表示访问后的结果描述。</returns>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Remark.NodeName">
+            <summary>
+            获取当前节点的名字。
+            </summary>
+        </member>
+        <member name="T:DocPlus.ApiDoc.See">
+            <summary>
+            表示一个参考。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.See.#ctor">
+            <summary>
+            初始化 <see cref="T:DocPlus.ApiDoc.See"/> 的新实例。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.See.Accept(DocPlus.ApiDoc.INodeVisitor)">
+            <summary>
+            使用一个 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 访问当前节点，并返回一个字符串。
+            </summary>
+            <param name="visitor">一个实现了 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 接口的类实例，表示一个访问工具。</param>
+            <returns>一个字符串，表示访问后的结果描述。</returns>
+        </member>
+        <member name="P:DocPlus.ApiDoc.See.NodeName">
+            <summary>
+            获取当前节点的名字。
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:DocPlus.ApiDoc.Extends">
+            <summary>
+            表示一个继承。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Extends.#ctor">
+            <summary>
+            初始化 <see cref="T:DocPlus.ApiDoc.Extends"/> 的新实例。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Extends.Accept(DocPlus.ApiDoc.INodeVisitor)">
+            <summary>
+            使用一个 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 访问当前节点，并返回一个字符串。
+            </summary>
+            <param name="visitor">一个实现了 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 接口的类实例，表示一个访问工具。</param>
+            <returns>一个字符串，表示访问后的结果描述。</returns>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Extends.NodeName">
+            <summary>
+            获取当前节点的名字。
+            </summary>
+            <value></value>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Extends.Member">
+            <summary>
+            获取当前字符串代表的实际成员。
+            </summary>
+        </member>
+        <member name="T:DocPlus.ApiDoc.Delegate">
+            <summary>
+            表示一个委托。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Delegate.#ctor">
+            <summary>
+            初始化 <see cref="T:DocPlus.ApiDoc.Delegate"/> 的新实例。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Delegate.ReadChildNode(DocPlus.ApiDoc.DocReader)">
+            <summary>
+            当遇到读取函数无法处理的节点时，运行本函数。
+            </summary>
+            <param name="reader">读取器。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Delegate.WriteChildNodes(DocPlus.ApiDoc.DocWriter)">
+            <summary>
+            写入到一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例。
+            </summary>
+            <param name="writer">一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Delegate.Accept(DocPlus.ApiDoc.INodeVisitor)">
+            <summary>
+            使用一个 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 访问当前节点，并返回一个字符串。
+            </summary>
+            <param name="visitor">一个实现了 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 接口的类实例，表示一个访问工具。</param>
+            <returns>一个字符串，表示访问后的结果描述。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Delegate.GetEnumerator">
+            <summary>
+            返回一个循环访问集合的枚举数。
+            </summary>
+            <returns>
+            可用于循环访问集合的 <see cref="T:System.Collections.IEnumerator"/> 对象。
+            </returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Delegate.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            返回一个循环访问集合的枚举数。
+            </summary>
+            <returns>
+            可用于循环访问集合的 <see cref="T:System.Collections.IEnumerator"/> 对象。
+            </returns>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Delegate.NodeName">
+            <summary>
+            获取当前节点的名字。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Delegate.Params">
+            <summary>
+            获取当前方法的全部参数。
+            </summary>
+        </member>
+        <member name="T:DocPlus.ApiDoc.Dynatic">
+            <summary>
+            表示动态的对象。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Dynatic.#ctor">
+            <summary>
+            初始化 <see cref="T:DocPlus.ApiDoc.Dynatic"/> 的新实例。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Dynatic.ReadChildNode(DocPlus.ApiDoc.DocReader)">
+            <summary>
+            当遇到读取函数无法处理的节点时，运行本函数。
+            </summary>
+            <param name="reader">读取器。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Dynatic.WriteChildNodes(DocPlus.ApiDoc.DocWriter)">
+            <summary>
+            写入到一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例。
+            </summary>
+            <param name="writer">一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Dynatic.Accept(DocPlus.ApiDoc.INodeVisitor)">
+            <summary>
+            使用一个 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 访问当前节点，并返回一个字符串。
+            </summary>
+            <param name="visitor">一个实现了 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 接口的类实例，表示一个访问工具。</param>
+            <returns>一个字符串，表示访问后的结果描述。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Dynatic.GetEnumerator">
+            <summary>
+            返回一个循环访问集合的枚举数。
+            </summary>
+            <returns>
+            可用于循环访问集合的 <see cref="T:System.Collections.IEnumerator"/> 对象。
+            </returns>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Dynatic.NodeName">
+            <summary>
+            获取当前节点的名字。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Dynatic.Members">
+            <summary>
+            获取全部的成员。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Dynatic.Base">
+            <summary>
+            获取或设置当前对象的基对象。 某些状态肯能为 Null 。
+            </summary>
+        </member>
+        <member name="T:DocPlus.ApiDoc.Syntax">
+            <summary>
+            表示一个语法。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Syntax.#ctor">
+            <summary>
+            初始化 <see cref="T:DocPlus.ApiDoc.Syntax"/> 的新实例。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Syntax.Accept(DocPlus.ApiDoc.INodeVisitor)">
+            <summary>
+            使用一个 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 访问当前节点，并返回一个字符串。
+            </summary>
+            <param name="visitor">一个实现了 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 接口的类实例，表示一个访问工具。</param>
+            <returns>一个字符串，表示访问后的结果描述。</returns>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Syntax.NodeName">
+            <summary>
+            获取当前节点的名字。
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:DocPlus.ApiDoc.SourceType">
+            <summary>
+            表示源的种类。
+            </summary>
+        </member>
+        <member name="F:DocPlus.ApiDoc.SourceType.Unknown">
+            <summary>
+            表示未知类型。
+            </summary>
+        </member>
+        <member name="F:DocPlus.ApiDoc.SourceType.Code">
+            <summary>
+            代码。
+            </summary>
+        </member>
+        <member name="F:DocPlus.ApiDoc.SourceType.Binary">
+            <summary>
+            表示二进制文件。
+            </summary>
+        </member>
+        <member name="F:DocPlus.ApiDoc.SourceType.Libaray">
+            <summary>
+            表示接口。
+            </summary>
+        </member>
+        <member name="F:DocPlus.ApiDoc.SourceType.System">
+            <summary>
+            表示系统内置的。
+            </summary>
+        </member>
+        <member name="T:DocPlus.ApiDoc.Map`1">
+            <summary>
+            表示一个 Id 成员的列表。
+            </summary>
+            <typeparam name="T">任何节点。</typeparam>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Map`1.OnKeyNotFound(System.Int32)">
+            <summary>
+            当键没找到后，执行此函数。
+            </summary>
+            <param name="key">键。</param>
+            <returns>值。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Map`1.Write(DocPlus.ApiDoc.DocWriter)">
+            <summary>
+            写入当前节点的数据到一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例。
+            </summary>
+            <param name="writer">一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例，表示写入的目标。</param>
+        </member>
+        <member name="T:DocPlus.ApiDoc.Config">
+            <summary>
+            表示一个配置。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Config.#ctor">
+            <summary>
+            初始化 <see cref="T:DocPlus.ApiDoc.Config"/> 的新实例。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Config.Accept(DocPlus.ApiDoc.INodeVisitor)">
+            <summary>
+            使用一个 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 访问当前节点，并返回一个字符串。
+            </summary>
+            <param name="visitor">一个实现了 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 接口的类实例，表示一个访问工具。</param>
+            <returns>一个字符串，表示访问后的结果描述。</returns>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Config.NodeName">
+            <summary>
+            获取当前节点的名字。
+            </summary>
+        </member>
+        <member name="T:DocPlus.ApiDoc.Source">
+            <summary>
+            表示生成此文档的源位置。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Source.#ctor">
+            <summary>
+            初始化 <see cref="T:DocPlus.ApiDoc.Source"/> 的新实例。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Source.ReadAttributes(DocPlus.ApiDoc.DocReader)">
+            <summary>
+            当被子类重写时，实现读取一个节点。
+            </summary>
+            <param name="reader">读取工具。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Source.ReadChildNodes(DocPlus.ApiDoc.DocReader)">
+            <summary>
+            当被子类重写时，实现读取一个节点的子节点。
+            </summary>
+            <param name="reader">一个 <see cref="T:DocPlus.ApiDoc.DocReader"/> 实例，表示读取的目标。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Source.WriteAttributes(DocPlus.ApiDoc.DocWriter)">
+            <summary>
+            当被子类重写时，实现写入一个节点。
+            </summary>
+            <param name="writer">写入工具。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Source.WriteChildNodes(DocPlus.ApiDoc.DocWriter)">
+            <summary>
+            当被子类重写时，实现写入一个节点的子节点。
+            </summary>
+            <param name="writer">一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例，表示写入的目标。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Source.ToString">
+            <summary>
+            返回表示当前 <see cref="T:System.Object"/> 的 <see cref="T:System.String"/>。
+            </summary>
+            <returns>
+            	<see cref="T:System.String"/>，表示当前的 <see cref="T:System.Object"/>。
+            </returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Source.Accept(DocPlus.ApiDoc.INodeVisitor)">
+            <summary>
+            使用一个 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 访问当前节点，并返回一个字符串。
+            </summary>
+            <param name="visitor">一个实现了 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 接口的类实例，表示一个访问工具。</param>
+            <returns>一个字符串，表示访问后的结果描述。</returns>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Source.NodeName">
+            <summary>
+            获取当前节点的名字。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Source.Id">
+            <summary>
+            获取或设置号 。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Source.Path">
+            <summary>
+            获取或设置位置 。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Source.Version">
+            <summary>
+            获取或设置当前文档版本。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Source.Name">
+            <summary>
+            获取或设置源的别名 。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Source.Author">
+            <summary>
+            获取或设置作者 。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Source.License">
+            <summary>
+            获取或设置协议 。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Source.FileOverview">
+            <summary>
+            获取或设置说明 。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Source.Copyright">
+            <summary>
+            获取或设置版权 。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Source.Type">
+            <summary>
+            获取和设置源类型。
+            </summary>
+            <value>如果 is system， 则 true; 否则, false。</value>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Source.ReferenceIds">
+            <summary>
+            获取全部引用的模块的序号。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Source.Reference">
+            <summary>
+            获取全部引用的模块。
+            </summary>
+        </member>
+        <member name="T:DocPlus.ApiDoc.Namespace">
+            <summary>
+            表示一个名空间。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Namespace.#ctor">
+            <summary>
+            初始化 <see cref="T:DocPlus.ApiDoc.Namespace"/> 的新实例。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Namespace.ReadChildNode(DocPlus.ApiDoc.DocReader)">
+            <summary>
+            当遇到读取函数无法处理的节点时，运行本函数。
+            </summary>
+            <param name="reader">读取器。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Namespace.WriteChildNodes(DocPlus.ApiDoc.DocWriter)">
+            <summary>
+            写入到一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例。
+            </summary>
+            <param name="writer">一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Namespace.Accept(DocPlus.ApiDoc.INodeVisitor)">
+            <summary>
+            使用一个 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 访问当前节点，并返回一个字符串。
+            </summary>
+            <param name="visitor">一个实现了 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 接口的类实例，表示一个访问工具。</param>
+            <returns>一个字符串，表示访问后的结果描述。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Namespace.GetEnumerator">
+            <summary>
+            返回一个循环访问集合的枚举数。
+            </summary>
+            <returns>
+            可用于循环访问集合的 <see cref="T:System.Collections.IEnumerator"/> 对象。
+            </returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Namespace.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            返回一个循环访问集合的枚举数。
+            </summary>
+            <returns>
+            可用于循环访问集合的 <see cref="T:System.Collections.IEnumerator"/> 对象。
+            </returns>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Namespace.NodeName">
+            <summary>
+            获取当前节点的名字。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Namespace.Members">
+            <summary>
+            获取全部成员。
+            </summary>
+        </member>
+        <member name="T:DocPlus.ApiDoc.ApiFile">
+            <summary>
+            管理整个文档。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.ApiFile.#ctor">
+            <summary>
+            初始化 <see cref="T:DocPlus.ApiDoc.ApiFile"/> 的新实例。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.ApiFile.Open(System.IO.Stream)">
+            <summary>
+            打开当前文件。
+            </summary>
+            <exception cref="T:System.IO.FileNotFoundException">载入的文件不存在。</exception>
+        </member>
+        <member name="M:DocPlus.ApiDoc.ApiFile.Close">
+            <summary>
+            关闭当前文件。释放所有占用的句柄。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.ApiFile.Save(System.IO.Stream)">
+            <summary>
+            保存当前操作的文件。如果需要保存时指定路径，使用 <see cref="M:Py.Core.Base.FileBase.SaveAs(System.String)"/> 将当前文件另存为指定路径。
+            </summary>
+            <exception cref="T:System.InvalidOperationException">没有设置保存的文件路径。</exception>
+        </member>
+        <member name="P:DocPlus.ApiDoc.ApiFile.Document">
+            <summary>
+            获取全部文档。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.ApiFile.Encoding">
+            <summary>
+            获取或设置当前文件的编码。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.ApiFile.Extension">
+            <summary>
+            获取当前类支持的文件扩展名类型，包括点的小写形式，多个扩展名以|分开。
+            </summary>
+            <value></value>
+        </member>
+        <member name="T:DocPlus.ApiDoc.PropertyAccess">
+            <summary>
+            表示属性的类型。
+            </summary>
+        </member>
+        <member name="F:DocPlus.ApiDoc.PropertyAccess.GetSet">
+            <summary>
+            读写。
+            </summary>
+        </member>
+        <member name="F:DocPlus.ApiDoc.PropertyAccess.Get">
+            <summary>
+            只读。
+            </summary>
+        </member>
+        <member name="F:DocPlus.ApiDoc.PropertyAccess.Set">
+            <summary>
+            只写。
+            </summary>
+        </member>
+        <member name="F:DocPlus.ApiDoc.PropertyAccess.Add">
+            <summary>
+            增加。
+            </summary>
+        </member>
+        <member name="F:DocPlus.ApiDoc.PropertyAccess.Remove">
+            <summary>
+            删除。
+            </summary>
+        </member>
+        <member name="T:DocPlus.ApiDoc.Class">
+            <summary>
+            表示一个类。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Class.#ctor">
+            <summary>
+            初始化 <see cref="T:DocPlus.ApiDoc.Class"/> 的新实例。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Class.Accept(DocPlus.ApiDoc.INodeVisitor)">
+            <summary>
+            使用一个 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 访问当前节点，并返回一个字符串。
+            </summary>
+            <param name="visitor">一个实现了 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 接口的类实例，表示一个访问工具。</param>
+            <returns>一个字符串，表示访问后的结果描述。</returns>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Class.NodeName">
+            <summary>
+            获取当前节点的名字。
+            </summary>
+        </member>
+        <member name="T:DocPlus.ApiDoc.Platform">
+            <summary>
+            表示一个平台。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Platform.#ctor">
+            <summary>
+            初始化 <see cref="T:DocPlus.ApiDoc.Platform"/> 的新实例。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Platform.ReadAttributes(DocPlus.ApiDoc.DocReader)">
+            <summary>
+            当被子类重写时，实现读取一个节。
+            </summary>
+            <param name="reader">读取工具。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Platform.ReadChildNodes(DocPlus.ApiDoc.DocReader)">
+            <summary>
+            当被子类重写时，实现读取一个节点的子节点。
+            </summary>
+            <param name="reader">一个 <see cref="T:DocPlus.ApiDoc.DocReader"/> 实例，表示读取的目标。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Platform.WriteAttributes(DocPlus.ApiDoc.DocWriter)">
+            <summary>
+            当被子类重写时，实现写入一个节点所有属性。
+            </summary>
+            <param name="writer">一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例，表示写入的目标。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Platform.WriteChildNodes(DocPlus.ApiDoc.DocWriter)">
+            <summary>
+            当被子类重写时，实现写入一个节点的子节点。
+            </summary>
+            <param name="writer">一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例，表示写入的目标。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Platform.Accept(DocPlus.ApiDoc.INodeVisitor)">
+            <summary>
+            使用一个 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 访问当前节点，并返回一个字符串。
+            </summary>
+            <param name="visitor">一个实现了 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 接口的类实例，表示一个访问工具。</param>
+            <returns>一个字符串，表示访问后的结果描述。</returns>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Platform.NodeName">
+            <summary>
+            获取当前节点的名字。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Platform.Id">
+            <summary>
+            获取当前平台的唯一ID。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Platform.Name">
+            <summary>
+            获取或设置引用名字。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Platform.Version">
+            <summary>
+            获取或设置引用的版本。
+            </summary>
+        </member>
+        <member name="T:DocPlus.ApiDoc.Link">
+            <summary>
+            表示节点的引用。比如某个成员的别名的成员就是这个成员的一个 Link 。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Link.#ctor">
+            <summary>
+            初始化 <see cref="T:DocPlus.ApiDoc.Link"/> 的新实例。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Link.ReadAttributes(DocPlus.ApiDoc.DocReader)">
+            <summary>
+            当被子类重写时，实现读取一个节。
+            </summary>
+            <param name="reader">读取工具。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Link.WriteAttributes(DocPlus.ApiDoc.DocWriter)">
+            <summary>
+            写入到一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例。
+            </summary>
+            <param name="writer">一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Link.Accept(DocPlus.ApiDoc.INodeVisitor)">
+            <summary>
+            把成员渲染至文档渲染工具。
+            </summary>
+            <param name="visitor">渲染工具。</param>
+            <returns>结果。</returns>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Link.NodeName">
+            <summary>
+            获取当前节点的名字。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Link.MemberId">
+            <summary>
+            获取所有者号。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Link.Member">
+            <summary>
+            获取当前链接目标成员。
+            </summary>
+        </member>
+        <member name="T:DocPlus.ApiDoc.EnumMember">
+            <summary>
+            表示枚举项。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.EnumMember.#ctor">
+            <summary>
+            初始化 <see cref="T:DocPlus.ApiDoc.EnumMember"/> 的新实例。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.EnumMember.ReadAttributes(DocPlus.ApiDoc.DocReader)">
+            <summary>
+            当被子类重写时，实现读取一个节。
+            </summary>
+            <param name="reader">读取工具。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.EnumMember.WriteAttributes(DocPlus.ApiDoc.DocWriter)">
+            <summary>
+            写入到一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例。
+            </summary>
+            <param name="writer">一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.EnumMember.Accept(DocPlus.ApiDoc.INodeVisitor)">
+            <summary>
+            使用一个 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 访问当前节点，并返回一个字符串。
+            </summary>
+            <param name="visitor">一个实现了 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 接口的类实例，表示一个访问工具。</param>
+            <returns>一个字符串，表示访问后的结果描述。</returns>
+        </member>
+        <member name="P:DocPlus.ApiDoc.EnumMember.NodeName">
+            <summary>
+            获取当前节点的名字。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.EnumMember.Value">
+            <summary>
+            获取当前值。
+            </summary>
+        </member>
+        <member name="T:DocPlus.ApiDoc.Popularity">
+            <summary>
+            表示手欢迎的程度。
+            </summary>
+        </member>
+        <member name="F:DocPlus.ApiDoc.Popularity.Lowest">
+            <summary>
+            非常低。
+            </summary>
+        </member>
+        <member name="F:DocPlus.ApiDoc.Popularity.Low">
+            <summary>
+            低。
+            </summary>
+        </member>
+        <member name="F:DocPlus.ApiDoc.Popularity.Default">
+            <summary>
+            默认。
+            </summary>
+        </member>
+        <member name="F:DocPlus.ApiDoc.Popularity.Hign">
+            <summary>
+            高。
+            </summary>
+        </member>
+        <member name="F:DocPlus.ApiDoc.Popularity.Hignest">
+            <summary>
+            非常高。
+            </summary>
+        </member>
+        <member name="T:DocPlus.ApiDoc.NodeNames">
+            <summary>
+            所有节点名的枚举。
+            </summary>
+        </member>
+        <member name="T:DocPlus.ApiDoc.Document">
+            <summary>
+            表示一个文档。
+            </summary>
+        </member>
+        <member name="F:DocPlus.ApiDoc.Document.CurrentVersion">
+            <summary>
+            当前文档系统的版本。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.#ctor">
+            <summary>
+            初始化 <see cref="T:DocPlus.ApiDoc.Document"/> 的新实例。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.Load(System.String)">
+            <summary>
+            载入一个文档。
+            </summary>
+            <param name="fileName">文件名。</param>
+            <exception cref="T:System.ArgumentException">path 是一个零长度字符串，仅包含空白或者包含一个或多个由 System.IO.Path.InvalidPathChars 定义的无效字符。</exception>
+            <exception cref="T:System.ArgumentNullException">path 为 null。</exception>
+            <exception cref="T:System.IO.PathTooLongException">指定的路径、文件名或者两者都超出了系统定义的最大长度。例如，在基于 Windows 的平台上，路径必须小于 248 个字符，文件名必须小于 260 个字符。</exception>
+            <exception cref="T:System.IO.DirectoryNotFoundException">指定的路径无效（例如，它位于未映射的驱动器上）。</exception>
+            <exception cref="T:System.UnauthorizedAccessException">path 指定了一个目录。- 或 -调用方没有所要求的权限。</exception>
+            <exception cref="T:System.IO.FileNotFoundException">未找到 path 中指定的文件。</exception>
+            <exception cref="T:System.NotSupportedException">path 的格式无效。</exception>
+            <exception cref="T:System.Xml.XmlException">API 文件格式不正确。</exception>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.Load(System.IO.Stream)">
+            <summary>
+            载入一个文档。
+            </summary>
+            <param name="s">流。</param>
+            <exception cref="T:System.Xml.XmlException">API 文件格式不正确。</exception>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.Save(System.String)">
+            <summary>
+            保存一个文档。
+            </summary>
+            <param name="fileName">文件名。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.Save(System.String,System.Text.Encoding)">
+            <summary>
+            保存一个文档。
+            </summary>
+            <param name="fileName">文件名。</param>
+            <param name="encoding">编码。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.Save(System.IO.Stream,System.Text.Encoding)">
+            <summary>
+            保存一个文档。
+            </summary>
+            <param name="s">流。</param>
+            <param name="encoding">编码。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.ReadDocument(DocPlus.ApiDoc.DocReader)">
+            <summary>
+            读入整个文档。
+            </summary>
+            <param name="reader">一个 <see cref="T:DocPlus.ApiDoc.DocReader"/> 实例，表示读取的目标。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.WriteDocument(DocPlus.ApiDoc.DocWriter)">
+            <summary>
+            写入整个文档。
+            </summary>
+            <param name="writer">一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例，表示写入的目标。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.ReadAttributes(DocPlus.ApiDoc.DocReader)">
+            <summary>
+            当被子类重写时，实现读取一个节点的所有属性。
+            </summary>
+            <param name="reader">一个 <see cref="T:DocPlus.ApiDoc.DocReader"/> 实例，表示读取的目标。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.ReadChildNodes(DocPlus.ApiDoc.DocReader)">
+            <summary>
+            当被子类重写时，实现读取一个节点的子节点。
+            </summary>
+            <param name="reader">一个 <see cref="T:DocPlus.ApiDoc.DocReader"/> 实例，表示读取的目标。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.WriteAttributes(DocPlus.ApiDoc.DocWriter)">
+            <summary>
+            当被子类重写时，实现写入一个节点所有属性。
+            </summary>
+            <param name="writer">一个 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 实例，表示写入的目标。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.WriteChildNodes(DocPlus.ApiDoc.DocWriter)">
+            <summary>
+            当被子类重写时，实现写入一个节点。
+            </summary>
+            <param name="writer">写入工具。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.Accept(DocPlus.ApiDoc.INodeVisitor)">
+            <summary>
+            使用一个 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 访问当前节点，并返回一个字符串。
+            </summary>
+            <param name="visitor">一个实现了 <see cref="T:DocPlus.ApiDoc.INodeVisitor"/> 接口的类实例，表示一个访问工具。</param>
+            <returns>一个字符串，表示访问后的结果描述。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.GetSourceById(System.Int32)">
+            <summary>
+            获取指定 ID 的源。
+            </summary>
+            <param name="id">序号。</param>
+            <returns>源。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.GetMemberById(System.Int32)">
+            <summary>
+            获取指定 ID 的成员。
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.GetPlatformsById(System.UInt64)">
+            <summary>
+            获取指定 ID 的成员。
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.GetMemberByName(System.String)">
+            <summary>
+            获取指定表达式的成员。
+            </summary>
+            <param name="ns">名字。</param>
+            <returns>成员。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.GetEnumerator">
+            <summary>
+            返回一个循环访问集合的枚举数。
+            </summary>
+            <returns>
+            可用于循环访问集合的 <see cref="T:System.Collections.IEnumerator"/> 对象。
+            </returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.System#Collections#IEnumerable#GetEnumerator">
+            <summary>
+            返回一个循环访问集合的枚举数。
+            </summary>
+            <returns>
+            可用于循环访问集合的 <see cref="T:System.Collections.IEnumerator"/> 对象。
+            </returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.CreateClass(System.String)">
+            <summary>
+            创建一个属于当前文档对象的 <see cref="T:DocPlus.ApiDoc.Class"/> 实例。
+            </summary>
+            <param name="name">对象的 Name 属性。</param>
+            <returns>创建的新实例。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.CreateConfig(System.String,System.String,System.String)">
+            <summary>
+            创建一个属于当前文档对象的 <see cref="T:DocPlus.ApiDoc.Config"/> 实例。
+            </summary>
+            <param name="name">对象的 Name 属性。</param>
+            <param name="type">对象的 Type 属性。</param>
+            <param name="defaultValue">对象的 DefaultValue 属性。</param>
+            <returns>创建的新实例。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.CreateConstructor(System.String)">
+            <summary>
+            创建一个属于当前文档对象的 <see cref="T:DocPlus.ApiDoc.Constructor"/> 实例。
+            </summary>
+            <param name="name">对象的 Name 属性。</param>
+            <returns>创建的新实例。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.CreateDelegate(System.String)">
+            <summary>
+            创建一个属于当前文档对象的 <see cref="T:DocPlus.ApiDoc.Delegate"/> 实例。
+            </summary>
+            <param name="name">对象的 Name 属性。</param>
+            <returns>创建的新实例。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.CreateDynatic(System.String)">
+            <summary>
+            创建一个属于当前文档对象的 <see cref="T:DocPlus.ApiDoc.Dynatic"/> 实例。
+            </summary>
+            <param name="name">对象的 Name 属性。</param>
+            <returns>创建的新实例。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.CreateEnum(System.String)">
+            <summary>
+            创建一个属于当前文档对象的 <see cref="T:DocPlus.ApiDoc.Enum"/> 实例。
+            </summary>
+            <param name="name">对象的 Name 属性。</param>
+            <returns>创建的新实例。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.CreateEnumMember(System.String,System.String)">
+            <summary>
+            创建一个属于当前文档对象的 <see cref="T:DocPlus.ApiDoc.EnumMember"/> 实例。
+            </summary>
+            <param name="name">对象的 Name 属性。</param>
+            <param name="value">对象的 Value 属性。</param>
+            <returns>创建的新实例。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.CreateEvent(System.String)">
+            <summary>
+            创建一个属于当前文档对象的 <see cref="T:DocPlus.ApiDoc.Event"/> 实例。
+            </summary>
+            <param name="name">对象的 Name 属性。</param>
+            <returns>创建的新实例。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.CreateExample(System.String)">
+            <summary>
+            创建一个属于当前文档对象的 <see cref="T:DocPlus.ApiDoc.Example"/> 实例。
+            </summary>
+            <param name="text">对象的 Text 属性。</param>
+            <returns>创建的新实例。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.CreateException(System.String)">
+            <summary>
+            创建一个属于当前文档对象的 <see cref="T:DocPlus.ApiDoc.Exception"/> 实例。
+            </summary>
+            <returns>创建的新实例。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.CreateExtends(System.String)">
+            <summary>
+            创建一个属于当前文档对象的 <see cref="T:DocPlus.ApiDoc.Extends"/> 实例。
+            </summary>
+            <param name="type">对象的 Type 属性。</param>
+            <returns>创建的新实例。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.CreateField(System.String,System.String)">
+            <summary>
+            创建一个属于当前文档对象的 <see cref="T:DocPlus.ApiDoc.Field"/> 实例。
+            </summary>
+            <param name="name">对象的 Name 属性。</param>
+            <param name="type">对象的 Type 属性。</param>
+            <returns>创建的新实例。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.CreateInterface(System.String)">
+            <summary>
+            创建一个属于当前文档对象的 <see cref="T:DocPlus.ApiDoc.Interface"/> 实例。
+            </summary>
+            <param name="name">对象的 Name 属性。</param>
+            <returns>创建的新实例。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.CreateLink">
+            <summary>
+            创建一个属于当前文档对象的 <see cref="T:DocPlus.ApiDoc.Link"/> 实例。
+            </summary>
+            <returns>创建的新实例。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.CreateLink(DocPlus.ApiDoc.Member,System.String)">
+            <summary>
+            创建一个属于当前文档对象的 <see cref="T:DocPlus.ApiDoc.Link"/> 实例。
+            </summary>
+            <param name="m"></param>
+            <param name="name">对象的 Name 属性。</param>
+            <returns>创建的新实例。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.CreateMethod(System.String)">
+            <summary>
+            创建一个属于当前文档对象的 <see cref="T:DocPlus.ApiDoc.Method"/> 实例。
+            </summary>
+            <param name="name">对象的 Name 属性。</param>
+            <returns>创建的新实例。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.CreateNamespace(System.String)">
+            <summary>
+            创建一个属于当前文档对象的 <see cref="T:DocPlus.ApiDoc.Namespace"/> 实例。
+            </summary>
+            <param name="name">对象的 Name 属性。</param>
+            <returns>创建的新实例。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.CreateParam(System.String,System.String,System.String)">
+            <summary>
+            创建一个属于当前文档对象的 <see cref="T:DocPlus.ApiDoc.Param"/> 实例。
+            </summary>
+            <param name="name">对象的 Name 属性。</param>
+            <param name="type">对象的 Type 属性。</param>
+            <param name="defaultValue">对象的 DefaultValue 属性。</param>
+            <returns>创建的新实例。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.CreatePlatform(System.String,System.Version)">
+            <summary>
+            创建一个属于当前文档对象的 <see cref="T:DocPlus.ApiDoc.Platform"/> 实例。
+            </summary>
+            <param name="name">对象的 Name 属性。</param>
+            <param name="version">对象的 Version 属性。</param>
+            <returns>创建的新实例。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.CreateProperty(System.String,System.String)">
+            <summary>
+            创建一个属于当前文档对象的 <see cref="T:DocPlus.ApiDoc.Property"/> 实例。
+            </summary>
+            <param name="name">对象的 Name 属性。</param>
+            <param name="type">对象的 Type 属性。</param>
+            <returns>创建的新实例。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.CreateRemark(System.String)">
+            <summary>
+            创建一个属于当前文档对象的 <see cref="T:DocPlus.ApiDoc.Remark"/> 实例。
+            </summary>
+            <param name="text">对象的 Text 属性。</param>
+            <returns>创建的新实例。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.CreateReturn(System.String)">
+            <summary>
+            创建一个属于当前文档对象的 <see cref="T:DocPlus.ApiDoc.Return"/> 实例。
+            </summary>
+            <returns>创建的新实例。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.CreateSee(System.String,System.String)">
+            <summary>
+            创建一个属于当前文档对象的 <see cref="T:DocPlus.ApiDoc.See"/> 实例。
+            </summary>
+            <param name="name">对象的 Name 属性。</param>
+            <param name="href">对象的 Href 属性。</param>
+            <returns>创建的新实例。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.CreateSeeAlso(System.String,System.String)">
+            <summary>
+            创建一个属于当前文档对象的 <see cref="T:DocPlus.ApiDoc.SeeAlso"/> 实例。
+            </summary>
+            <param name="name">对象的 Name 属性。</param>
+            <param name="href">对象的 Href 属性。</param>
+            <returns>创建的新实例。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.CreateSource">
+            <summary>
+            创建一个属于当前文档对象的 <see cref="T:DocPlus.ApiDoc.Platform"/> 实例。
+            </summary>
+            <returns>创建的新实例。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.CreateStruct(System.String)">
+            <summary>
+            创建一个属于当前文档对象的 <see cref="T:DocPlus.ApiDoc.Struct"/> 实例。
+            </summary>
+            <param name="name">对象的 Name 属性。</param>
+            <returns>创建的新实例。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.CreateSummary(System.String)">
+            <summary>
+            创建一个属于当前文档对象的 <see cref="T:DocPlus.ApiDoc.Summary"/> 实例。
+            </summary>
+            <param name="text">对象的 Text 属性。</param>
+            <returns>创建的新实例。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.Document.CreateSyntax(System.String)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Syntax"/> 实例。
+            </summary>
+            <param name="text">对象的 Text 属性。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Document.NodeName">
+            <summary>
+            获取当前节点的名字。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Document.Language">
+            <summary>
+            获取当前文档的语言。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Document.ProjectDescription">
+            <summary>
+            获取或设置项目的描述。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Document.Version">
+            <summary>
+            获取或设置当前文档的版本。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Document.Name">
+            <summary>
+            获取此文档的名字。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Document.FullName">
+            <summary>
+            获取此文档的全名。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Document.CurrentSource">
+            <summary>
+            获取或设置当前使用的源，新创建的Node将属于这个源。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Document.CreateTime">
+            <summary>
+            获取或设置此文档的创建时间。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Document.Sources">
+            <summary>
+            获取当前文档源文件列表。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Document.Links">
+            <summary>
+            获取当前文档链接列表。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Document.Platforms">
+            <summary>
+            获取当前文档源文件列表。
+            </summary>
+        </member>
+        <member name="P:DocPlus.ApiDoc.Document.Members">
+            <summary>
+            获取全部名字空间。
+            </summary>
+        </member>
+        <member name="T:DocPlus.ApiDoc.MemberAttributes">
+            <summary>
+            表示成员属性的枚举。
+            </summary>
+        </member>
+        <member name="F:DocPlus.ApiDoc.MemberAttributes.None">
+            <summary>
+            没有额外的属性。
+            </summary>
+        </member>
+        <member name="F:DocPlus.ApiDoc.MemberAttributes.Static">
+            <summary>
+            表示这是静态的属性。
+            </summary>
+        </member>
+        <member name="F:DocPlus.ApiDoc.MemberAttributes.Virtual">
+            <summary>
+            表示这是虚成员。
+            </summary>
+        </member>
+        <member name="F:DocPlus.ApiDoc.MemberAttributes.Override">
+            <summary>
+            表示这是重载的成员。
+            </summary>
+        </member>
+        <member name="F:DocPlus.ApiDoc.MemberAttributes.Abstract">
+            <summary>
+            表示这是抽象的成员。
+            </summary>
+        </member>
+        <member name="T:DocPlus.ApiDoc.DocWriter">
+            <summary>
+            读取 .api 文件的 XML读取器。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.DocWriter.#ctor(System.IO.Stream)">
+            <summary>
+            使用指定的流和默认的编码创建 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 的实例。
+            </summary>
+            <param name="input">要写入的流。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.DocWriter.#ctor(System.IO.Stream,System.Text.Encoding)">
+            <summary>
+            使用指定的流和编码方式创建 <see cref="T:DocPlus.ApiDoc.DocWriter"/> 的实例。
+            </summary>
+            <param name="input">要写入的流。</param>
+            <param name="encoding">要生成的编码方式。如果编码方式为 null，它将以 UTF-8 的形式写出该文件，并忽略 ProcessingInstruction 中的编码属性。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.DocWriter.WriteAttribute(System.String,System.String)">
+            <summary>
+            当在派生类中被重写时，写出具有指定的本地名称和值的属性。
+            </summary>
+            <param name="localName">属性的本地名称。</param>
+            <param name="value">属性值。</param>
+            <exception cref="T:System.InvalidOperationException">编写器的状态不是 WriteState.Element 或者编写器已关闭。</exception>
+            <exception cref="T:System.ArgumentException">xml:space 或 xml:lang 属性值无效。</exception>
+        </member>
+        <member name="M:DocPlus.ApiDoc.DocWriter.WriteAttribute(System.String,System.Int32)">
+            <summary>
+            当在派生类中被重写时，写出具有指定的本地名称和值的属性。
+            </summary>
+            <param name="localName">属性的本地名称。</param>
+            <param name="value">属性值。</param>
+            <exception cref="T:System.InvalidOperationException">编写器的状态不是 WriteState.Element 或者编写器已关闭。</exception>
+            <exception cref="T:System.ArgumentException">xml:space 或 xml:lang 属性值无效。</exception>
+        </member>
+        <member name="M:DocPlus.ApiDoc.DocWriter.WriteAttribute(System.String,System.Boolean)">
+            <summary>
+            当在派生类中被重写时，写出具有指定的本地名称和值的属性。
+            </summary>
+            <param name="localName">属性的本地名称。</param>
+            <param name="value">属性值。</param>
+            <exception cref="T:System.InvalidOperationException">编写器的状态不是 WriteState.Element 或者编写器已关闭。</exception>
+            <exception cref="T:System.ArgumentException">xml:space 或 xml:lang 属性值无效。</exception>
+        </member>
+        <member name="M:DocPlus.ApiDoc.DocWriter.WriteAttribute(System.String,System.DateTime)">
+            <summary>
+            当在派生类中被重写时，写出具有指定的本地名称和值的属性。
+            </summary>
+            <param name="localName">属性的本地名称。</param>
+            <param name="value">属性值。</param>
+            <exception cref="T:System.InvalidOperationException">编写器的状态不是 WriteState.Element 或者编写器已关闭。</exception>
+            <exception cref="T:System.ArgumentException">xml:space 或 xml:lang 属性值无效。</exception>
+        </member>
+        <member name="M:DocPlus.ApiDoc.DocWriter.WriteAttribute``1(System.String,``0)">
+            <summary>
+            当在派生类中被重写时，写出具有指定的本地名称和值的属性。
+            </summary>
+            <param name="localName">属性的本地名称。</param>
+            <param name="value">属性值。</param>
+            <exception cref="T:System.InvalidOperationException">编写器的状态不是 WriteState.Element 或者编写器已关闭。</exception>
+            <exception cref="T:System.ArgumentException">xml:space 或 xml:lang 属性值无效。</exception>
+        </member>
+        <member name="M:DocPlus.ApiDoc.DocWriter.WriteElement(System.String)">
+            <summary>
+            读取一个元素，并确认获取的元素是指定名字。
+            </summary>
+            <param name="name">希望得到的元素的名字。</param>
+            <returns>是否符合要求。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.DocWriter.WriteElement">
+            <summary>
+            读取一个元素。
+            </summary>
+            <returns>是否符合要求。</returns>
+        </member>
+        <member name="T:DocPlus.ApiDoc.DocReader">
+            <summary>
+            读取 .api 文件的 XML读取器。
+            </summary>
+        </member>
+        <member name="F:DocPlus.ApiDoc.DocReader._next">
+            <summary>
+            表示是否需读取。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.DocReader.#ctor(System.IO.Stream)">
+            <summary>
+            初始化 <see cref="T:DocPlus.ApiDoc.DocReader"/> 的新实例。
+            </summary>
+            <param name="input">输入的值。</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.DocReader.ReadElement(System.String)">
+            <summary>
+            读取一个元素，并确认获取的元素是指定名字。
+            </summary>
+            <param name="name">希望得到的元素的名字。</param>
+            <returns>是否符合要求。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.DocReader.GetAttributeAsInt(System.String,System.Int32)">
+            <summary>
+            获取具有指定名称的属性的值。
+            </summary>
+            <param name="name">属性的限定名。</param>
+            <param name="dftValue">如果未找到该属性，将得到这个默认值。</param>
+            <returns>指定属性的值。如果未找到该属性，则返回dftValue。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.DocReader.GetAttributeAsUInt(System.String,System.UInt32)">
+            <summary>
+            获取具有指定名称的属性的值。
+            </summary>
+            <param name="name">属性的限定名。</param>
+            <param name="dftValue">如果未找到该属性，将得到这个默认值。</param>
+            <returns>指定属性的值。如果未找到该属性，则返回dftValue。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.DocReader.GetAttributeAsBool(System.String,System.Boolean)">
+            <summary>
+            获取具有指定名称的属性的值。
+            </summary>
+            <param name="name">属性的限定名。</param>
+            <param name="dftValue">如果未找到该属性，将得到这个默认值。</param>
+            <returns>指定属性的值。如果未找到该属性，则返回dftValue。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.DocReader.GetAttributeAsEnum``1(System.String,``0)">
+            <summary>
+            获取具有指定名称的属性的值。
+            </summary>
+            <param name="name">属性的限定名。</param>
+            <param name="dftValue">如果未找到该属性，将得到这个默认值。</param>
+            <returns>指定属性的值。如果未找到该属性，则返回dftValue。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.DocReader.GetAttributeAsVersion(System.String,System.Version)">
+            <summary>
+            获取具有指定名称的属性的值。
+            </summary>
+            <param name="name">属性的限定名。</param>
+            <param name="dftValue">如果未找到该属性，将得到这个默认值。</param>
+            <returns>指定属性的值。如果未找到该属性，则返回dftValue。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.DocReader.GetAttributeAsUri(System.String,System.Uri)">
+            <summary>
+            获取具有指定名称的属性的值。
+            </summary>
+            <param name="name">属性的限定名。</param>
+            <param name="dftValue">如果未找到该属性，将得到这个默认值。</param>
+            <returns>指定属性的值。如果未找到该属性，则返回dftValue。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.DocReader.GetAttributeAsString(System.String)">
+            <summary>
+            获取具有指定名称的属性的值。
+            </summary>
+            <param name="name">属性的限定名。</param>
+            <returns>指定属性的值。如果未找到该属性，则返回dftValue。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.DocReader.GetAttributeAsString(System.String,System.String)">
+            <summary>
+            获取具有指定名称的属性的值。
+            </summary>
+            <param name="name">属性的限定名。</param>
+            <param name="dftValue">如果未找到该属性，将得到这个默认值。</param>
+            <returns>指定属性的值。如果未找到该属性，则返回dftValue。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.DocReader.GetAttributeAsDateTime(System.String)">
+            <summary>
+            获取具有指定名称的属性的值。
+            </summary>
+            <param name="name">属性的限定名。</param>
+            <returns>指定属性的值。如果未找到该属性，则返回dftValue。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.DocReader.GetAttributeAsDateTime(System.String,System.DateTime)">
+            <summary>
+            获取具有指定名称的属性的值。
+            </summary>
+            <param name="name">属性的限定名。</param>
+            <param name="dftValue">如果未找到该属性，将得到这个默认值。</param>
+            <returns>指定属性的值。如果未找到该属性，则返回dftValue。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.DocReader.ReadElement">
+            <summary>
+            读取一个元素。
+            </summary>
+            <returns>是否符合要求。</returns>
+        </member>
+        <member name="T:DocPlus.ApiDoc.NodeVisitor">
+            <summary>
+            提供默认的节点访问器的基类。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.NodeVisitor.VisitStructOrClass(DocPlus.ApiDoc.StructOrClass)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.StructOrClass"/> 实例。
+            </summary>
+            <param name="structOrClass">要访问的 <see cref="T:DocPlus.ApiDoc.StructOrClass"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.NodeVisitor.VisitType(DocPlus.ApiDoc.Type)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Type"/> 实例。
+            </summary>
+            <param name="type">要访问的 <see cref="T:DocPlus.ApiDoc.Type"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.NodeVisitor.VisitMember(DocPlus.ApiDoc.Member)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Member"/> 实例。
+            </summary>
+            <param name="m">要访问的 <see cref="T:DocPlus.ApiDoc.Member"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.NodeVisitor.VisitCref(DocPlus.ApiDoc.Cref)">
+            <summary>
+            访问一个  <see cref="M:DocPlus.ApiDoc.NodeVisitor.VisitCref(DocPlus.ApiDoc.Cref)"/> 实例。
+            </summary>
+            <param name="cref">要访问的 <see cref="M:DocPlus.ApiDoc.NodeVisitor.VisitCref(DocPlus.ApiDoc.Cref)"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.NodeVisitor.VisitRichText(DocPlus.ApiDoc.RichText)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.RichText"/> 实例。
+            </summary>
+            <param name="richText">要访问的 <see cref="T:DocPlus.ApiDoc.RichText"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.NodeVisitor.VisitParamOrReturn(DocPlus.ApiDoc.ParamOrReturn)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.ParamOrReturn"/> 实例。
+            </summary>
+            <param name="preturn">要访问的 <see cref="T:DocPlus.ApiDoc.ParamOrReturn"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.NodeVisitor.VisitPlatform(DocPlus.ApiDoc.Platform)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Platform"/> 实例。
+            </summary>
+            <param name="platform">要访问的 <see cref="T:DocPlus.ApiDoc.Platform"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.NodeVisitor.VisitSource(DocPlus.ApiDoc.Source)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Source"/> 实例。
+            </summary>
+            <param name="source">要访问的 <see cref="T:DocPlus.ApiDoc.Source"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.NodeVisitor.VisitDocument(DocPlus.ApiDoc.Document)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Document"/> 实例。
+            </summary>
+            <param name="document">要访问的 <see cref="T:DocPlus.ApiDoc.Document"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.NodeVisitor.VisitClass(DocPlus.ApiDoc.Class)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Class"/> 实例。
+            </summary>
+            <param name="class">要访问的 <see cref="T:DocPlus.ApiDoc.Class"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.NodeVisitor.VisitConfig(DocPlus.ApiDoc.Config)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Config"/> 实例。
+            </summary>
+            <param name="config">要访问的 <see cref="T:DocPlus.ApiDoc.Config"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.NodeVisitor.VisitConstructor(DocPlus.ApiDoc.Constructor)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Constructor"/> 实例。
+            </summary>
+            <param name="constructor">要访问的 <see cref="T:DocPlus.ApiDoc.Constructor"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.NodeVisitor.VisitDelegate(DocPlus.ApiDoc.Delegate)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Delegate"/> 实例。
+            </summary>
+            <param name="delegate">要访问的 <see cref="T:DocPlus.ApiDoc.Delegate"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.NodeVisitor.VisitDynatic(DocPlus.ApiDoc.Dynatic)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Dynatic"/> 实例。
+            </summary>
+            <param name="dynatic">要访问的 <see cref="T:DocPlus.ApiDoc.Dynatic"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.NodeVisitor.VisitEnum(DocPlus.ApiDoc.Enum)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Enum"/> 实例。
+            </summary>
+            <param name="enum">要访问的 <see cref="T:DocPlus.ApiDoc.Enum"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.NodeVisitor.VisitEnumMember(DocPlus.ApiDoc.EnumMember)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.EnumMember"/> 实例。
+            </summary>
+            <param name="enumMember">要访问的 <see cref="T:DocPlus.ApiDoc.EnumMember"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.NodeVisitor.VisitEvent(DocPlus.ApiDoc.Event)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Event"/> 实例。
+            </summary>
+            <param name="event">要访问的 <see cref="T:DocPlus.ApiDoc.Event"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.NodeVisitor.VisitExample(DocPlus.ApiDoc.Example)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Example"/> 实例。
+            </summary>
+            <param name="example">要访问的 <see cref="T:DocPlus.ApiDoc.Example"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.NodeVisitor.VisitException(DocPlus.ApiDoc.Exception)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Exception"/> 实例。
+            </summary>
+            <param name="exception">要访问的 <see cref="T:DocPlus.ApiDoc.Exception"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.NodeVisitor.VisitExtends(DocPlus.ApiDoc.Extends)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Extends"/> 实例。
+            </summary>
+            <param name="extends">要访问的 <see cref="T:DocPlus.ApiDoc.Extends"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.NodeVisitor.VisitField(DocPlus.ApiDoc.Field)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Field"/> 实例。
+            </summary>
+            <param name="field">要访问的 <see cref="T:DocPlus.ApiDoc.Field"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.NodeVisitor.VisitInterface(DocPlus.ApiDoc.Interface)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Interface"/> 实例。
+            </summary>
+            <param name="interface">要访问的 <see cref="T:DocPlus.ApiDoc.Interface"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.NodeVisitor.VisitLink(DocPlus.ApiDoc.Link)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Link"/> 实例。
+            </summary>
+            <param name="link">要访问的 <see cref="T:DocPlus.ApiDoc.Link"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.NodeVisitor.VisitMethod(DocPlus.ApiDoc.Method)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Method"/> 实例。
+            </summary>
+            <param name="method">要访问的 <see cref="T:DocPlus.ApiDoc.Method"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.NodeVisitor.VisitNamespace(DocPlus.ApiDoc.Namespace)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Namespace"/> 实例。
+            </summary>
+            <param name="namespace">要访问的 <see cref="T:DocPlus.ApiDoc.Namespace"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.NodeVisitor.VisitParam(DocPlus.ApiDoc.Param)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Param"/> 实例。
+            </summary>
+            <param name="param">要访问的 <see cref="T:DocPlus.ApiDoc.Param"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.NodeVisitor.VisitProperty(DocPlus.ApiDoc.Property)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Property"/> 实例。
+            </summary>
+            <param name="property">要访问的 <see cref="T:DocPlus.ApiDoc.Property"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.NodeVisitor.VisitRemark(DocPlus.ApiDoc.Remark)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Remark"/> 实例。
+            </summary>
+            <param name="remark">要访问的 <see cref="T:DocPlus.ApiDoc.Remark"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.NodeVisitor.VisitReturn(DocPlus.ApiDoc.Return)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Return"/> 实例。
+            </summary>
+            <param name="return">要访问的 <see cref="T:DocPlus.ApiDoc.Return"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.NodeVisitor.VisitSee(DocPlus.ApiDoc.See)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.See"/> 实例。
+            </summary>
+            <param name="see">要访问的 <see cref="T:DocPlus.ApiDoc.See"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.NodeVisitor.VisitSeeAlso(DocPlus.ApiDoc.SeeAlso)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.SeeAlso"/> 实例。
+            </summary>
+            <param name="seeAlso">要访问的 <see cref="T:DocPlus.ApiDoc.SeeAlso"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.NodeVisitor.VisitStruct(DocPlus.ApiDoc.Struct)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Struct"/> 实例。
+            </summary>
+            <param name="struct">要访问的 <see cref="T:DocPlus.ApiDoc.Struct"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.NodeVisitor.VisitSummary(DocPlus.ApiDoc.Summary)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Summary"/> 实例。
+            </summary>
+            <param name="summary">要访问的 <see cref="T:DocPlus.ApiDoc.Summary"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="M:DocPlus.ApiDoc.NodeVisitor.VisitSyntax(DocPlus.ApiDoc.Syntax)">
+            <summary>
+            访问一个  <see cref="T:DocPlus.ApiDoc.Syntax"/> 实例。
+            </summary>
+            <param name="syntax">要访问的 <see cref="T:DocPlus.ApiDoc.Syntax"/> 实例。</param>
+            <returns>访问之后返回的信息。</returns>
+        </member>
+        <member name="T:DocPlus.ApiDoc.MemberSet">
+            <summary>
+            表示成员集合。
+            </summary>
+        </member>
+        <member name="M:DocPlus.ApiDoc.MemberSet.#ctor(DocPlus.ApiDoc.IMemberConatiner)">
+            <summary>
+            初始化 <see cref="T:DocPlus.ApiDoc.MemberSet"/> 的新实例。
+            </summary>
+            <param name="owner">The owner.</param>
+        </member>
+        <member name="M:DocPlus.ApiDoc.MemberSet.OnAddItem(System.Int32,DocPlus.ApiDoc.Member)">
+            <summary>
+            将元素插入集合的指定索引处。
+            </summary>
+            <param name="index">从零开始的索引，应在该位置插入 item。</param>
+            <param name="item">要插入的对象。对于引用类型，该值可以为 null。</param>
+            <returns>继续添加返回 true， 否则返回 false 。</returns>
+        </member>
+        <member name="P:DocPlus.ApiDoc.MemberSet.Owner">
+            <summary>
+            获取当前集合所有者。
+            </summary>
+        </member>
+    </members>
+</doc>

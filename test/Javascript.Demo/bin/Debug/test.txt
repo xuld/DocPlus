@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="gb2312"?>
+<doc language="Javascript" createtime="2012/5/15 12:33:32" version="2">
+  <sources />
+  <platforms />
+  <members>
+    <field name="a" sourceline="1" type="Number">
+      <summary>AAA</summary>
+    </field>
+  </members>
+</doc>

@@ -242,14 +242,14 @@ namespace DocPlus.Javascript.Demo {
 
         }
 
-        static void ShowGlobal(Variant v, bool showIgnore) {
-            List<Variant> displayed = new List<Variant>() { v };
+        static void ShowGlobal(DocComment v, bool showIgnore) {
+            List<DocComment> displayed = new List<DocComment>() { v };
             foreach (var v2 in v) {
                 ShowGlobal(v2.Value, null, v2.Key, displayed, showIgnore);
             }
         }
 
-        static void ShowGlobal(Variant v, string prefix, string name, List<Variant> displayed, bool showIgnore) {
+        static void ShowGlobal(DocComment v, string prefix, string name, List<DocComment> displayed, bool showIgnore) {
 
             if (!displayed.Contains(v)) {
                 displayed.Add(v);

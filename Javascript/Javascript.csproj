@@ -62,30 +62,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Markdown.cs" />
-    <Compile Include="Parser\CommentNode\ParamCommentNode.cs" />
-    <Compile Include="Parser\CommentNode\ReturnCommentNode.cs" />
-    <Compile Include="Parser\CommentNode\StringCommentNode.cs" />
-    <Compile Include="Parser\DocData.cs" />
-    <Compile Include="Parser\DocGenerator.cs" />
-    <Compile Include="Parser\Variant1\Scope.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Parser\Variant\JavaCommentParser.cs" />
-    <Compile Include="Parser\Variant\JavaCommentParser.Parsers.cs" />
-    <Compile Include="Parser\Variant\NodeNames.cs" />
-    <Compile Include="Parser\CommentNode\ICommentNode.cs" />
-    <Compile Include="Parser\Variant\Variant.cs" />
-    <Compile Include="Parser\DocMerger.cs" />
-    <Compile Include="Parser\DocParser.cs" />
+    <Compile Include="DocParser\Markdown.cs" />
+    <Compile Include="CommentNode\ParamCommentNode.cs" />
+    <Compile Include="CommentNode\ReturnCommentNode.cs" />
+    <Compile Include="CommentNode\StringCommentNode.cs" />
+    <Compile Include="DocParser\DocData.cs" />
+    <Compile Include="DocParser\DocGenerator.cs" />
+    <Compile Include="DocParser\JavaCommentParser.cs" />
+    <Compile Include="DocParser\JavaCommentParser.Parsers.cs" />
+    <Compile Include="DocComment\NodeNames.cs" />
+    <Compile Include="CommentNode\ICommentNode.cs" />
+    <Compile Include="DocComment\DocComment.cs" />
+    <Compile Include="DocParser\DocMerger.cs" />
+    <Compile Include="DocParser\DocParser.cs" />
     <Compile Include="DocProject.cs" />
-    <Compile Include="Parser\Variant\Map.cs" />
-    <Compile Include="Parser\Variant\ErrorNumber.cs" />
-    <Compile Include="Parser\DocAstVistor.cs" />
-    <Compile Include="Parser\Variant\VariantAttribute.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Parser\Variant\VariantMap.cs">
+    <Compile Include="DocComment\ErrorNumber.cs" />
+    <Compile Include="DocParser\DocAstVistor.cs" />
+    <Compile Include="DocComment\DocCommentAttribute.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -96,6 +89,7 @@
       <Name>Core</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
