@@ -50,44 +50,48 @@ namespace DocPlus.Javascript {
             set;
         }
 
-        Stack<DocComment> _function = new Stack<DocComment>();
+        Scope _currentScope = new Scope() { CurrentMemberOf = "window" };
 
-        Stack<DocComment> _object = new Stack<DocComment>();
+        Stack<DocComment> _objectStack = new Stack<DocComment>();
 
         void PushFunction(DocComment docComment) {
-            _function.Push(docComment);
+            Scope scope = new Scope();
+            scope.Comment = docComment;
+            scope.Parent = _currentScope;
+            scope.CurrentMemberOf = _currentScope.CurrentMemberOf;
+            scope.CurrentMemberOfIsClass = _currentScope.CurrentMemberOfIsClass;
+            _currentScope = scope;
         }
 
         bool IsGlobal {
             get {
-                return _function.Count == 0;
+                return _currentScope.Parent == null;
             }
         }
 
         DocComment CurrentFunction {
             get {
-                return _function.Count > 0 ? _function.Peek() : null;
+                return _currentScope.Comment;
             }
         }
 
         void PopFunction() {
-            if (_function.Count > 0)
-                _function.Pop();
+            _currentScope = _currentScope.Parent;
         }
 
         void PushObject(DocComment docComment) {
-            _object.Push(docComment);
+            _objectStack.Push(docComment);
         }
 
         DocComment CurrentObject {
             get {
-                return _object.Count > 0 ? _object.Peek() : null;
+                return _objectStack.Count > 0 ? _objectStack.Peek() : null;
             }
         }
 
         void PopObject() {
-            if (_object.Count > 0)
-                _object.Pop();
+            if (_objectStack.Count > 0)
+                _objectStack.Pop();
         }
 
         bool GetNext(Location location, out DocComment dc) {
@@ -137,6 +141,57 @@ namespace DocPlus.Javascript {
             return false;
         }
 
+        private void AutoFill(DocComment dc) {
+            string memberType = dc.MemberType;
+            bool isType = false;
+
+            if (dc.NamespaceSetter != null) {
+                if (dc.NamespaceSetter.Length == 0) {
+                    _currentScope.CurrentMemberOf = dc.FullName;
+                } else {
+                    _currentScope.CurrentMemberOf = dc.NamespaceSetter;
+                }
+                _currentScope.CurrentMemberOfIsClass = false;
+            } else if (memberType == "class") {
+                _currentScope.CurrentMemberOf = dc.FullName;
+                _currentScope.CurrentMemberOfIsClass = !dc.IsStatic;
+                isType = true;
+            } else if (memberType == "enum" || memberType == "interface") {
+                _currentScope.CurrentMemberOf = dc.FullName;
+                _currentScope.CurrentMemberOfIsClass = false;
+                isType = true;
+
+                // 只有不存在 MemberOf 的时候才填充。
+            } else {
+                if (memberType == "member") {
+                    if (dc.Type == "Function" || dc[NodeNames.Param] != null || dc[NodeNames.Return] != null) {
+                        dc.MemberType = memberType = "method";
+                    } else {
+                        dc.MemberType = memberType = "field";
+                    }
+                }
+
+                if (dc.MemberOf == null) {
+                    string parentNamspace = _currentScope.CurrentMemberOf;
+                    bool parentIsClass = _currentScope.CurrentMemberOfIsClass;
+                    if (dc.Parent != null) {
+                        parentNamspace = dc.Parent.FullName;
+                        parentIsClass = dc.Parent.MemberType == "class";
+                    }
+
+                    if (parentIsClass) {
+                        if (dc.IsStatic) {
+                            dc.MemberOf = parentNamspace;
+                        } else {
+                            dc.MemberOf = parentNamspace + ".prototype";
+                        }
+                    } else {
+                        dc.MemberOf = parentNamspace;
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// 获取指定的文档节点附近定义的注释变量。并处理之前的全部注释变量。如果不存在变量，则返回 null 。
         /// </summary>
@@ -144,30 +199,33 @@ namespace DocPlus.Javascript {
         /// <returns>变量。</returns>
         DocComment GetDocCommentBy(Node node) {
 
-            DocComment v;
+            DocComment dc;
 
             // 获取一个变量，如果此变量之后还有可用的变量，直接处理。
-            while(GetNext(node.StartLocation, out v)) {
+            while(GetNext(node.StartLocation, out dc)) {
 
                 // 处理不属于节点，但之前的变量。
-                Process(v);
+                Process(dc);
             }
 
-            return v;
+            AutoFill(dc);
+            return dc;
         }
 
         private void ProcessCommentIn(Node node) {
 
-            DocComment v;
-            while(GetNext(node.EndLocation, out v)) {
+            DocComment dc;
+            while(GetNext(node.EndLocation, out dc)) {
 
                 // 处理不属于节点，但之前的变量。
-                Process(v);
+                Process(dc);
             }
         }
 
         private void Process(DocComment dc) {
             dc.Parent = CurrentObject;
+
+            AutoFill(dc);
         }
 
         void Assign(Node node, string name, Expression value) {

@@ -291,7 +291,7 @@ namespace DocPlus.Javascript {
 
                     case '{':
                         i++;
-
+                        _buffer.Append('{');
                         // 如果紧跟的是 @  表示引号添加。
                         if(i < len && value[i] == '@')
                             quoteCount++;
@@ -299,6 +299,7 @@ namespace DocPlus.Javascript {
 
                     case '}':
                         i++;
+                        _buffer.Append('}');
                         if(quoteCount > 0)
                             quoteCount--;
                         break;

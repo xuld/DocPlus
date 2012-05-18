@@ -74,6 +74,7 @@
     <Compile Include="DocComment\DocComment.cs" />
     <Compile Include="DocParser\DocMerger.cs" />
     <Compile Include="DocParser\DocParser.cs" />
+    <Compile Include="DocParser\Scope.cs" />
     <Compile Include="DocProject.cs" />
     <Compile Include="DocComment\ErrorNumber.cs" />
     <Compile Include="DocParser\DocAstVistor.cs" />
