@@ -219,8 +219,10 @@ namespace DocPlus.Javascript {
         /// <returns></returns>
         public DocData Parse() {
 
+            // 创建一个 DocParser 来解析文档。
             DocParser parser = new DocParser(this);
-            
+
+            // 使用 DocParser 来为添加的每个文件和文件夹单独解析。
             for(int i = 0; i < Items.Count; i++) {
                 string name = Items[i];
                 if(Directory.Exists(name)) {
@@ -232,6 +234,7 @@ namespace DocPlus.Javascript {
                 }
             }
 
+            // 返回解析之后得到的原始文档数据。
             return parser.Data;
 
         }
@@ -240,7 +243,11 @@ namespace DocPlus.Javascript {
         /// 开始编译整个文档。
         /// </summary>
         public override void Build() {
+
+            // 首先获取原始的文档数据。
             DocData data = Parse();
+
+            // 然后使用 DocGenerator 进行最终文件生成。
             new DocGenerator(this).Generate(data);
         }
 
