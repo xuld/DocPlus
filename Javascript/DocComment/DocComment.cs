@@ -202,6 +202,24 @@ namespace DocPlus.Javascript {
             }
         }
 
+        public string MemberAccess {
+            get {
+                return (string)this[NodeNames.MemberAccess];
+            }
+            set {
+                this[NodeNames.MemberAccess] = value;
+            }
+        }
+
+        public string MemberAttribute {
+            get {
+                return (string)this[NodeNames.MemberAttribute];
+            }
+            set {
+                this[NodeNames.MemberAttribute] = value;
+            }
+        }
+
         public string FullName {
             get {
                 return MemberOf == null || MemberOf.Length == 0 ? Name : (MemberOf + "." + Name);

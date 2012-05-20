@@ -1,0 +1,1 @@
+﻿jsonp({"summary":'<p>\u5bfc\u5165\u6307\u5b9a\u540d\u5b57\u7a7a\u95f4\u8868\u793a\u7684\u6837\u5f0f\u6587\u4ef6\u3002</p>\n',"param":'{String} ns \u540d\u5b57\u7a7a\u95f4\u3002\r\n',"name":'imports',"memberOf":'',"return":'',"type":'Function',"defaultValue":'true'});

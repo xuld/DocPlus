@@ -77,8 +77,12 @@ namespace DocPlus.Core {
         [DisplayName("保存位置")]
         [Editor(typeof(FolderNameEditor), typeof(UITypeEditor))]
         public string TargetPath {
-            get;
-            set;
+            get {
+                return GetValue("TargetPath");
+            }
+            set {
+                SetValue("TargetPath", value);
+            }
         }
 
         #endregion
@@ -103,13 +107,16 @@ namespace DocPlus.Core {
 
             XmlNode itemGroup = xml.SelectSingleNode("Project/ItemGroup");
 
-            foreach(XmlNode s in itemGroup.ChildNodes) {
-                Items.Add(s.InnerText);
+            foreach(XmlElement s in itemGroup.ChildNodes) {
+                if(s.Name == "Item")
+                    Items.Add(s.InnerText);
+                else
+                    _vals[s.Name] = s.InnerText;
             }
 
             XmlNode propertyGroup = xml.SelectSingleNode("Project/PropertyGroup");
 
-            foreach(XmlElement s in itemGroup.ChildNodes) {
+            foreach (XmlElement s in propertyGroup.ChildNodes) {
                 _vals[s.Name] = s.InnerText;
             }
 
@@ -144,7 +151,7 @@ namespace DocPlus.Core {
             foreach(string s in _vals) {
                 XmlNode t = xml.CreateElement(s);
                 t.InnerText = _vals[s];
-                itemGroup.AppendChild(t);
+                propertyGroup.AppendChild(t);
             }
 
 

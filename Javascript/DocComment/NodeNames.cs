@@ -28,13 +28,14 @@ namespace DocPlus.Javascript {
 
         public static string Value = "defaultValue";
 
-        #endregion
-
         public static string Requires = "requires";
 
         public static string Param = "param";
+
         public static string MemberOf = "memberOf";
 
         public static string Exception = "exception";
+
+        #endregion
     }
 }

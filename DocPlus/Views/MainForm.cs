@@ -554,6 +554,14 @@ namespace DocPlus.GUI {
 
         }
 
+        private void toolStripMenuItem1_Click(object sender, EventArgs e) {
+            try {
+                System.Diagnostics.Process.Start("DocDebug.exe");
+            } catch(Exception e1) {
+                SystemManager.ShowError(e1.Message);
+            }
+        }
+
     }
 
 }

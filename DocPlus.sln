@@ -42,6 +42,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocPlus.Console", "DocPlus.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocDebug", "DocDebug\DocDebug.csproj", "{3B0B51FA-EDFB-4CE7-9EC0-F24B6D74BA40}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Json", "..\CorePlus\CorePlus\Json\Json\Json.csproj", "{A60CAD5B-E4BE-44B6-8F8C-CEA2655A2A55}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -132,6 +134,16 @@ Global
 		{3B0B51FA-EDFB-4CE7-9EC0-F24B6D74BA40}.Release|Mixed Platforms.Build.0 = Release|x86
 		{3B0B51FA-EDFB-4CE7-9EC0-F24B6D74BA40}.Release|x86.ActiveCfg = Release|x86
 		{3B0B51FA-EDFB-4CE7-9EC0-F24B6D74BA40}.Release|x86.Build.0 = Release|x86
+		{A60CAD5B-E4BE-44B6-8F8C-CEA2655A2A55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A60CAD5B-E4BE-44B6-8F8C-CEA2655A2A55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A60CAD5B-E4BE-44B6-8F8C-CEA2655A2A55}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A60CAD5B-E4BE-44B6-8F8C-CEA2655A2A55}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A60CAD5B-E4BE-44B6-8F8C-CEA2655A2A55}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A60CAD5B-E4BE-44B6-8F8C-CEA2655A2A55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A60CAD5B-E4BE-44B6-8F8C-CEA2655A2A55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A60CAD5B-E4BE-44B6-8F8C-CEA2655A2A55}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A60CAD5B-E4BE-44B6-8F8C-CEA2655A2A55}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{A60CAD5B-E4BE-44B6-8F8C-CEA2655A2A55}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -87,6 +87,7 @@
             this.cmiExplorer = new System.Windows.Forms.ToolStripMenuItem();
             this.propertyGrid = new System.Windows.Forms.PropertyGrid();
             this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.menuStrip.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -242,7 +243,7 @@
             // 
             this.miOutput.CheckOnClick = true;
             this.miOutput.Name = "miOutput";
-            this.miOutput.Size = new System.Drawing.Size(127, 22);
+            this.miOutput.Size = new System.Drawing.Size(152, 22);
             this.miOutput.Text = "输出(&T)";
             this.miOutput.CheckedChanged += new System.EventHandler(this.miOutput_CheckedChanged);
             // 
@@ -250,7 +251,7 @@
             // 
             this.miOptions.CheckOnClick = true;
             this.miOptions.Name = "miOptions";
-            this.miOptions.Size = new System.Drawing.Size(127, 22);
+            this.miOptions.Size = new System.Drawing.Size(152, 22);
             this.miOptions.Text = "属性(&P)";
             this.miOptions.CheckedChanged += new System.EventHandler(this.miOptions_CheckedChanged);
             // 
@@ -260,7 +261,7 @@
             this.miStatus.CheckOnClick = true;
             this.miStatus.CheckState = System.Windows.Forms.CheckState.Checked;
             this.miStatus.Name = "miStatus";
-            this.miStatus.Size = new System.Drawing.Size(127, 22);
+            this.miStatus.Size = new System.Drawing.Size(152, 22);
             this.miStatus.Text = "状态栏(&S)";
             this.miStatus.CheckedChanged += new System.EventHandler(this.miStatus_CheckedChanged);
             // 
@@ -348,6 +349,7 @@
             this.miCancel,
             this.miClearBuild,
             this.toolStripSeparator3,
+            this.toolStripMenuItem1,
             this.miViewDoc});
             this.miBuildProject.Name = "miBuildProject";
             this.miBuildProject.Size = new System.Drawing.Size(60, 21);
@@ -357,7 +359,7 @@
             // 
             this.miBuild.Name = "miBuild";
             this.miBuild.ShortcutKeys = System.Windows.Forms.Keys.F6;
-            this.miBuild.Size = new System.Drawing.Size(140, 22);
+            this.miBuild.Size = new System.Drawing.Size(163, 22);
             this.miBuild.Text = "生成(&D)";
             this.miBuild.Click += new System.EventHandler(this.miBuild_Click);
             // 
@@ -365,26 +367,26 @@
             // 
             this.miCancel.Enabled = false;
             this.miCancel.Name = "miCancel";
-            this.miCancel.Size = new System.Drawing.Size(140, 22);
+            this.miCancel.Size = new System.Drawing.Size(163, 22);
             this.miCancel.Text = "取消生成(&C)";
             this.miCancel.Click += new System.EventHandler(this.miCancel_Click);
             // 
             // miClearBuild
             // 
             this.miClearBuild.Name = "miClearBuild";
-            this.miClearBuild.Size = new System.Drawing.Size(140, 22);
+            this.miClearBuild.Size = new System.Drawing.Size(163, 22);
             this.miClearBuild.Text = "清理(&C)";
             this.miClearBuild.Click += new System.EventHandler(this.miClearBuild_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(137, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(160, 6);
             // 
             // miViewDoc
             // 
             this.miViewDoc.Name = "miViewDoc";
-            this.miViewDoc.Size = new System.Drawing.Size(140, 22);
+            this.miViewDoc.Size = new System.Drawing.Size(163, 22);
             this.miViewDoc.Text = "查看(&V)";
             this.miViewDoc.Click += new System.EventHandler(this.miViewDoc_Click);
             // 
@@ -638,6 +640,13 @@
             this.backgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
             this.backgroundWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
             // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(163, 22);
+            this.toolStripMenuItem1.Text = "文档调试工具(&T)";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            // 
             // MainForm
             // 
             this.AllowDrop = true;
@@ -735,6 +744,7 @@
         private System.Windows.Forms.ToolStripMenuItem cmiAddFile;
         private System.Windows.Forms.ToolStripMenuItem cmiAddDirectory;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
 
     }
 }

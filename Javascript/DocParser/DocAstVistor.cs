@@ -272,9 +272,7 @@ namespace DocPlus.Javascript {
             string memberType = dc.MemberType;
             int memberTypeNo =
                 memberType == "class" ? 0 :
-                memberType == "enum" || memberType == "interface" || memberType == "module" ? 1 :
-                memberType == "member" ? 2 :
-                3;
+                memberType == "enum" || memberType == "interface" || memberType == "module" ? 1 : 2;
 
             // 处理当前的所属成员问题。
             if (dc.NamespaceSetter == null) {
@@ -300,15 +298,7 @@ namespace DocPlus.Javascript {
             }
 
             // 处理类成员问题。
-            if (memberTypeNo >= 2) {
-
-                if (memberTypeNo == 2) {
-                    if (dc.Type == "Function" || dc[NodeNames.Param] != null || dc[NodeNames.Return] != null) {
-                        dc.MemberType = "method";
-                    } else {
-                        dc.MemberType = "field";
-                    }
-                }
+            if (memberTypeNo == 2) {
 
                 // 如果没有指定 memberOf ，程序需要自行猜测。
                 if (dc.MemberOf == null) {
