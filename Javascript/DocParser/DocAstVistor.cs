@@ -28,7 +28,7 @@ namespace DocPlus.Javascript {
     /// </remarks>
     public class DocAstVistor :IAstVisitor {
 
-        #region 变量域
+        #region 遍历器必备
 
         /// <summary>
         /// 正在处理的项目配置。
@@ -40,81 +40,32 @@ namespace DocPlus.Javascript {
         /// </summary>
         DocComment[] _map;
 
-        int _position;
-
         /// <summary>
-        /// 获取或设置上一步执行代码返回的变量值。
+        /// 当前变量列表的位置。
         /// </summary>
-        object ReturnValue {
-            get;
-            set;
-        }
-
-        Scope _currentScope = new Scope() { CurrentMemberOf = "window" };
-
-        Stack<DocComment> _objectStack = new Stack<DocComment>();
-
-        void PushFunction(DocComment docComment) {
-            Scope scope = new Scope();
-            scope.Comment = docComment;
-            scope.Parent = _currentScope;
-            scope.CurrentMemberOf = _currentScope.CurrentMemberOf;
-            scope.CurrentMemberOfIsClass = _currentScope.CurrentMemberOfIsClass;
-            _currentScope = scope;
-        }
-
-        bool IsGlobal {
-            get {
-                return _currentScope.Parent == null;
-            }
-        }
-
-        DocComment CurrentFunction {
-            get {
-                return _currentScope.Comment;
-            }
-        }
-
-        void PopFunction() {
-            _currentScope = _currentScope.Parent;
-        }
-
-        void PushObject(DocComment docComment) {
-            _objectStack.Push(docComment);
-        }
-
-        DocComment CurrentObject {
-            get {
-                return _objectStack.Count > 0 ? _objectStack.Peek() : null;
-            }
-        }
-
-        void PopObject() {
-            if (_objectStack.Count > 0)
-                _objectStack.Pop();
-        }
+        int _position;
 
         bool GetNext(Location location, out DocComment dc) {
 
             int off;
 
             // 如果当前索引在范围内。
-            if(_position < _map.Length) {
+            if (_position < _map.Length) {
 
                 // 获取下一个变量。
                 dc = _map[_position];
                 off = dc.EndLocation.Line - location.Line;
 
                 // 如果下一个变量在当前行之上。
-                if(off <= 0) {
+                if (off <= 0) {
                     _position++;
 
                     bool r = off < -1;
 
                     // 假如当前的注释是接近的注释，那检查是否存在更接近的注释。
-                    if(!r && _position < _map.Length) {
+                    if (!r && _position < _map.Length) {
                         off = _map[_position].EndLocation.Line - location.Line;
-                        if(off == 0 || off == -1)
+                        if (off == 0 || off == -1)
                             r = true;
                     }
 
@@ -124,72 +75,21 @@ namespace DocPlus.Javascript {
             }
 
             // 否则，没有可用的变量了。必须回去找。
-            for(int i = _position - 1; i >= 0; i--) {
-                off = _map[i].EndLocation.Line - location.Line;
-                if(off <= 0) {
-                    if(off == 0 || off == -1) {
-                        dc = _map[i];
-                        return false;
-                    }
+            //for (int i = _position - 1; i >= 0; i--) {
+            //    off = _map[i].EndLocation.Line - location.Line;
+            //    if (off <= 0) {
+            //        if (off == 0 || off == -1) {
+            //            dc = _map[i];
+            //            return false;
+            //        }
 
-                    break;
-                }
-            }
+            //        break;
+            //    }
+            //}
 
 
             dc = null;
             return false;
-        }
-
-        private void AutoFill(DocComment dc) {
-            string memberType = dc.MemberType;
-            bool isType = false;
-
-            if (dc.NamespaceSetter != null) {
-                if (dc.NamespaceSetter.Length == 0) {
-                    _currentScope.CurrentMemberOf = dc.FullName;
-                } else {
-                    _currentScope.CurrentMemberOf = dc.NamespaceSetter;
-                }
-                _currentScope.CurrentMemberOfIsClass = false;
-            } else if (memberType == "class") {
-                _currentScope.CurrentMemberOf = dc.FullName;
-                _currentScope.CurrentMemberOfIsClass = !dc.IsStatic;
-                isType = true;
-            } else if (memberType == "enum" || memberType == "interface") {
-                _currentScope.CurrentMemberOf = dc.FullName;
-                _currentScope.CurrentMemberOfIsClass = false;
-                isType = true;
-
-                // 只有不存在 MemberOf 的时候才填充。
-            } else {
-                if (memberType == "member") {
-                    if (dc.Type == "Function" || dc[NodeNames.Param] != null || dc[NodeNames.Return] != null) {
-                        dc.MemberType = memberType = "method";
-                    } else {
-                        dc.MemberType = memberType = "field";
-                    }
-                }
-
-                if (dc.MemberOf == null) {
-                    string parentNamspace = _currentScope.CurrentMemberOf;
-                    bool parentIsClass = _currentScope.CurrentMemberOfIsClass;
-                    if (dc.Parent != null) {
-                        parentNamspace = dc.Parent.FullName;
-                        parentIsClass = dc.Parent.MemberType == "class";
-                    }
-
-                    if (parentIsClass) {
-                        if (dc.IsStatic) {
-                            dc.MemberOf = parentNamspace;
-                        } else {
-                            dc.MemberOf = parentNamspace + ".prototype";
-                        }
-                    } else {
-                        dc.MemberOf = parentNamspace;
-                    }
-                }
-            }
         }
 
         /// <summary>
@@ -202,129 +102,146 @@ namespace DocPlus.Javascript {
             DocComment dc;
 
             // 获取一个变量，如果此变量之后还有可用的变量，直接处理。
-            while(GetNext(node.StartLocation, out dc)) {
+            while (GetNext(node.StartLocation, out dc)) {
 
                 // 处理不属于节点，但之前的变量。
                 Process(dc);
             }
 
-            AutoFill(dc);
             return dc;
         }
 
-        private void ProcessCommentIn(Node node) {
+        void ProcessCommentBefore(Node node) {
 
             DocComment dc;
-            while(GetNext(node.EndLocation, out dc)) {
+            while (GetNext(node.EndLocation, out dc)) {
 
                 // 处理不属于节点，但之前的变量。
                 Process(dc);
-            }
-        }
-
-        private void Process(DocComment dc) {
-            dc.Parent = CurrentObject;
-
-            AutoFill(dc);
-        }
-
-        void Assign(Node node, string name, Expression value) {
-            DocComment dc = GetDocCommentBy(node);
-            if (dc != null) {
-                dc.Parent = CurrentObject;
-                if(IsGlobal && !_project.EnableClosure) {
-                    dc.AutoFill(NodeNames.MemberOf, "window");
-                }
-                AutoFillName(dc, name);
-                PushObject(value is ObjectLiteral ? dc : null);
-                VisitExpression(value);
-                PopObject();
-                AutoFillTypeByReturnValue(dc);
             }
         }
 
         /// <summary>
-        /// 自动识别注释中的名字。
+        /// 初始化 <see cref="DocPlus.DocParser.Javascript.DocAstVistor"/> 的新实例。
         /// </summary>
-        /// <param name="dc">赋值的父对象。</param>
-        /// <param name="value">变量。</param>
-        private void AutoFillName(DocComment dc, string name) {
-
-            if(dc != null && name != null)
-                dc.AutoFill(NodeNames.Name, name);
-
+        public DocAstVistor(DocProject project) {
+            _project = project;
         }
 
-        private void AutoFillTypeByReturnValue(DocComment dc) {
-            if(dc != null && ReturnValue != null) {
-                if(ReturnValue is bool) {
-                    dc.AutoFill(NodeNames.Name, "Boolean");
-                    dc.AutoFill(NodeNames.Value, (bool)ReturnValue == true ? "true" : "false");
-                } else if(ReturnValue is string) {
-                    dc.AutoFill(NodeNames.Type, "String");
-                    dc.AutoFill(NodeNames.Value, new StringLiteral((string)ReturnValue, '"', Location.Empty, Location.Empty).ToString());
-                } else if(ReturnValue is double) {
-                    dc.AutoFill(NodeNames.Type, "Number");
-                    if(!(double.IsNaN((double)ReturnValue)))
-                        dc.AutoFill(NodeNames.Value, ReturnValue.ToString());
-                } else if(ReturnValue is ILiteral) {
-                    if(ReturnValue is ArrayLiteral) {
-                        dc.AutoFill(NodeNames.Type, "Array");
-                    } else if(ReturnValue is NullLiteral) {
-                        dc.AutoFill(NodeNames.Value, "null");
-                    } else if (ReturnValue is RegExpLiteral) {
-                        dc.AutoFill(NodeNames.Type, "RegExp");
-                        dc.AutoFill(NodeNames.Value, ((RegExpLiteral)ReturnValue).ToString());
-                    } else if(ReturnValue is FunctionExpression) {
-                        dc.AutoFill(NodeNames.Type, "method");
-                        FunctionExpression fn = (FunctionExpression)ReturnValue;
+        /// <summary>
+        /// 开始对指定的节点解析。
+        /// </summary>
+        /// <param name="script">语法树。</param>
+        /// <param name="comments">所有注释。</param>
+        /// <returns>全局对象。所有变量都可从这个节点找到。</returns>
+        public void Parse(Script script, DocComment[] comments) {
+            _map = comments;
+            CurrentScope = new Scope() { CurrentMemberOf = "window" };
+            VisitScript(script);
+        }
 
-                        var param = (ParamCommentNode)dc[NodeNames.Param];
-                        if(param == null) {
-                            dc[NodeNames.Param] = param = new ParamCommentNode();
-                            foreach(Identifier p in fn.Params) {
-                                param.Add(p.Value);
-                            }
-                        }
-                    }
-                }
+        #endregion
+
+        #region 运行
+
+        /// <summary>
+        /// 获取或设置上一步执行代码返回的变量值。
+        /// </summary>
+        object ReturnValue {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// 获取当前执行的作用域。
+        /// </summary>
+        Scope CurrentScope {
+            get;
+            set;
+        }
+
+        Stack<DocComment> _objectStack = new Stack<DocComment>();
+
+        bool IsGlobal {
+            get {
+                return CurrentScope.Parent == null;
             }
+        }
+
+        DocComment CurrentFunction {
+            get {
+                return CurrentScope.Comment;
+            }
+        }
+
+        void PushScope(DocComment docComment) {
+            Scope scope = new Scope();
+            scope.Comment = docComment;
+            scope.Parent = CurrentScope;
+            scope.CurrentMemberOf = CurrentScope.CurrentMemberOf;
+            scope.CurrentMemberOfIsClass = CurrentScope.CurrentMemberOfIsClass;
+            CurrentScope = scope;
+        }
+
+        void PopScope() {
+
+            // 如果启用就近原则匹配，则内作用域的名字空间可以覆盖父作用域。
+            if (_project.EnableGlobalNamespaceSetter) {
+                CurrentScope.Parent.CurrentMemberOf = CurrentScope.CurrentMemberOf;
+                CurrentScope.Parent.CurrentMemberOfIsClass = CurrentScope.CurrentMemberOfIsClass;
+            }
+
+            CurrentScope = CurrentScope.Parent;
+        }
+
+        DocComment CurrentObject {
+            get {
+                return _objectStack.Count > 0 ? _objectStack.Peek() : null;
+            }
+        }
+
+        void PushObject(DocComment docComment) {
+            _objectStack.Push(docComment);
+        }
+
+        void PopObject() {
+            _objectStack.Pop();
         }
 
         private static bool ConvertToBoolean(object value) {
-            if(value == null) {
+            if (value == null) {
                 return false;
             }
 
-            if(value is bool)
+            if (value is bool)
                 return (bool)value;
 
-            if(value is double)
+            if (value is double)
                 return (double)value > 0;
 
-            if(value is string)
+            if (value is string)
                 return ((string)value).Length > 0;
 
             return true;
         }
 
         private static double ConvertToNumber(object value) {
-            if(value == null) {
+            if (value == null) {
                 return double.NaN;
             }
 
-            if(value is double)
+            if (value is double)
                 return (double)value;
 
-            if(value is bool)
+            if (value is bool)
                 return (bool)value ? 1d : 0d;
 
             string strValue = value.ToString();
             double dblValue;
-            if(double.TryParse(strValue, out dblValue))
+            if (double.TryParse(strValue, out dblValue))
                 return dblValue;
 
-            if(strValue == "null")
+            if (strValue == "null")
                 return 0d;
 
             return double.NaN;
@@ -343,22 +260,155 @@ namespace DocPlus.Javascript {
             return double.IsNaN(d) ? 0 : unchecked((int)d);
         }
 
+        #endregion
+
+        #region 注释分析
+
         /// <summary>
-        /// 初始化 <see cref="DocPlus.DocParser.Javascript.DocAstVistor"/> 的新实例。
+        /// 根据注释所处位置，自动分析注释的所属对象。
         /// </summary>
-        public DocAstVistor(DocProject project) {
-            _project = project;
+        /// <param name="dc"></param>
+        private void AutoFillMemberOf(DocComment dc) {
+            string memberType = dc.MemberType;
+            int memberTypeNo =
+                memberType == "class" ? 0 :
+                memberType == "enum" || memberType == "interface" || memberType == "module" ? 1 :
+                memberType == "member" ? 2 :
+                3;
+
+            // 处理当前的所属成员问题。
+            if (dc.NamespaceSetter == null) {
+                if (memberTypeNo <= 1) {
+                    if (dc.Name == null) {
+                        CurrentScope.CurrentMemberOf = null;
+                        CurrentScope.CurrentMemberOfIsClass = false;
+                    } else if (memberTypeNo == 0) {
+                        CurrentScope.CurrentMemberOf = dc.FullName;
+                        CurrentScope.CurrentMemberOfIsClass = !dc.IsStatic;
+                    } else if (memberTypeNo == 1) {
+                        CurrentScope.CurrentMemberOf = dc.FullName;
+                        CurrentScope.CurrentMemberOfIsClass = false;
+                    }
+                }
+            } else {
+                if (dc.NamespaceSetter.Length == 0) {
+                    CurrentScope.CurrentMemberOf = dc.FullName;
+                } else {
+                    CurrentScope.CurrentMemberOf = dc.NamespaceSetter;
+                }
+                CurrentScope.CurrentMemberOfIsClass = false;
+            }
+
+            // 处理类成员问题。
+            if (memberTypeNo >= 2) {
+
+                if (memberTypeNo == 2) {
+                    if (dc.Type == "Function" || dc[NodeNames.Param] != null || dc[NodeNames.Return] != null) {
+                        dc.MemberType = "method";
+                    } else {
+                        dc.MemberType = "field";
+                    }
+                }
+
+                // 如果没有指定 memberOf ，程序需要自行猜测。
+                if (dc.MemberOf == null) {
+                    string parentNamspace;
+                    bool parentIsClass;
+
+                    // 如果现在正在 obj = {} 状态下。
+                    DocComment obj = CurrentObject;
+
+                    if (obj != null) {
+                        parentNamspace = obj.FullName;
+                        parentIsClass = obj.MemberType == "class";
+
+                        if (obj.Ignore) {
+                            dc.Ignore = true;
+                        }
+                    } else {
+                        parentNamspace = CurrentScope.CurrentMemberOf;
+                        parentIsClass = CurrentScope.CurrentMemberOfIsClass;
+                    }
+
+                    if (parentIsClass) {
+                        if (dc.IsStatic) {
+                            dc.MemberOf = parentNamspace;
+                        } else {
+                            dc.MemberOf = parentNamspace + ".prototype";
+                        }
+                    } else {
+                        dc.MemberOf = parentNamspace;
+                    }
+                }
+
+            }
+        }
+
+        private void Process(DocComment dc) {
+            AutoFillMemberOf(dc);
+        }
+
+        private void Assign(Node node, string name, Expression value, bool isVar = false) {
+            DocComment dc = GetDocCommentBy(node);
+            if (dc != null) {
+                if (isVar && !IsGlobal && _project.EnableClosure) {
+                    dc.Ignore = true;
+                }
+                AutoFillName(dc, name);
+                AutoFillMemberOf(dc);
+                PushObject(_project.ResolveObjectSetter && value is ObjectLiteral ? dc : null);
+                VisitExpression(value);
+                PopObject();
+                AutoFillTypeByReturnValue(dc);
+            }
         }
 
         /// <summary>
-        /// 开始对指定的节点解析。
+        /// 自动识别注释中的名字。
         /// </summary>
-        /// <param name="script">语法树。</param>
-        /// <param name="comments">所有注释。</param>
-        /// <returns>全局对象。所有变量都可从这个节点找到。</returns>
-        public void Parse(Script script, DocComment[] comments) {
-            _map = comments;
-            VisitScript(script);
+        /// <param name="dc">赋值的父对象。</param>
+        /// <param name="value">变量。</param>
+        private void AutoFillName(DocComment dc, string name) {
+
+            if (dc != null && name != null)
+                dc.AutoFill(NodeNames.Name, name);
+
+        }
+
+        private void AutoFillTypeByReturnValue(DocComment dc) {
+            if (dc != null && ReturnValue != null) {
+                if (ReturnValue is bool) {
+                    dc.AutoFill(NodeNames.Name, "Boolean");
+                    dc.AutoFill(NodeNames.Value, (bool)ReturnValue == true ? "true" : "false");
+                } else if (ReturnValue is string) {
+                    dc.AutoFill(NodeNames.Type, "String");
+                    dc.AutoFill(NodeNames.Value, new StringLiteral((string)ReturnValue, '"', Location.Empty, Location.Empty).ToString());
+                } else if (ReturnValue is double) {
+                    dc.AutoFill(NodeNames.Type, "Number");
+                    if (!(double.IsNaN((double)ReturnValue)))
+                        dc.AutoFill(NodeNames.Value, ReturnValue.ToString());
+                } else if (ReturnValue is ILiteral) {
+                    if (ReturnValue is ArrayLiteral) {
+                        dc.AutoFill(NodeNames.Type, "Array");
+                    } else if (ReturnValue is NullLiteral) {
+                        dc.AutoFill(NodeNames.Value, "null");
+                    } else if (ReturnValue is RegExpLiteral) {
+                        dc.AutoFill(NodeNames.Type, "RegExp");
+                        dc.AutoFill(NodeNames.Value, ((RegExpLiteral)ReturnValue).ToString());
+                    } else if (ReturnValue is FunctionExpression) {
+                        dc.AutoFill(NodeNames.Type, "method");
+                        FunctionExpression fn = (FunctionExpression)ReturnValue;
+
+                        var param = (ParamInfoCollection)dc[NodeNames.Param];
+                        if (param == null) {
+                            dc[NodeNames.Param] = param = new ParamInfoCollection();
+                            foreach (Identifier p in fn.Params) {
+                                param.Add(p.Value);
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         #endregion
@@ -370,6 +420,12 @@ namespace DocPlus.Javascript {
 
             // 访问语句。
             VisitBlock(script);
+
+            // 处理全部剩下的注释。
+            while (_position < _map.Length) {
+                DocComment dc = _map[_position++];
+                Process(dc);
+            }
         }
 
         [DebuggerStepThrough()]
@@ -428,8 +484,8 @@ namespace DocPlus.Javascript {
 
                 } else {
                     Identifier e3 = assignmentExpression.Target as Identifier;
-                    
-                    if(e3 != null) {
+
+                    if (e3 != null) {
 
                         AutoFillName(dc, e3.Name);
 
@@ -439,6 +495,8 @@ namespace DocPlus.Javascript {
 
             }
 
+            if (dc != null)
+                AutoFillMemberOf(dc);
             PushObject(assignmentExpression.Value is ObjectLiteral ? dc : null);
             VisitExpression(assignmentExpression.Value);
             PopObject();
@@ -450,7 +508,7 @@ namespace DocPlus.Javascript {
             VisitStatements(blockStatement.Statements);
 
             // 获取一个变量，如果此变量之后还有可用的变量，直接处理。
-            ProcessCommentIn(blockStatement);
+            ProcessCommentBefore(blockStatement);
         }
 
         public void VisitBreakStatement(BreakStatement breakStatement) {
@@ -544,12 +602,18 @@ namespace DocPlus.Javascript {
         public void VisitFunctionExpression(FunctionExpression functionExpression) {
 
             DocComment dc = GetDocCommentBy(functionExpression);
-            PushFunction(dc);
-            AutoFillName(dc,  functionExpression.Name);
+            if (_project.EnableClosure && dc != null && functionExpression.Name != null && !IsGlobal) {
+                dc.Ignore = true;
+            }
+            AutoFillName(dc, functionExpression.Name);
 
+            if (dc != null)
+                AutoFillMemberOf(dc);
+
+            PushScope(dc);
             VisitStatements(functionExpression.Statements);
-            ProcessCommentIn(functionExpression);
-            PopFunction();
+            ProcessCommentBefore(functionExpression);
+            PopScope();
         }
 
         public void VisitFunctionCallExpression(FunctionCallExpression functionCallExpression) {
@@ -590,8 +654,11 @@ namespace DocPlus.Javascript {
         public void VisitIndexCallExpression(IndexCallExpression indexCallExpression) {
             DocComment dc = GetDocCommentBy(indexCallExpression);
             VisitExpression(indexCallExpression.Target);
-            if(ReturnValue is string) {
+            if (ReturnValue is string) {
                 AutoFillName(dc, (string)ReturnValue);
+
+                if (dc != null)
+                    AutoFillMemberOf(dc);
             }
             VisitExpression(indexCallExpression.Argument);
             ReturnValue = null;
@@ -613,7 +680,7 @@ namespace DocPlus.Javascript {
                 VisitProperty(p);
             }
 
-            ProcessCommentIn(objectLiteral);
+            ProcessCommentBefore(objectLiteral);
 
             ReturnValue = null;
         }
@@ -627,7 +694,10 @@ namespace DocPlus.Javascript {
         }
 
         public void VisitPropertyCallExpression(PropertyCallExpression propertyCallExpression) {
-            AutoFillName(GetDocCommentBy(propertyCallExpression), propertyCallExpression.Argument);
+            //DocComment dc = GetDocCommentBy(propertyCallExpression);
+            //if (dc != null) {
+            //    AutoFillName(dc, propertyCallExpression.Argument);
+            //}
             VisitExpression(propertyCallExpression.Target);
             ReturnValue = null;
         }
@@ -644,13 +714,13 @@ namespace DocPlus.Javascript {
             if (currentFunction != null) {
 
                 if (currentFunction[NodeNames.Return] == null) {
-                    currentFunction[NodeNames.Return] = new ReturnCommentNode();
+                    currentFunction[NodeNames.Return] = new TypeSummary();
                 }
 
                 currentFunction.Type = null;
                 AutoFillTypeByReturnValue(currentFunction);
 
-                ((ReturnCommentNode)currentFunction[NodeNames.Return]).Type = currentFunction.Type;
+                ((TypeSummary)currentFunction[NodeNames.Return]).Type = currentFunction.Type;
                 currentFunction.Type = "Function";
             }
         }
@@ -677,15 +747,15 @@ namespace DocPlus.Javascript {
         public void VisitThrowStatement(ThrowStatement throwStatement) {
             VisitExpression(throwStatement.Expression);
 
-            if(CurrentFunction != null && ReturnValue is string) {
+            if (CurrentFunction != null && ReturnValue is string) {
 
-                ParamCommentNode p = (ParamCommentNode)CurrentFunction[NodeNames.Exception];
+                ArrayProxy<TypeSummary> p = (ArrayProxy<TypeSummary>)CurrentFunction[NodeNames.Exception];
 
-                if(p == null) {
-                    CurrentFunction[NodeNames.Exception] = p = new ParamCommentNode();
+                if (p == null) {
+                    CurrentFunction[NodeNames.Exception] = p = new ArrayProxy<TypeSummary>();
                 }
 
-                p.Add((string)ReturnValue, "String");
+                p.Add(new TypeSummary { Summary = (string)ReturnValue, Type = "String" });
 
             }
         }
@@ -729,15 +799,15 @@ namespace DocPlus.Javascript {
                     break;
 
                 case TokenType.Typeof:
-                    if(ReturnValue is string) {
+                    if (ReturnValue is string) {
                         ReturnValue = "string";
-                    } else if(ReturnValue is bool) {
+                    } else if (ReturnValue is bool) {
                         ReturnValue = "boolean";
-                    } else if(ReturnValue is double) {
+                    } else if (ReturnValue is double) {
                         ReturnValue = "number";
-                    } else if(ReturnValue is FunctionExpression) {
+                    } else if (ReturnValue is FunctionExpression) {
                         ReturnValue = "function";
-                    } else if(ReturnValue != null) {
+                    } else if (ReturnValue != null) {
                         ReturnValue = "object";
                     } else {
                         ReturnValue = null;
@@ -767,7 +837,7 @@ namespace DocPlus.Javascript {
         }
 
         public void VisitVariableDeclaration(VariableDeclaration variableDeclaration) {
-            Assign(variableDeclaration, variableDeclaration.Name.Name, variableDeclaration.Initialiser ?? new UndefinedExpression());
+            Assign(variableDeclaration, variableDeclaration.Name.Name, variableDeclaration.Initialiser ?? new UndefinedExpression(), true);
         }
 
         public void VisitVariableStatement(VariableStatement variableStatement) {
@@ -792,7 +862,7 @@ namespace DocPlus.Javascript {
             object right = ReturnValue;
 
             // 如果是加， 且有一个类型是 String ，则返回 String 。
-            if(additiveExpression.Operator == TokenType.Add && (!IsNumberic(left) || !IsNumberic(right))) {
+            if (additiveExpression.Operator == TokenType.Add && (!IsNumberic(left) || !IsNumberic(right))) {
                 ReturnValue = String.Concat(left, right);
             } else {
                 ReturnValue = double.NaN;
@@ -817,7 +887,7 @@ namespace DocPlus.Javascript {
             object right = ReturnValue;
 
             ReturnValue = double.NaN;
-            if(left != null && right != null) {
+            if (left != null && right != null) {
                 switch (multiplicativeExpression.Operator) {
                     case TokenType.Mul:
                         ReturnValue = ConvertToNumber(left) * ConvertToNumber(right);
@@ -837,16 +907,16 @@ namespace DocPlus.Javascript {
             object right = ReturnValue;
 
             ReturnValue = double.NaN;
-            if(left != null && right != null) {
+            if (left != null && right != null) {
                 switch (shiftExpression.Operator) {
                     case TokenType.Shl:
                         int i = ConvertToInteger(left) << ConvertToInteger(right);
-                        if(i != 0)
+                        if (i != 0)
                             ReturnValue = (double)i;
                         break;
                     case TokenType.Shr:
                         int j = ConvertToInteger(left) >> ConvertToInteger(right);
-                        if(j != 0)
+                        if (j != 0)
                             ReturnValue = (double)j;
                         break;
                 }
@@ -861,8 +931,8 @@ namespace DocPlus.Javascript {
             object right = ReturnValue;
 
             ReturnValue = false;
-            if(left != null && right != null) {
-                if(IsNumberic(left) && IsNumberic(right)) {
+            if (left != null && right != null) {
+                if (IsNumberic(left) && IsNumberic(right)) {
                     switch (relationalExpression.Operator) {
                         case TokenType.Gt:
                             ReturnValue = ConvertToNumber(left) > ConvertToNumber(right);
@@ -906,7 +976,7 @@ namespace DocPlus.Javascript {
             object right = ReturnValue;
 
             ReturnValue = null;
-            if(left != null && right != null) {
+            if (left != null && right != null) {
                 switch (equalityExpression.Operator) {
                     case TokenType.Eq:
                         ReturnValue = left == right;
@@ -932,21 +1002,21 @@ namespace DocPlus.Javascript {
             object right = ReturnValue;
 
             ReturnValue = double.NaN;
-            if(left != null && right != null) {
+            if (left != null && right != null) {
                 switch (bitwiseExpression.Operator) {
                     case TokenType.BitOr:
                         int i = ConvertToInteger(left) | ConvertToInteger(right);
-                        if(i != 0)
+                        if (i != 0)
                             ReturnValue = (double)i;
                         break;
                     case TokenType.BitXor:
                         int j = ConvertToInteger(left) ^ ConvertToInteger(right);
-                        if(j != 0)
+                        if (j != 0)
                             ReturnValue = (double)j;
                         break;
                     case TokenType.BitAnd:
                         int k = ConvertToInteger(left) & ConvertToInteger(right);
-                        if(k != 0)
+                        if (k != 0)
                             ReturnValue = (double)k;
                         break;
                 }
@@ -972,6 +1042,9 @@ namespace DocPlus.Javascript {
         }
 
         #endregion
+
     }
 
 }
+
+

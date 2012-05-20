@@ -62,15 +62,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CommentNode\ArrayProxy.cs" />
+    <Compile Include="CommentNode\ParamInfo.cs" />
     <Compile Include="DocParser\Markdown.cs" />
-    <Compile Include="CommentNode\ParamCommentNode.cs" />
-    <Compile Include="CommentNode\ReturnCommentNode.cs" />
+    <Compile Include="CommentNode\ParamInfoCollection.cs" />
+    <Compile Include="CommentNode\TypeSummary.cs" />
     <Compile Include="DocParser\DocData.cs" />
     <Compile Include="DocParser\DocGenerator.cs" />
     <Compile Include="DocParser\JavaCommentParser.cs" />
     <Compile Include="DocParser\JavaCommentParser.Parsers.cs" />
     <Compile Include="DocComment\NodeNames.cs" />
-    <Compile Include="CommentNode\ICommentNode.cs" />
     <Compile Include="DocComment\DocComment.cs" />
     <Compile Include="DocParser\DocMerger.cs" />
     <Compile Include="DocParser\DocParser.cs" />

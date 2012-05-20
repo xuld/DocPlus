@@ -83,10 +83,6 @@ namespace DocPlus.Javascript {
             _parser.Project.ProgressReporter.Warning(_parser.CurrentSource, _line, String.Format(message, args), 0);
         }
 
-        void Redefined() {
-            Error("重复的标签: @{0}", _currentNodeName);
-        }
-
         /// <summary>
         /// 提示用户标签重复定义。
         /// </summary>
@@ -341,6 +337,7 @@ namespace DocPlus.Javascript {
         }
 
         void ParseNext() {
+            SkipWhiteSpace();
             string value = ReadWord();
             if(value != null) {
                 _currentNodeName = value;
@@ -548,21 +545,15 @@ namespace DocPlus.Javascript {
             }
         }
 
-        /// <summary>
-        /// 把2个数组的内容合并。
-        /// </summary>
-        /// <param name="p"></param>
-        /// <param name="p_2"></param>
-        /// <returns></returns>
-        static string[] Concat(string[] p, string[] p_2) {
-            if(p == null)
-                return p_2;
+        void AddArrayProxy<T>(T value) {
+            ArrayProxy<T> e = (ArrayProxy<T>)_currentComment[_currentNodeName];
+            if (e == null) {
+                _currentComment[_currentNodeName] = e = new ArrayProxy<T>();
+            }
 
-            string[] r = new string[p.Length + p_2.Length];
-            p.CopyTo(r, 0);
-            p_2.CopyTo(r, p.Length);
 
-            return r;
+            e.Add(value);
+
         }
 
         #endregion
@@ -635,7 +626,7 @@ namespace DocPlus.Javascript {
 
         void UpdateString(string nodeName, string value) {
             if(_currentComment[nodeName] != null) {
-                Redefined();
+                Redefined(nodeName);
             }
 
             if (value != null && value.Length > 0) {
@@ -661,7 +652,7 @@ namespace DocPlus.Javascript {
             if(memberType != null) {
                 Redefined(memberType);
             }
-            _currentComment[NodeNames.MemberType] = nodeName == "member" ? null : nodeName;
+            _currentComment[NodeNames.MemberType] = nodeName;
         }
 
         #endregion
@@ -669,19 +660,31 @@ namespace DocPlus.Javascript {
         #region 底层更新的封装
 
         void TryUpdateString(string nodeName) {
-            UpdateString(nodeName, ReadText());
+            string text =  ReadText();
+            if(!String.IsNullOrEmpty(text)){
+                _currentComment[nodeName] = text;
+            }
         }
 
         void TryUpdateName() {
-            UpdateName(NodeNames.Name, ReadName());
+            string value = ReadName();
+            if (!String.IsNullOrEmpty(value)) {
+                UpdateName(NodeNames.Name, value);
+            }
         }
 
         void TryUpdateType() {
-            UpdateString(NodeNames.Type, ReadType());
+            string value = ReadType();
+            if (!String.IsNullOrEmpty(value)) {
+                _currentComment[NodeNames.Type] = value;
+            }
         }
 
         void TryUpdateDefaultValue() {
-            UpdateString(NodeNames.Value, ReadDefaultValue());
+            string value = ReadDefaultValue();
+            if (!String.IsNullOrEmpty(value)) {
+                _currentComment[NodeNames.Value] = value;
+            }
         }
 
         #endregion

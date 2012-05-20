@@ -26,70 +26,19 @@ namespace DocPlus.Javascript {
 
         void AutoFillMemberOf() {
 
-            // 如果启用了作用域模式，则默认为 null，全局成员已经被标记为 window 成员。
-            string currentNamespace = _parser.Project.EnableClosure ? null : "window";
-            bool currentNamespaceIsClass = false;
-
             for(int i = 0; i < _docCommentMap.Length; i++) {
 
                 DocComment dc = _docCommentMap[i];
 
-                string memberType = dc.MemberType;
-                bool isType = false;
+                if (dc.Name != null && !dc.Ignore) {
 
-                if (dc.NamespaceSetter != null) {
-                    if (dc.NamespaceSetter.Length == 0) {
-                        currentNamespace = dc.FullName;
+                    string key = dc.FullName;
+                    DocComment old;
+                    if (_parser.Data.DocComments.TryGetValue(dc.FullName, out old)) {
+                        old.Merge(dc);
                     } else {
-                        currentNamespace = dc.NamespaceSetter;
-                    }
-                    currentNamespaceIsClass = false;
-                }else if(memberType == "class"){
-                    currentNamespace = dc.FullName;
-                    currentNamespaceIsClass = !dc.IsStatic;
-                    isType = true;
-                } else if (memberType == "enum" || memberType == "interface") {
-                    currentNamespace = dc.FullName;
-                    currentNamespaceIsClass = false;
-                    isType = true;
-
-                    // 只有不存在 MemberOf 的时候才填充。
-                } else {
-                    if (memberType == "member") {
-                        if (dc.Type == "Function" || dc[NodeNames.Param] != null || dc[NodeNames.Return] != null) {
-                            dc.MemberType = memberType = "method";
-                        } else {
-                            dc.MemberType = memberType = "field";
-                        }
-                    }
-
-                    if (dc.MemberOf == null) {
-                        string parentNamspace = currentNamespace;
-                        bool parentIsClass = currentNamespaceIsClass;
-                        if (dc.Parent != null) {
-                            parentNamspace = dc.Parent.FullName;
-                            parentIsClass = dc.Parent.MemberType == "class";
-                        } 
-                        
-                        if (parentIsClass) {
-                            if (dc.IsStatic) {
-                                dc.MemberOf = parentNamspace;
-                            } else {
-                                dc.MemberOf = parentNamspace + ".prototype";
-                            }
-                        } else {
-                            dc.MemberOf = parentNamspace;
-                        }
-                    }
-                }
-
-
-                if (dc.Name != null) {
-
-                    if (isType || !String.IsNullOrEmpty(dc.MemberOf)) {
                         _parser.Data.DocComments[dc.FullName] = dc;
                     }
-
                 }
 
 

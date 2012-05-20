@@ -202,6 +202,11 @@ namespace DocPlus.Javascript {
 
         public bool UseStrictMode { get; set; }
 
+        /// <summary>
+        /// 当将一个 JSON 对象赋值给父对象时，文档解析时自动将成员作为目标对象的成员。
+        /// </summary>
+        public bool ResolveObjectSetter { get; set; }
+
         #endregion
 
         /// <summary>
@@ -211,6 +216,7 @@ namespace DocPlus.Javascript {
             NewLine = Environment.NewLine;
             EnableClosure = AutoCreateFunctionParam = EnableAutoCreateComment = UseNamingRules = true;
             OpenIfSuccess = true;
+            ResolveObjectSetter = true;
         }
 
         /// <summary>
@@ -250,7 +256,6 @@ namespace DocPlus.Javascript {
             // 然后使用 DocGenerator 进行最终文件生成。
             new DocGenerator(this).Generate(data);
         }
-
     }
 
 }

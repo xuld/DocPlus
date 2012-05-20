@@ -30,10 +30,13 @@ namespace DocPlus.Javascript {
             _commentNodes["enum"] = ParseMemberType;
             _commentNodes["interface"] = ParseMemberType;
             _commentNodes["interface"] = ParseMemberType;
+            _commentNodes["constructor"] = ParseMemberType;
             _commentNodes["member"] = ParseMemberType;
             _commentNodes["method"] = ParseMemberType;
             _commentNodes["event"] = ParseMemberType;
             _commentNodes["property"] = ParseTypedMemberType;
+            _commentNodes["getter"] = ParseTypedMemberType;
+            _commentNodes["setter"] = ParseTypedMemberType;
             _commentNodes["field"] = ParseTypedMemberType;
             _commentNodes["config"] = ParseTypedMemberType;
 
@@ -180,7 +183,7 @@ namespace DocPlus.Javascript {
         #region 特殊
 
         void ParseMemberAttribute() {
-            string memberAttribute = (string)_currentComment[NodeNames.MemberAccess];
+            string memberAttribute = (string)_currentComment[NodeNames.MemberAttribute];
             if(memberAttribute == null) {
                 memberAttribute = _currentNodeName;
             } else if((memberAttribute == "static" && _currentNodeName == "readonly") || (memberAttribute == "readonly" && _currentNodeName == "static")) {
@@ -286,7 +289,7 @@ namespace DocPlus.Javascript {
 
             }
 
-            ParamCommentNode p = (ParamCommentNode)(_currentComment[NodeNames.Param] ?? (_currentComment[NodeNames.Param] = new ParamCommentNode()));
+            ParamInfoCollection p = (ParamInfoCollection)(_currentComment[NodeNames.Param] ?? (_currentComment[NodeNames.Param] = new ParamInfoCollection()));
 
             p.Add(name, type, summary, dftValue);
         }
@@ -301,10 +304,10 @@ namespace DocPlus.Javascript {
         }
 
         void ParseException() {
-            //if(currentVariant.Exceptions == null) {
-            //    currentVariant.Exceptions = new List<string[]>();
-            //}
-            //currentVariant.Exceptions.Add(ReadReturn());
+            AddArrayProxy(new TypeSummary() {
+                Type = ReadType(),
+                Summary = ReadText()
+            });
         }
 
         void ParseMemberOf() {
@@ -314,10 +317,10 @@ namespace DocPlus.Javascript {
         void ParseReturn() {
 
             if(_currentComment[NodeNames.Return] != null) {
-                Redefined();
+                Redefined(NodeNames.Return);
             }
 
-            _currentComment[NodeNames.Return] = new ReturnCommentNode() {
+            _currentComment[NodeNames.Return] = new TypeSummary() {
                 Type = ReadType(),
                 Summary = ReadText()
             };
@@ -325,13 +328,11 @@ namespace DocPlus.Javascript {
         }
 
         void ParseLink() {
-            //currentVariant[node] = Concat(currentVariant[node], ReadLink());
+            _currentComment[_currentNodeName] = ReadText();
         }
 
         void ParseExtendsAndImplements() {
-            //if(currentVariant.MemberType == MemberType.Default)
-            //    currentVariant.MemberType = MemberType.Class;
-            //ParseMultiName(currentVariant, node);
+            AddArrayProxy(ReadNameAndEnsureEmpty());
         }
 
         void ParseIgnore() {
@@ -382,7 +383,7 @@ namespace DocPlus.Javascript {
         }
 
         void ParseSee() {
-
+            AddArrayProxy(ReadNameAndEnsureEmpty());
         }
 
         void ParseDefine() {

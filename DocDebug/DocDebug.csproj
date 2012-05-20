@@ -6,7 +6,7 @@
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{3B0B51FA-EDFB-4CE7-9EC0-F24B6D74BA40}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DocPlus.GUI.Debug</RootNamespace>
     <AssemblyName>DocDebug</AssemblyName>
@@ -34,6 +34,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>DocPlus.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="JavascriptParser, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -102,6 +105,9 @@
       <Project>{8C736F03-B28D-46B7-97F0-6DDAE27F7585}</Project>
       <Name>Javascript</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="DocPlus.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

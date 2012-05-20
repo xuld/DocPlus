@@ -12,11 +12,11 @@ namespace DocPlus.Javascript {
 
         #region 常量
 
-        public static string MemberType = "membertype";
+        public static string MemberType = "memberType";
 
-        public static string MemberAccess = "membercccess";
+        public static string MemberAccess = "memberAccess";
 
-        public static string MemberAttribute = "memberattribute";
+        public static string MemberAttribute = "memberAttribute";
 
         public static string Name = "name";
 
@@ -26,7 +26,7 @@ namespace DocPlus.Javascript {
 
         public static string Summary = "summary";
 
-        public static string Value = "defaultvalue";
+        public static string Value = "defaultValue";
 
         #endregion
 
@@ -35,6 +35,6 @@ namespace DocPlus.Javascript {
         public static string Param = "param";
         public static string MemberOf = "memberOf";
 
-        public static string Exception { get; set; }
+        public static string Exception = "exception";
     }
 }

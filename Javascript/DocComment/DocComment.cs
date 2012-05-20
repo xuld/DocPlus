@@ -8,7 +8,7 @@ namespace DocPlus.Javascript {
     /// <summary>
     /// 表示一个文档注释变量。
     /// </summary>
-    public class DocComment : NameObjectCollectionBase {
+    public class DocComment :NameObjectCollectionBase {
 
         #region 注释自身属性
 
@@ -86,7 +86,7 @@ namespace DocPlus.Javascript {
         /// <param name="nodeName">节点名。</param>
         /// <param name="value">值。</param>
         public void AutoFill(string nodeName, object value) {
-            if(BaseGet(nodeName) == null) {
+            if (BaseGet(nodeName) == null) {
                 BaseSet(nodeName, value);
             }
         }
@@ -111,7 +111,7 @@ namespace DocPlus.Javascript {
         /// </summary>
         /// <param name="src"></param>
         public void Merge(DocComment src) {
-            for(int i = 0; i < src.Count; i++) {
+            for (int i = 0; i < src.Count; i++) {
                 BaseSet(src.BaseGetKey(i), src.BaseGet(i));
             }
         }
@@ -182,7 +182,14 @@ namespace DocPlus.Javascript {
                 return (string)this[NodeNames.MemberOf];
             }
             set {
-                this[NodeNames.MemberOf] = value;
+                if (value != null) {
+                    if (value == "window") {
+                        value = string.Empty;
+                    } else if (value.StartsWith("window.")) {
+                        value = value.Substring("window.".Length);
+                    }
+                    this[NodeNames.MemberOf] = value;
+                }
             }
         }
 
@@ -197,16 +204,16 @@ namespace DocPlus.Javascript {
 
         public string FullName {
             get {
-                return MemberOf == null ? Name : (MemberOf + "." + Name);
+                return MemberOf == null || MemberOf.Length == 0 ? Name : (MemberOf + "." + Name);
             }
         }
 
         public bool IsStatic {
             get {
-                if(this[NodeNames.MemberAccess] == null)
+                if (this[NodeNames.MemberAttribute] == null)
                     return false;
 
-                if(((string)this[NodeNames.MemberAccess]).Contains("static"))
+                if (((string)this[NodeNames.MemberAttribute]).Contains("static"))
                     return true;
 
 
@@ -215,8 +222,6 @@ namespace DocPlus.Javascript {
         }
 
         public string NamespaceSetter { get; set; }
-
-        public DocComment Parent { get; set; }
 
         public bool Ignore { get; set; }
     }

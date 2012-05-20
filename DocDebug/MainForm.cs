@@ -27,7 +27,7 @@ namespace DocPlus.GUI.Debug {
             splitContainer1.Panel2.Controls.Add(tw);
 
             scintilla.Dock = DockStyle.Fill;
-            scintilla.Margins[0].Width = 20;
+            scintilla.Margins[0].Width = 40;
             scintilla.ConfigurationManager.Language = "js";
             scintilla.BorderStyle = BorderStyle.None;
             tabPage1.Controls.Add(scintilla);
@@ -45,7 +45,7 @@ namespace DocPlus.GUI.Debug {
         }
 
         private void 控制台CToolStripMenuItem_Click(object sender, EventArgs e) {
-            splitContainer1.Panel2Collapsed = !splitContainer1.Panel2Collapsed;
+            ShowConsole();
         }
 
         void ShowConsole() {
@@ -86,7 +86,7 @@ namespace DocPlus.GUI.Debug {
                         node.Nodes.Add("@" + kv.Value[k]).Tag = kv.Value;
                     } else if(k == "memberOf" || k == "name"){
                     }else{
-                        node.Nodes.Add("@" + k + " " + kv.Value[k]).Tag = kv.Value;
+                        node.Nodes.Add(String.Concat("@", k, " ", kv.Value[k].ToString())).Tag = kv.Value;
                     }
                 }
             }
@@ -94,19 +94,19 @@ namespace DocPlus.GUI.Debug {
             treeView1.ResumeLayout(true);
         }
 
-        private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e) {
-            if(e.Node.Tag != null) {
+        void OnSelectNode(TreeNode treeNode) {
+            if (treeNode.Tag != null) {
                 int i = (int)treeView1.Tag;
                 Location start, end;
-                switch(i){
+                switch (i) {
                     case 1:
-                        DocComment dc = (DocComment)e.Node.Tag;
+                        DocComment dc = (DocComment)treeNode.Tag;
                         start = dc.StartLocation;
                         end = dc.EndLocation;
                         break;
 
                     case 2:
-                        Node node = (Node)e.Node.Tag;
+                        Node node = (Node)treeNode.Tag;
                         start = node.StartLocation;
                         end = node.EndLocation;
                         break;
@@ -115,19 +115,18 @@ namespace DocPlus.GUI.Debug {
                         return;
                 }
 
-                    int pos = scintilla.FindColumn(start.Line - 1, start.Column - 1);
+                int pos = scintilla.FindColumn(start.Line - 1, start.Column - 1);
 
-                    scintilla.Selection.Start = pos;
+                scintilla.Selection.Start = pos;
 
-                    if (start.Line == end.Line) {
-                        pos += end.Column - start.Column;
-                    } else {
-                        pos = scintilla.FindColumn(end.Line - 1, end.Column - 1);
-                    }
-                    scintilla.Selection.End = pos;
-                    scintilla.Scrolling.ScrollToCaret();
+                if (start.Line == end.Line) {
+                    pos += end.Column - start.Column;
+                } else {
+                    pos = scintilla.FindColumn(end.Line - 1, end.Column - 1);
+                }
+                scintilla.Selection.End = pos;
+                scintilla.Scrolling.ScrollToCaret();
             }
-            
         }
 
         void Bind(TreeNode node, CorePlus.Parser.Javascript.Node codeNode) {
@@ -261,6 +260,10 @@ namespace DocPlus.GUI.Debug {
             treeView1.ResumeLayout(true);
 
 
+        }
+
+        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e) {
+            OnSelectNode(e.Node);
         }
 
 
