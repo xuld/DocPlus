@@ -22,11 +22,11 @@ namespace DocPlus.Javascript {
 
         public static string Type = "type";
 
-        public static string Return = "return";
+        public static string Returns = "returns";
 
         public static string Summary = "summary";
 
-        public static string Value = "defaultValue";
+        public static string DefaultValue = "defaultValue";
 
         public static string Requires = "requires";
 
@@ -35,6 +35,10 @@ namespace DocPlus.Javascript {
         public static string MemberOf = "memberOf";
 
         public static string Exception = "exception";
+
+        public static string Extends = "extends";
+
+        public static string Implements = "implements";
 
         #endregion
     }

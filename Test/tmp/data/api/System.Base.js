@@ -1,1 +1,1 @@
-﻿jsonp({"summary":'<p>\u6240\u6709\u7c7b\u7684\u57fa\u7c7b\u3002</p>\n',"memberType":'class',"name":'Base',"memberOf":'System'});
+﻿jsonp({"fullName":'System.Base',"methods":[{"name":'un',"icon":'M',"fullName":'System.Base.prototype.un',"summary":'<p>\u5220\u9664\u4e00\u4e2a\u76d1\u542c\u5668\u3002</p>\n',"isStatic":false,"defines":''}],"summary":'<p>\u6240\u6709\u7c7b\u7684\u57fa\u7c7b\u3002</p>\n',"memberType":'class',"name":'Base',"memberOf":'System'});

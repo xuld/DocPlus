@@ -74,12 +74,12 @@ namespace DocPlus.Javascript {
             _commentNodes["since"] = ParseString;
             _commentNodes["deprecated"] = ParseString;
 
-            _commentNodes["extends"] = ParseExtendsAndImplements;
-            _commentNodes["implements"] = ParseExtendsAndImplements;
+            _commentNodes["extends"] = ParseExtends;
+            _commentNodes["implements"] = ParseImplements;
 
             _commentNodes["exception"] = ParseException;
             _commentNodes["param"] = ParseParam;
-            _commentNodes["return"] = ParseReturn;
+            _commentNodes["returns"] = ParseReturn;
 
             _commentNodes["see"] = ParseSee;
             _commentNodes["seeAlso"] = ParseSee;
@@ -316,11 +316,11 @@ namespace DocPlus.Javascript {
 
         void ParseReturn() {
 
-            if(_currentComment[NodeNames.Return] != null) {
-                Redefined(NodeNames.Return);
+            if(_currentComment[NodeNames.Returns] != null) {
+                Redefined(NodeNames.Returns);
             }
 
-            _currentComment[NodeNames.Return] = new TypeSummary() {
+            _currentComment[NodeNames.Returns] = new TypeSummary() {
                 Type = ReadType(),
                 Summary = ReadText()
             };
@@ -331,8 +331,12 @@ namespace DocPlus.Javascript {
             _currentComment[_currentNodeName] = ReadText();
         }
 
-        void ParseExtendsAndImplements() {
+        void ParseImplements() {
             AddArrayProxy(ReadNameAndEnsureEmpty());
+        }
+
+        void ParseExtends() {
+            UpdateString(_currentNodeName, ReadNameAndEnsureEmpty());
         }
 
         void ParseIgnore() {
@@ -345,7 +349,7 @@ namespace DocPlus.Javascript {
         }
 
         void ParseSystem() {
-            _currentComment.Attribute = DocCommentAttribute.PredefinedMember;
+            _currentComment.System = true;
         }
 
         void ParseConstructor() {

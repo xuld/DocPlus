@@ -1,1 +1,1 @@
-﻿jsonp({"memberType":'class',"name":'Function'});
+﻿jsonp({"fullName":'Function',"methods":[{"name":'isFunction',"icon":'M',"fullName":'Function.isFunction',"summary":'<p>\u5224\u65ad\u4e00\u4e2a\u53d8\u91cf\u662f\u5426\u662f\u51fd\u6570\u3002</p>\n',"isStatic":true,"defines":''}],"properties":[{"name":'returnTrue',"icon":'P',"fullName":'Function.returnTrue',"summary":'<p>\u4e00\u4e2a\u8fd4\u56de true \u7684\u51fd\u6570\u3002</p>\n',"isStatic":true,"defines":''}],"memberType":'class',"name":'Function'});

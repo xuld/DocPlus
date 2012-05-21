@@ -24,7 +24,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ShareApp", "ShareApp\", "{C
 		Release.AspNetCompiler.ForceOverwrite = "true"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
-		VWDPort = "17103"
+		VWDPort = "48291"
 		DefaultWebSiteLanguage = "Visual C#"
 	EndProjectSection
 EndProject
@@ -157,5 +157,6 @@ Global
 		{E7B70917-888C-48EE-B8BB-140A84838FB7} = {D88D4262-1E43-4A26-8C4F-7B7A27D8576A}
 		{785D69A9-3338-4436-97EF-1761699D0069} = {C78B9F3A-2F63-4308-8BD8-3B397E7A0255}
 		{26EA4DD9-65F1-4739-9052-186A5BCBC665} = {C78B9F3A-2F63-4308-8BD8-3B397E7A0255}
+		{A60CAD5B-E4BE-44B6-8F8C-CEA2655A2A55} = {C78B9F3A-2F63-4308-8BD8-3B397E7A0255}
 	EndGlobalSection
 EndGlobal

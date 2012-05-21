@@ -26,10 +26,16 @@ namespace DocPlus.Javascript {
             set;
         }
 
+        public Variant Global {
+            get;
+            set;
+        }
+
         public DocData() {
             Properties = new NameValueCollection();
             Files = new NameValueCollection();
             DocComments = new Dictionary<string, DocComment>();
+            Global = new Variant();
         }
     }
 }

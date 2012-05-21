@@ -320,15 +320,8 @@ namespace DocPlus.Javascript {
                         parentIsClass = CurrentScope.CurrentMemberOfIsClass;
                     }
 
-                    if (parentIsClass) {
-                        if (dc.IsStatic) {
-                            dc.MemberOf = parentNamspace;
-                        } else {
-                            dc.MemberOf = parentNamspace + ".prototype";
-                        }
-                    } else {
-                        dc.MemberOf = parentNamspace;
-                    }
+                    dc.MemberOf = parentNamspace;
+                    dc.IsMember = parentIsClass && !dc.IsStatic;
                 }
 
             }
@@ -369,22 +362,22 @@ namespace DocPlus.Javascript {
             if (dc != null && ReturnValue != null) {
                 if (ReturnValue is bool) {
                     dc.AutoFill(NodeNames.Name, "Boolean");
-                    dc.AutoFill(NodeNames.Value, (bool)ReturnValue == true ? "true" : "false");
+                    dc.AutoFill(NodeNames.DefaultValue, (bool)ReturnValue == true ? "true" : "false");
                 } else if (ReturnValue is string) {
                     dc.AutoFill(NodeNames.Type, "String");
-                    dc.AutoFill(NodeNames.Value, new StringLiteral((string)ReturnValue, '"', Location.Empty, Location.Empty).ToString());
+                    dc.AutoFill(NodeNames.DefaultValue, new StringLiteral((string)ReturnValue, '"', Location.Empty, Location.Empty).ToString());
                 } else if (ReturnValue is double) {
                     dc.AutoFill(NodeNames.Type, "Number");
                     if (!(double.IsNaN((double)ReturnValue)))
-                        dc.AutoFill(NodeNames.Value, ReturnValue.ToString());
+                        dc.AutoFill(NodeNames.DefaultValue, ReturnValue.ToString());
                 } else if (ReturnValue is ILiteral) {
                     if (ReturnValue is ArrayLiteral) {
                         dc.AutoFill(NodeNames.Type, "Array");
                     } else if (ReturnValue is NullLiteral) {
-                        dc.AutoFill(NodeNames.Value, "null");
+                        dc.AutoFill(NodeNames.DefaultValue, "null");
                     } else if (ReturnValue is RegExpLiteral) {
                         dc.AutoFill(NodeNames.Type, "RegExp");
-                        dc.AutoFill(NodeNames.Value, ((RegExpLiteral)ReturnValue).ToString());
+                        dc.AutoFill(NodeNames.DefaultValue, ((RegExpLiteral)ReturnValue).ToString());
                     } else if (ReturnValue is FunctionExpression) {
                         dc.AutoFill(NodeNames.Type, "method");
                         FunctionExpression fn = (FunctionExpression)ReturnValue;
@@ -703,14 +696,14 @@ namespace DocPlus.Javascript {
 
             if (currentFunction != null) {
 
-                if (currentFunction[NodeNames.Return] == null) {
-                    currentFunction[NodeNames.Return] = new TypeSummary();
+                if (currentFunction[NodeNames.Returns] == null) {
+                    currentFunction[NodeNames.Returns] = new TypeSummary();
                 }
 
                 currentFunction.Type = null;
                 AutoFillTypeByReturnValue(currentFunction);
 
-                ((TypeSummary)currentFunction[NodeNames.Return]).Type = currentFunction.Type;
+                ((TypeSummary)currentFunction[NodeNames.Returns]).Type = currentFunction.Type;
                 currentFunction.Type = "Function";
             }
         }

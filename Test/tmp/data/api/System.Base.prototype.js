@@ -1,0 +1,1 @@
+﻿jsonp({fullName:'System.Base.prototype',memberType:'Object',name:'prototype',memberOf:'System.Base'});

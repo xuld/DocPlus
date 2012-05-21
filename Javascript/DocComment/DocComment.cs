@@ -36,13 +36,7 @@ namespace DocPlus.Javascript {
             set;
         }
 
-        /// <summary>
-        /// 获取或设置当前变量的来源。
-        /// </summary>
-        public DocCommentAttribute Attribute {
-            get;
-            set;
-        }
+        internal Variant Variant;
 
         #endregion
 
@@ -149,10 +143,10 @@ namespace DocPlus.Javascript {
         /// </summary>
         public object Value {
             get {
-                return this[NodeNames.Value];
+                return this[NodeNames.DefaultValue];
             }
             set {
-                this[NodeNames.Value] = value;
+                this[NodeNames.DefaultValue] = value;
             }
         }
 
@@ -220,9 +214,41 @@ namespace DocPlus.Javascript {
             }
         }
 
+        public string Summary {
+            get {
+                return (string)this[NodeNames.Summary];
+            }
+            set {
+                this[NodeNames.Summary] = value;
+            }
+        }
+
+        public string Extends {
+            get {
+                return (string)this[NodeNames.Extends];
+            }
+            set {
+                this[NodeNames.Extends] = value;
+            }
+        }
+
+        public ArrayProxy<string> Implements {
+            get {
+                return (ArrayProxy<string>)this[NodeNames.Implements];
+            }
+            set {
+                this[NodeNames.Implements] = value;
+            }
+        }
+
+        public bool IsMember {
+            get;
+            set;
+        }
+
         public string FullName {
             get {
-                return MemberOf == null || MemberOf.Length == 0 ? Name : (MemberOf + "." + Name);
+                return MemberOf == null || MemberOf.Length == 0 ? Name : string.Concat(MemberOf, IsMember ? ".prototype." : ".", Name);
             }
         }
 
@@ -242,6 +268,8 @@ namespace DocPlus.Javascript {
         public string NamespaceSetter { get; set; }
 
         public bool Ignore { get; set; }
+
+        public bool System { get; set; }
     }
 
 }

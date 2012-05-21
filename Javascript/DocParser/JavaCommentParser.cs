@@ -683,7 +683,7 @@ namespace DocPlus.Javascript {
         void TryUpdateDefaultValue() {
             string value = ReadDefaultValue();
             if (!String.IsNullOrEmpty(value)) {
-                _currentComment[NodeNames.Value] = value;
+                _currentComment[NodeNames.DefaultValue] = value;
             }
         }
 

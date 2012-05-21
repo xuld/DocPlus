@@ -1,0 +1,1 @@
+﻿jsonp({fullName:'Function.prototype',memberType:'Object',name:'prototype',memberOf:'Function'});

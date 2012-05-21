@@ -1,0 +1,1 @@
+﻿jsonp({"fullName":'Object.Object',"methods":[{"name":'set',"icon":'M',"fullName":'Object.set',"summary":'<p>\u5c06\u4e00\u4e2a\u5bf9\u8c61\u89e3\u6790\u6210\u4e00\u4e2a\u7c7b\u7684\u5c5e\u6027\u3002</p>\n',"isStatic":true,"defines":''}],"type":'Object',"name":'Object',"memberOf":'Object',"memberType":'namespace'});
