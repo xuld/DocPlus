@@ -134,8 +134,10 @@ namespace DocPlus.Javascript {
             if(dc == null)
                 return;
             dc.Variant = variant;
+
+            string memberType = dc.MemberType;
             
-            if(String.IsNullOrEmpty(dc.MemberType)) {
+            if(String.IsNullOrEmpty(memberType)) {
                 if(dc.Type == "Function" || dc[NodeNames.Param] != null || dc[NodeNames.Returns] != null) {
                     dc.MemberType = dc.IsMember ? "method" : "function";
                 } else if(variant.Count > 0 && variant.Members != null) {
@@ -145,12 +147,15 @@ namespace DocPlus.Javascript {
                 } else {
                     dc.MemberType = "field";
                 }
-            } else if(dc.MemberType == "member"){
+            } else if(memberType == "member"){
                 if(dc.Type == "Function" || dc[NodeNames.Param] != null || dc[NodeNames.Returns] != null) {
                     dc.MemberType = dc.IsMember ? "method" : "function";
                 } else {
                     dc.MemberType = "field";
                 }
+            } else if(memberType == "getter" || memberType == "setter"){
+                 dc.MemberType = "property";
+                 dc[NodeNames.PropertyAttribute] = memberType == "getter" ? "get" : "set";
             }
 
             foreach(var vk in variant) {

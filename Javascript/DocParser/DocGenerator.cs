@@ -4,67 +4,22 @@ using System.Linq;
 using System.Text;
 using CorePlus.Json;
 using System.IO;
+using System.Collections.Specialized;
 
 namespace DocPlus.Javascript {
     public class DocGenerator {
 
         static string GetIcon(DocComment dc) {
-            string access = null, type;
+            string access = null;
 
-            switch(dc.MemberAccess) {
-                case null:
-                case "public":
-                    break;
-
-                case "protected":
-                    access = "F";
-                    break;
-
-                case "private":
-                    access = "T";
-                    break;
+            if(dc.MemberAccess == null) {
+            } else if(dc.MemberAccess == "protected" || dc.MemberAccess == "internal") {
+                access = "-protected";
+            } else if(dc.MemberAccess == "private") {
+                access = "-private";
             }
 
-            switch(dc.MemberType) {
-                case "class":
-                    type = "C";
-                    break;
-
-                case "field":
-                    type = "F";
-                    break;
-
-                case "method":
-                case "function":
-                    type = "M";
-                    break;
-
-                case "property":
-                    type = "P";
-                    break;
-
-                case "config":
-                    type = "O";
-                    break;
-
-                case "event":
-                    type = "E";
-                    break;
-
-                case "interface":
-                    type = "I";
-                    break;
-
-                case "enum":
-                    type = "U";
-                    break;
-
-                default:
-                    type = "N";
-                    break;
-            }
-
-            return access + type;
+            return dc.MemberType + access;
         }
         
         /// <summary>
@@ -180,8 +135,55 @@ namespace DocPlus.Javascript {
             }
         }
 
+        Dictionary<string, List<string>> _extendsInfo = new Dictionary<string, List<string>>();
+
+        void GetExtendsInfo(Dictionary<string, DocComment> comments) {
+            foreach(var vk in comments) {
+                string extends = vk.Value.Extends;
+                if(extends != null) {
+
+
+                     List<string> buffer;
+
+                     if(!_extendsInfo.TryGetValue(extends, out buffer)) {
+                         _extendsInfo[extends] = buffer = new List<string>();
+                     }
+
+
+                     buffer.Add(vk.Key);
+
+                }
+            }
+        }
+
+        Dictionary<string, List<KeyValuePair<string, DocComment>>> _sourceInfo = new Dictionary<string,List< KeyValuePair<string, DocComment>>>();
+
+        void GetSourceInfo(Dictionary<string, DocComment> comments) {
+            foreach(var vk in comments) {
+
+                if(vk.Value.Source != null) {
+
+                    List<KeyValuePair<string, DocComment>> list;
+
+                    if(!_sourceInfo.TryGetValue(vk.Value.Source, out list)) {
+                        _sourceInfo[vk.Value.Source] = list = new List<KeyValuePair<string, DocComment>>();
+                    }
+
+                    list.Add(vk);
+
+                }
+            }
+        }
+
         void SaveComment(DocComment dc, CorePlus.Json.JsonObject obj) {
-            obj.Add("fullName", dc.FullName);
+            string fullName = dc.FullName;
+            obj.Add("fullName",fullName);
+            obj.Add("source", dc.Source);
+
+
+            if(dc.Source != null) {
+                obj.Add("sourceFile", "data/source/" + Path.ChangeExtension(dc.Source, "html") + "#" + fullName.Replace('.', '-'));
+            }
 
             // 如果有成员。生成成员字段。
             if(dc.Variant.Count > 0) {
@@ -190,13 +192,34 @@ namespace DocPlus.Javascript {
 
             DocComment e;
             if(dc.Extends != null && _data.DocComments.TryGetValue(dc.Extends, out e)) {
-                AddMembers(e, obj, e.FullName);
+                string extends = dc.Extends;
+                AddMembers(e, obj, extends);
+
+                JsonArray baseClasses = new JsonArray();
+
+                obj["baseClasss"] = baseClasses;
+                while(_data.DocComments.TryGetValue(extends, out e)) {
+                    baseClasses.Insert(0, extends);
+
+                    extends = e.Extends;
+                }
             }
             if(dc.Implements != null) {
                 foreach(string im in dc.Implements) {
                     if(_data.DocComments.TryGetValue(im, out e))
                         AddMembers(e, obj, e.FullName);
                 }
+            }
+
+
+            if(_extendsInfo.ContainsKey(fullName)) {
+
+                JsonArray subClasses = new JsonArray();
+
+                obj["subClasses"] = subClasses;
+                var list = _extendsInfo[fullName];
+                list.Sort();
+                subClasses.AddRange(list);
             }
 
             foreach(string key in dc){
@@ -272,10 +295,69 @@ namespace DocPlus.Javascript {
             }
         }
 
+        void GenerateSource(NameValueCollection comments) {
+
+            string source = _outputPath + "source/";
+
+            Directory.CreateDirectory(source);
+
+            foreach(string key in comments) {
+                string[] lines = File.ReadAllLines(comments[key], _project.Encoding ?? Encoding.UTF8);
+
+                for(int i = 0; i < lines.Length; i++){
+                    lines[i] = CorePlus.Core.Str.HtmlEncode(lines[i]);
+                }
+
+                List<KeyValuePair<string, DocComment>> list;
+                if(_sourceInfo.TryGetValue(key, out list)) {
+
+                    foreach(var vk in list) {
+                        string id = vk.Key.Replace('.', '-');
+
+
+                        DocComment dc = vk.Value;
+
+                        int line = dc.StartLocation.Line - 1;
+
+                        lines[line] = lines[line].Insert(dc.StartLocation.Column - 1, "<span id=\"" + id + "\">");
+
+                        line = dc.EndLocation.Line - 1;
+
+                        lines[line] = lines[line].Insert(dc.EndLocation.Column - 1, "</span>");
+                    }
+
+                }
+
+                lines[0] = @"<!doctype html>
+<html>
+	<head>
+		<meta charset=""utf-8"">
+		<title>" + key + @" 源码</title>
+		<link href=""../../assets/styles/prettify.css"" type=""text/css"" rel=""stylesheet"" />
+		<script src=""../../assets/scripts/prettify.js"" type=""text/javascript""></script>
+		<style type=""text/css"">.highlight { display: block; background-color: #ddd; }</style>
+</head>
+<body onload=""setTimeout('prettyPrint()', 0);var node = document.getElementById(location.hash.replace(/#/, ''));if(node)node.className = 'highlight';""><pre class=""prettyprint lang-js"">" + lines[0];
+
+                lines[lines.Length - 1] += @"</pre>
+</body>
+</html>";
+
+                File.WriteAllLines(Path.ChangeExtension(source + key, ".html"), lines, Encoding.UTF8);
+            }
+        }
+
         public void Generate(DocData data) {
             _data = data;
+            GetExtendsInfo(data.DocComments);
             GenerateAPI(data);
             GenerateDetail(data.DocComments);
+
+            GetSourceInfo(data.DocComments);
+            GenerateSource(data.Files);
+
+
+
         }
 
     }

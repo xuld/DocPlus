@@ -40,6 +40,9 @@ namespace DocPlus.Javascript {
 
         public static string Implements = "implements";
 
+
+        public static string PropertyAttribute = "propertyAttribute";
+
         #endregion
     }
 }
