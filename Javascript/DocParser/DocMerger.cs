@@ -101,7 +101,7 @@ namespace DocPlus.Javascript {
 
                         DocComment dc2;
                         if(!_parser.Data.DocComments.TryGetValue(newBaseMemberName, out dc2)) {
-                            dc2 = new DocComment() { Type = "Object", Name = memberName, MemberOf = newBaseMemberName, System = true };
+                            dc2 = new DocComment() { Type = "Object", Name = memberName, MemberOf = baseMemberName, System = true };
                             _parser.Data.DocComments[newBaseMemberName] = dc2;
                         }
 

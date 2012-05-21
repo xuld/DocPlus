@@ -169,12 +169,12 @@ namespace DocPlus.GUI {
 
         private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e) {
             if (e.Cancelled) {
-                Hint("生成被取消。");
+                Hint("生成被取消");
             } else if (e.Error == null) {
-                Hint("全部生成完成。");
+                Hint("全部生成完成");
             } else {
                 CurrentProject.ProgressReporter.Error(e.Error);
-                Hint("生成失败。");
+                Hint("生成失败");
             }
 
             miCancel.Enabled = false;
@@ -203,7 +203,12 @@ namespace DocPlus.GUI {
             string[] s = (string[])e.Data.GetData(DataFormats.FileDrop);
 
             if (s != null) {
-                AddItems(s);
+
+                if(s.Length == 1 && s[0].EndsWith(".docproj")){
+                    OpenProject(s[0]);
+                } else {
+                    AddItems(s);
+                }
             }
         }
 
@@ -334,13 +339,19 @@ namespace DocPlus.GUI {
             }
 
             if (CurrentProject.Items.Count == 0) {
-                Hint("未添加任何文件。操作被取消。");
+                Hint("未添加任何文件，操作被取消");
                 return;
             }
 
             if(CurrentProject.TargetPath == null) {
-                Hint("未指定文档生成输出位置。操作被取消。");
-                return;
+                var fbd =new FolderBrowserDialog(){Description = "选择生成的文档位置"};
+                fbd.RootFolder = Environment.SpecialFolder.DesktopDirectory;
+                if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
+                    CurrentProject.TargetPath = fbd.SelectedPath;
+                } else {
+                    Hint("未指定文档生成输出位置，操作被取消");
+                    return;
+                }
             }
 
             miCancel.Enabled = true;

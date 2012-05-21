@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="1.0" DisplayName="Javascript 文档">
+  <ItemGroup>
+    <Item>F:\window\DocPlus\Test\test.js</Item>
+  </ItemGroup>
+  <PropertyGroup>
+    <TargetPath>F:\wz\JPlus\release\jplus-3.0-full\docs</TargetPath>
+  </PropertyGroup>
+</Project>

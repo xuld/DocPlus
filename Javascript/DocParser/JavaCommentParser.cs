@@ -263,7 +263,7 @@ namespace DocPlus.Javascript {
                         _line++;
 
                         // 跳过空格。
-                        SkipWhiteSpace(value, ref i, ref _line);
+                        SkipWhiteSpaceButNotBreakLine(value, ref i);
 
                         // 跳过开始的 *
                         if(i < len && value[i] == '*') {
@@ -272,7 +272,7 @@ namespace DocPlus.Javascript {
                             i++;
 
                             // 继续忽略空格。
-                            SkipWhiteSpace(value, ref i, ref _line);
+                            SkipWhiteSpaceButNotBreakLine(value, ref i);
 
 
                         }
@@ -500,9 +500,8 @@ namespace DocPlus.Javascript {
             }
         }
 
-        static void SkipWhiteSpace(StringBuilder sb, ref int start, ref int currenLine) {
-            while(start < sb.Length && char.IsWhiteSpace(sb[start])) {
-                CalcLine(sb, ref start, ref currenLine);
+        static void SkipWhiteSpaceButNotBreakLine(StringBuilder sb, ref int start) {
+            while (start < sb.Length && char.IsWhiteSpace(sb[start]) && sb[start] != '\r' && sb[start] != '\n' && sb[start] != '\u2029') {
                 start++;
             }
         }
@@ -531,19 +530,19 @@ namespace DocPlus.Javascript {
             return sb.ToString(s, start - s);
         }
 
-        static void CalcLine(StringBuilder sb, ref int start, ref int currentLine) {
-            // 如果后面为换行。
-            switch(sb[start]) {
-                case '\r':
-                    if(++start == sb.Length || sb[start] != '\n')
-                        start--;  // 跳过 \r
-                    goto case '\n';
-                case '\n':
-                case '\u2029':
-                    currentLine++;
-                    break;
-            }
-        }
+        //static void CalcLine(StringBuilder sb, ref int start, ref int currentLine) {
+        //    // 如果后面为换行。
+        //    switch(sb[start]) {
+        //        case '\r':
+        //            if(++start == sb.Length || sb[start] != '\n')
+        //                start--;  // 跳过 \r
+        //            goto case '\n';
+        //        case '\n':
+        //        case '\u2029':
+        //            currentLine++;
+        //            break;
+        //    }
+        //}
 
         void AddArrayProxy<T>(T value) {
             ArrayProxy<T> e = (ArrayProxy<T>)_currentComment[_currentNodeName];

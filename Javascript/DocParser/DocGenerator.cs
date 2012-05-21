@@ -39,6 +39,10 @@ namespace DocPlus.Javascript {
             _templatePath = project.TemplateName;
             _outputPath = Path.Combine(project.TargetPath, "data/");
 
+            if (_project.ClearBeforeRebuild) {
+                Directory.Delete(_outputPath, true);
+            }
+
             Directory.CreateDirectory(_outputPath);
         }
 
@@ -59,6 +63,7 @@ namespace DocPlus.Javascript {
                 foreach (string v in (ArrayProxy<string>)value) {
                     t.Add(v);
                 }
+                obj[key] = t;
             } else if (value is ArrayProxy<TypeSummary>) {
                 var ta = new JsonArray();
                 foreach (TypeSummary v in (ArrayProxy<TypeSummary>)value) {
@@ -67,6 +72,7 @@ namespace DocPlus.Javascript {
                     t.Add("summary", v.Summary);
                     ta.Add(t);
                 }
+                obj[key] = ta;
             } else if(value is ParamInfoCollection) {
                 var ta = new JsonArray();
                 foreach(ParamInfo v in (ParamInfoCollection)value) {
@@ -77,6 +83,7 @@ namespace DocPlus.Javascript {
                     t.Add("summary", v.Summary);
                     ta.Add(t);
                 }
+                obj["params"] = ta;
             } else {
                 obj.Add(key, value.ToString());
             }
@@ -89,8 +96,8 @@ namespace DocPlus.Javascript {
         /// <param name="dc">The dc.</param>
         /// <param name="obj">The obj.</param>
         /// <param name="defines">要操作的字符串。</param>
-        void AddMembers(DocComment dc, CorePlus.Json.JsonObject obj, string defines) {
-            foreach(var vk in dc.Variant) {
+        void AddMembers(Variant v, CorePlus.Json.JsonObject obj, string defines) {
+            foreach(var vk in v) {
                 Variant value = vk.Value;
 
                 string names = "members";
@@ -185,20 +192,26 @@ namespace DocPlus.Javascript {
                 obj.Add("sourceFile", "data/source/" + Path.ChangeExtension(dc.Source, "html") + "#" + fullName.Replace('.', '-'));
             }
 
+            if (dc.MemberType == "class" && dc.Variant.Members != null) {
+                AddMembers(dc.Variant.Members, obj, String.Empty);
+            }
+
             // 如果有成员。生成成员字段。
             if(dc.Variant.Count > 0) {
-                AddMembers(dc, obj, String.Empty);
+                AddMembers(dc.Variant, obj, String.Empty);
             }
 
             DocComment e;
             if(dc.Extends != null && _data.DocComments.TryGetValue(dc.Extends, out e)) {
                 string extends = dc.Extends;
-                AddMembers(e, obj, extends);
+                if (e.Variant.Members != null) {
+                    AddMembers(e.Variant.Members, obj, extends);
+                }
 
                 JsonArray baseClasses = new JsonArray();
 
-                obj["baseClasss"] = baseClasses;
-                while(_data.DocComments.TryGetValue(extends, out e)) {
+                obj["baseClasses"] = baseClasses;
+                while (extends != null && _data.DocComments.TryGetValue(extends, out e)) {
                     baseClasses.Insert(0, extends);
 
                     extends = e.Extends;
@@ -207,7 +220,7 @@ namespace DocPlus.Javascript {
             if(dc.Implements != null) {
                 foreach(string im in dc.Implements) {
                     if(_data.DocComments.TryGetValue(im, out e))
-                        AddMembers(e, obj, e.FullName);
+                        AddMembers(e.Variant, obj, e.FullName);
                 }
             }
 
@@ -317,13 +330,13 @@ namespace DocPlus.Javascript {
 
                         DocComment dc = vk.Value;
 
-                        int line = dc.StartLocation.Line - 1;
 
-                        lines[line] = lines[line].Insert(dc.StartLocation.Column - 1, "<span id=\"" + id + "\">");
-
-                        line = dc.EndLocation.Line - 1;
+                        int line = dc.EndLocation.Line - 1;
 
                         lines[line] = lines[line].Insert(dc.EndLocation.Column - 1, "</span>");
+                        line = dc.StartLocation.Line - 1;
+
+                        lines[line] = lines[line].Insert(dc.StartLocation.Column - 1, "<span id=\"" + id + "\">");
                     }
 
                 }
@@ -347,16 +360,21 @@ namespace DocPlus.Javascript {
             }
         }
 
+        void CopyBasicTemplate() {
+            if(Directory.Exists(_templatePath))
+                CorePlus.IO.FileHelper.CopyDirectory(_templatePath, _project.TargetPath);
+        }
+
         public void Generate(DocData data) {
             _data = data;
+            CopyBasicTemplate();
+
             GetExtendsInfo(data.DocComments);
             GenerateAPI(data);
             GenerateDetail(data.DocComments);
 
             GetSourceInfo(data.DocComments);
             GenerateSource(data.Files);
-
-
 
         }
 

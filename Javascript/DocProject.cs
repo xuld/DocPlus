@@ -250,12 +250,26 @@ namespace DocPlus.Javascript {
         /// </summary>
         public override void Build() {
 
+            ProgressReporter.Write("***启动生成***");
+            System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
+
+            watch.Start();
+
             // 首先获取原始的文档数据。
             DocData data = Parse();
 
             // 然后使用 DocGenerator 进行最终文件生成。
             new DocGenerator(this).Generate(data);
+
+            ProgressReporter.Write("***生成完成***");
+
+            watch.Stop();
+
+            ProgressReporter.Write("共 " + Items.Count + " 项 用时: " + watch.Elapsed.TotalSeconds + "秒");
+            ProgressReporter.Write(TargetPath);
         }
+
+        public bool ClearBeforeRebuild { get; set; }
     }
 
 }

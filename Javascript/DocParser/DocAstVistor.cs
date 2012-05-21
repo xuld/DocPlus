@@ -608,6 +608,8 @@ namespace DocPlus.Javascript {
             foreach (Expression s in functionCallExpression.Arguments) {
                 VisitExpression(s);
             }
+
+            ReturnValue = null;
         }
 
         public void VisitFunctionDeclaration(FunctionDeclaration functionDeclaration) {
