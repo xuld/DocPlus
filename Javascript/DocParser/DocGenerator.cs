@@ -356,7 +356,12 @@ namespace DocPlus.Javascript {
 </body>
 </html>";
 
-                File.WriteAllLines(Path.ChangeExtension(source + key, ".html"), lines, Encoding.UTF8);
+                string path = Path.ChangeExtension(source + key, ".html");
+
+
+                Directory.CreateDirectory(Path.GetDirectoryName(path));
+
+                File.WriteAllLines(path, lines, Encoding.UTF8);
             }
         }
 
