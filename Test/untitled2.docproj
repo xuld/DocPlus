@@ -2,6 +2,7 @@
 <Project ToolsVersion="1.0" DisplayName="Javascript 文档">
   <ItemGroup>
     <Item>F:\wz\JPlus\jplus-milk\system\core\assets\scripts\base.js</Item>
+    <Item>F:\wz\JPlus\jplus-milk\system\dom\assets\scripts\base.js</Item>
   </ItemGroup>
   <PropertyGroup>
     <TargetPath>F:\wz\JPlus\release\jplus-3.0-full\docs</TargetPath>

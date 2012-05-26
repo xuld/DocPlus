@@ -129,20 +129,17 @@ namespace DocPlus.Javascript {
         #region 属性
 
         /// <summary>
+        /// 获取当前解析的最终文档数据。
+        /// </summary>
+        internal DocData Data;
+
+        /// <summary>
         /// 获取正在处理的项目配置。
         /// </summary>
         public DocProject Project {
             get {
                 return _project;
             }
-        }
-
-        /// <summary>
-        /// 获取当前解析的最终文档数据。
-        /// </summary>
-        public DocData Data {
-            get;
-            set;
         }
 
         /// <summary>
@@ -194,19 +191,22 @@ namespace DocPlus.Javascript {
         /// <param name="file">解析的文件名称。</param>
         public void ParseFile(string path, string file) {
 
-            if(Data.Files[file] == null) {
-                Data.Files[file] = path;
-            } else {
-                int i = 0;
-                while (Data.Files[file + "_" + (++i)] != null) ;
+            if (Data.Files[file] != null) {
 
-                file += i;
-                Data.Files[file] = path;
+                string extension = Path.GetExtension(file);
+                string purlName = Path.GetFileNameWithoutExtension(file);
+                int i = 0;
+                while (Data.Files[purlName + "_" + (++i)] != null) ;
+
+                file = purlName + "_" + i + extension;
+
             }
 
-            _currentSource = file;
+            Data.Files[file] = path;
 
             _project.ProgressReporter.Write(">> {0}", file);
+
+            _currentSource = file;
 
             _comments.Clear();
 
@@ -266,6 +266,14 @@ namespace DocPlus.Javascript {
             // 文档合成。
             _docMerger.Parse(map);
 
+        }
+
+        /// <summary>
+        /// 合并之前解析的文档数据，并返回所有数据。
+        /// </summary>
+        public DocData End() {
+            _docMerger.Process();
+            return Data;
         }
 
         #endregion

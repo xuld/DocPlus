@@ -270,6 +270,10 @@ namespace DocPlus.Javascript {
         public bool Ignore { get; set; }
 
         public bool System { get; set; }
+
+        public void Remove(string name) {
+            BaseRemove(name);
+        }
     }
 
 }

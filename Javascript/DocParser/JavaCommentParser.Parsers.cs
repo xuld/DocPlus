@@ -311,7 +311,14 @@ namespace DocPlus.Javascript {
         }
 
         void ParseMemberOf() {
-            UpdateString(_currentNodeName, ReadNameAndEnsureEmpty());
+            string value = ReadNameAndEnsureEmpty();
+            if (_currentComment[_currentNodeName] != null) {
+                Redefined(_currentNodeName);
+            }
+
+            if (value != null && value.Length > 0) {
+                _currentComment.MemberOf = value;
+            }
         }
 
         void ParseReturn() {

@@ -189,7 +189,7 @@ namespace DocPlus.Javascript {
 
 
             if(dc.Source != null) {
-                obj.Add("sourceFile", "data/source/" + Path.ChangeExtension(dc.Source, "html") + "#" + fullName.Replace('.', '-'));
+                obj.Add("sourceFile", "data/source/" + dc.Source + ".html#" + fullName.Replace('.', '-'));
             }
 
             if (dc.MemberType == "class" && dc.Variant.Members != null) {
@@ -356,7 +356,7 @@ namespace DocPlus.Javascript {
 </body>
 </html>";
 
-                string path = Path.ChangeExtension(source + key, ".html");
+                string path = source + key + ".html";
 
 
                 Directory.CreateDirectory(Path.GetDirectoryName(path));

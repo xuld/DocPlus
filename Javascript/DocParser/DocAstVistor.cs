@@ -136,6 +136,7 @@ namespace DocPlus.Javascript {
         /// <returns>全局对象。所有变量都可从这个节点找到。</returns>
         public void Parse(Script script, DocComment[] comments) {
             _map = comments;
+            _position = 0;
             CurrentScope = new Scope() { CurrentMemberOf = "window" };
             VisitScript(script);
         }
@@ -379,7 +380,8 @@ namespace DocPlus.Javascript {
                         dc.AutoFill(NodeNames.Type, "RegExp");
                         dc.AutoFill(NodeNames.DefaultValue, ((RegExpLiteral)ReturnValue).ToString());
                     } else if (ReturnValue is FunctionExpression) {
-                        dc.AutoFill(NodeNames.Type, "method");
+                        dc.AutoFill(NodeNames.Type, "Function");
+                        dc.AutoFill(NodeNames.MemberType, "method");
                         FunctionExpression fn = (FunctionExpression)ReturnValue;
 
                         var param = (ParamInfoCollection)dc[NodeNames.Param];
@@ -597,6 +599,8 @@ namespace DocPlus.Javascript {
             VisitStatements(functionExpression.Statements);
             ProcessCommentBefore(functionExpression);
             PopScope();
+
+            ReturnValue = functionExpression;
         }
 
         public void VisitFunctionCallExpression(FunctionCallExpression functionCallExpression) {

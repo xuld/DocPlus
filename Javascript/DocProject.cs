@@ -241,7 +241,7 @@ namespace DocPlus.Javascript {
             }
 
             // 返回解析之后得到的原始文档数据。
-            return parser.Data;
+            return parser.End();
 
         }
 

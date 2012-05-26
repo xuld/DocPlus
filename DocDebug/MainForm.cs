@@ -69,7 +69,7 @@ namespace DocPlus.GUI.Debug {
             DocParser parser = new DocParser(_project);
             parser.ParseString(scintilla.Text.Replace("\t", "    "));
             _project.ProgressReporter.Complete();
-            ShowData( parser.Data  );
+            ShowData( parser.End()  );
         }
 
         void ShowData(DocData data) {

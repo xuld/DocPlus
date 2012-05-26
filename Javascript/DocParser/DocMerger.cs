@@ -30,9 +30,6 @@ namespace DocPlus.Javascript {
             GetDocMembers(docCommentMap);
 
             RemoveIgnores();
-
-
-            Process();
         }
 
         /// <summary>
@@ -69,9 +66,11 @@ namespace DocPlus.Javascript {
             foreach(string t in _parser.Ignores) {
                 _parser.Data.DocComments.Remove(t);
             }
+
+            _parser.Ignores.Clear();
         }
 
-        void Process() {
+        public void Process() {
 
             DocComment[] dcs = new DocComment[_parser.Data.DocComments.Count];
 
@@ -139,7 +138,7 @@ namespace DocPlus.Javascript {
             
             if(String.IsNullOrEmpty(memberType)) {
                 if(dc.Type == "Function" || dc[NodeNames.Param] != null || dc[NodeNames.Returns] != null) {
-                    dc.MemberType = dc.IsMember ? "method" : "function";
+                    dc.MemberType = memberType = dc.IsMember ? "method" : "function";
                 } else if(variant.Count > 0 && variant.Members != null) {
                     dc.MemberType = "class";
                 } else if(variant.Count > 0 ) {
@@ -149,13 +148,26 @@ namespace DocPlus.Javascript {
                 }
             } else if(memberType == "member"){
                 if(dc.Type == "Function" || dc[NodeNames.Param] != null || dc[NodeNames.Returns] != null) {
-                    dc.MemberType = dc.IsMember ? "method" : "function";
+                    dc.MemberType = memberType = dc.IsMember ? "method" : "function";
                 } else {
                     dc.MemberType = "field";
                 }
             } else if(memberType == "getter" || memberType == "setter"){
                  dc.MemberType = "property";
                  dc[NodeNames.PropertyAttribute] = memberType == "getter" ? "get" : "set";
+            }
+
+            if(memberType == "function" || memberType == "method") {
+                
+                if(dc.Type == "Function")
+                    dc.Remove(NodeNames.Type);
+
+
+                if (dc.Name == "constructor") {
+                    dc.MemberType = "constructor";
+                }
+            } else if (memberType == "class" && dc.MemberAttribute == "static") {
+                dc.Remove(NodeNames.MemberAttribute);
             }
 
             foreach(var vk in variant) {
