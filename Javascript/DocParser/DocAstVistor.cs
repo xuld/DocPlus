@@ -335,11 +335,11 @@ namespace DocPlus.Javascript {
         private void Assign(Node node, string name, Expression value, bool isVar = false) {
             DocComment dc = GetDocCommentBy(node);
             if (dc != null) {
-                if (isVar && !IsGlobal && _project.EnableClosure) {
-                    dc.Ignore = true;
-                }
                 AutoFillName(dc, name);
                 AutoFillMemberOf(dc);
+                if (isVar && _project.EnableClosure && !IsGlobal && dc.MemberType == null) {
+                    dc.Ignore = true;
+                }
                 PushObject(_project.ResolveObjectSetter && value is ObjectLiteral ? dc : null);
                 VisitExpression(value);
                 PopObject();
