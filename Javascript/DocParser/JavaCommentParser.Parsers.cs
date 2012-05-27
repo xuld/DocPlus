@@ -160,10 +160,13 @@ namespace DocPlus.Javascript {
 
         MarkdownSharp.Markdown _md = new MarkdownSharp.Markdown();
 
+        string ParseMarkDown(string value) {
+            return _md.Transform(value);
+        }
+
         void ParseRichText() {
             string value = ReadText();
             if (value.Length > 0) {
-                value = _md.Transform(value);
                 UpdateString(_currentNodeName, value);
             }
         }
@@ -175,7 +178,9 @@ namespace DocPlus.Javascript {
         /// <param name="node">正在解析的标签。</param>
         void ParseGlobalNode() {
             string summary = ReadText();
-            _parser.Data.Properties[_currentNodeName] = summary;
+            if (summary.Length > 0) {
+                _parser.Data.Properties[_currentNodeName] = summary;
+            }
         }
 
         #endregion
@@ -332,10 +337,6 @@ namespace DocPlus.Javascript {
                 Summary = ReadText()
             };
 
-        }
-
-        void ParseLink() {
-            _currentComment[_currentNodeName] = ReadText();
         }
 
         void ParseImplements() {

@@ -216,7 +216,7 @@ namespace DocPlus.Javascript {
 
                                     // 假如正在 {。
                                     if(quoteCount > 0) {
-                                        _buffer.Append(value[i]);
+                                        _buffer.Append('@');
                                         break;
                                     }
 
@@ -581,7 +581,7 @@ namespace DocPlus.Javascript {
             string value = _buffer.ToString(_position, end - _position + 1);
             _position = _buffer.Length;
 
-            return value;
+            return value.Length > 0 ? ParseMarkDown(value) : value;
         }
 
         string ReadType(bool enableMap = true) {
@@ -659,9 +659,9 @@ namespace DocPlus.Javascript {
         #region 底层更新的封装
 
         void TryUpdateString(string nodeName) {
-            string text =  ReadText();
-            if(!String.IsNullOrEmpty(text)){
-                _currentComment[nodeName] = text;
+            string value = ReadText();
+            if (value.Length > 0) {
+                _currentComment[nodeName] = value;
             }
         }
 

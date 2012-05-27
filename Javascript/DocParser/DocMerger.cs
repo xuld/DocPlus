@@ -42,7 +42,10 @@ namespace DocPlus.Javascript {
 
                 DocComment dc = docCommentMap[i];
 
-                if (dc.Name != null && !dc.Ignore) {
+                if (dc.Ignore)
+                    continue;
+
+                if (dc.Name != null) {
 
                     string key = dc.FullName;
                     DocComment old;
@@ -51,11 +54,29 @@ namespace DocPlus.Javascript {
                     } else {
                         _parser.Data.DocComments[dc.FullName] = dc;
                     }
+                } else if (dc.NamespaceSetter != null && dc.NamespaceSetter != "window") {
+                    string key = dc.NamespaceSetter;
+
+                    int p = key.LastIndexOf('.');
+
+                    if (p <= 0) {
+                        dc.Name = key;
+                        dc.MemberOf = "window";
+                    } else {
+                        dc.Name = key.Substring(p + 1);
+                        dc.MemberOf = key.Substring(0, p);
+                    }
+
+                    DocComment old;
+                    if (_parser.Data.DocComments.TryGetValue(key, out old)) {
+                        old.Merge(dc);
+                    } else {
+                        _parser.Data.DocComments[key] = dc;
+                    }
                 }
 
 
             }
-
 
         }
 

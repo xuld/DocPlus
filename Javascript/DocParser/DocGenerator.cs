@@ -79,7 +79,9 @@ namespace DocPlus.Javascript {
                     var t = new JsonObject();
                     t.Add("type", v.Type);
                     t.Add("name", v.Name);
-                    t.Add("defaultValue", v.DefaultValue);
+
+                    if(v.DefaultValue != null)
+                        t.Add("defaultValue", v.DefaultValue);
                     t.Add("summary", v.Summary);
                     ta.Add(t);
                 }
@@ -223,7 +225,6 @@ namespace DocPlus.Javascript {
                         AddMembers(e.Variant, obj, e.FullName);
                 }
             }
-
 
             if(_extendsInfo.ContainsKey(fullName)) {
 
