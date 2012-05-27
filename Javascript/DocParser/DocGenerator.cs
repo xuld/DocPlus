@@ -92,62 +92,6 @@ namespace DocPlus.Javascript {
 
         }
 
-        /// <summary>
-        /// Adds the members.
-        /// </summary>
-        /// <param name="dc">The dc.</param>
-        /// <param name="obj">The obj.</param>
-        /// <param name="defines">要操作的字符串。</param>
-        void AddMembers(Variant v, CorePlus.Json.JsonObject obj, string defines) {
-            foreach(var vk in v) {
-                Variant value = vk.Value;
-
-                string names = "members";
-
-                switch(value.DocComment.MemberType) {
-                    case "method":
-                    case "function":
-                        names = "methods";
-                        break;
-                    case "field":
-                        names = "fields";
-                        break;
-                    case "config":
-                        names = "configs";
-                        break;
-                    case "property":
-                    case "getter":
-                    case "setter":
-                        names = "properties";
-                        break;
-                    case "event":
-                        names = "events";
-                        break;
-
-                }
-
-                JsonObject arr = obj[names] as JsonObject;
-
-                if(arr == null) {
-                    obj[names] = arr = new JsonObject();
-                }
-
-                if (arr[value.DocComment.Name] != null) {
-                    continue;
-                }
-
-                JsonObject values = new JsonObject();
-                arr.Add(value.DocComment.Name, values);
-
-                values.Add("name", value.DocComment.Name);
-                values.Add("icon", GetIcon(value.DocComment));
-                values.Add("fullName", value.DocComment.FullName);
-                values.Add("summary", value.DocComment.Summary);
-                values.Add("isStatic", !value.DocComment.IsMember);
-                values.Add("defines", defines);
-            }
-        }
-
         Dictionary<string, List<string>> _extendsInfo = new Dictionary<string, List<string>>();
 
         void GetExtendsInfo(Dictionary<string, DocComment> comments) {
@@ -188,7 +132,77 @@ namespace DocPlus.Javascript {
             }
         }
 
-        void SaveComment(DocComment dc, CorePlus.Json.JsonObject obj) {
+        void GetMembersAndCopyToTmpList(Variant v, SortedList<string, DocComment> members, SortedList<string, DocComment> statics) {
+            foreach (var vk in v) {
+                Variant value = vk.Value;
+
+                SortedList<string, DocComment> member = value.DocComment.IsMember ?members : statics ;
+
+                if (!member.ContainsKey(value.DocComment.Name)) {
+                    member[value.DocComment.Name] = value.DocComment;
+                }
+            };
+        }
+
+        /// <summary>
+        /// Adds the members.
+        /// </summary>
+        /// <param name="dc">The dc.</param>
+        /// <param name="obj">The obj.</param>
+        /// <param name="defines">要操作的字符串。</param>
+        void SaveTmpList(SortedList<string, DocComment> members, CorePlus.Json.JsonObject obj, string currentMemberOf, bool isStatic) {
+
+            foreach (var vk in members) {
+                DocComment value = vk.Value;
+
+                string names = "members";
+
+                switch (value.MemberType) {
+                    case "method":
+                    case "function":
+                        names = "methods";
+                        break;
+                    case "field":
+                        names = "fields";
+                        break;
+                    case "config":
+                        names = "configs";
+                        break;
+                    case "property":
+                    case "getter":
+                    case "setter":
+                        names = "properties";
+                        break;
+                    case "event":
+                        names = "events";
+                        break;
+
+                }
+
+                JsonArray arr = obj[names] as JsonArray;
+
+                if (arr == null) {
+                    obj[names] = arr = new JsonArray();
+                }
+
+                JsonObject values = new JsonObject();
+                arr.Add(values);
+
+                values.Add("name", value.Name);
+                values.Add("icon", GetIcon(value));
+                values.Add("fullName", value.FullName);
+                values.Add("summary", value.Summary);
+                values.Add("isStatic", isStatic);
+
+                string m = value.MemberOf;
+                if(currentMemberOf != m)
+                    values.Add("defines", m);
+
+            }
+           
+        }
+
+        void SaveClassInfo(DocComment dc, CorePlus.Json.JsonObject obj) {
             string fullName = dc.FullName;
             obj.Add("fullName",fullName);
             obj.Add("source", dc.Source);
@@ -198,13 +212,16 @@ namespace DocPlus.Javascript {
                 obj.Add("sourceFile", "data/source/" + dc.Source + ".html#" + fullName.Replace('.', '-'));
             }
 
+            SortedList<string, DocComment> members = new SortedList<string,DocComment>();
+            SortedList<string, DocComment> statics = new SortedList<string, DocComment>();
+
             if (dc.MemberType == "class" && dc.Variant.Members != null) {
-                AddMembers(dc.Variant.Members, obj, String.Empty);
+                GetMembersAndCopyToTmpList(dc.Variant.Members, members, statics);
             }
 
             // 如果有成员。生成成员字段。
             if(dc.Variant.Count > 0) {
-                AddMembers(dc.Variant, obj, String.Empty);
+                GetMembersAndCopyToTmpList(dc.Variant, members, statics);
             }
 
             if (_project.DefaultExtends != null && dc.MemberType == "class") {
@@ -213,7 +230,7 @@ namespace DocPlus.Javascript {
 
                 if (_data.DocComments.TryGetValue(_project.DefaultExtends, out dc2) && dc2.Variant != null) {
 
-                    AddMembers(dc2.Variant, obj, _project.DefaultExtends);
+                    GetMembersAndCopyToTmpList(dc2.Variant, members, statics);
                 }
 
 
@@ -223,7 +240,7 @@ namespace DocPlus.Javascript {
             if(dc.Extends != null && _data.DocComments.TryGetValue(dc.Extends, out e)) {
                 string extends = dc.Extends;
                 if (e.Variant.Members != null) {
-                    AddMembers(e.Variant.Members, obj, extends);
+                    GetMembersAndCopyToTmpList(e.Variant.Members, members, statics);
                 }
 
                 JsonArray baseClasses = new JsonArray();
@@ -238,9 +255,13 @@ namespace DocPlus.Javascript {
             if(dc.Implements != null) {
                 foreach(string im in dc.Implements) {
                     if(_data.DocComments.TryGetValue(im, out e))
-                        AddMembers(e.Variant, obj, e.FullName);
+                        GetMembersAndCopyToTmpList(e.Variant, members, statics);
                 }
             }
+
+            string memberOf = dc.FullName;
+            SaveTmpList(members, obj, memberOf, false);
+            SaveTmpList(statics, obj, memberOf, true);
 
             if(_extendsInfo.ContainsKey(fullName)) {
 
@@ -319,7 +340,7 @@ namespace DocPlus.Javascript {
 
             foreach (var kv in comments) {
                 CorePlus.Json.JsonObject obj = new CorePlus.Json.JsonObject();
-                SaveComment(kv.Value, obj);
+                SaveClassInfo(kv.Value, obj);
 
                 SaveJSONP(api + kv.Key + ".js", obj);
             }
