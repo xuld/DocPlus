@@ -270,6 +270,15 @@ namespace DocPlus.Javascript {
         }
 
         public bool ClearBeforeRebuild { get; set; }
+
+        public string DefaultExtends {
+            get {
+                return GetValue("DefaultExtends");
+            }
+            set {
+                SetValue("DefaultExtends", value);
+            }
+        }
     }
 
 }

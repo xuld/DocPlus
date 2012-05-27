@@ -430,7 +430,18 @@ namespace DocPlus.Javascript {
         }
 
         void ParseProgma() {
-            NotSupport();
+            string name = ReadWord();
+            string value = ReadText();
+
+            switch(name){
+                case "defaultExtends":
+                    _parser.Project.DefaultExtends = value;
+                    break;
+
+                default:
+                    Error("不支持标签 @progma {0} {1}", name, value);
+                    break;
+            }
         }
 
         void ParseInclude() {

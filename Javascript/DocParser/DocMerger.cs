@@ -54,6 +54,7 @@ namespace DocPlus.Javascript {
                     } else {
                         _parser.Data.DocComments[dc.FullName] = dc;
                     }
+
                 } else if (dc.NamespaceSetter != null && dc.NamespaceSetter != "window") {
                     string key = dc.NamespaceSetter;
 

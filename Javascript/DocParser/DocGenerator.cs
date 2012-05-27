@@ -126,14 +126,18 @@ namespace DocPlus.Javascript {
 
                 }
 
-                JsonArray arr = obj[names] as JsonArray;
+                JsonObject arr = obj[names] as JsonObject;
 
                 if(arr == null) {
-                    obj[names] = arr = new JsonArray();
+                    obj[names] = arr = new JsonObject();
+                }
+
+                if (arr[value.DocComment.Name] != null) {
+                    continue;
                 }
 
                 JsonObject values = new JsonObject();
-                arr.Add(values);
+                arr.Add(value.DocComment.Name, values);
 
                 values.Add("name", value.DocComment.Name);
                 values.Add("icon", GetIcon(value.DocComment));
@@ -201,6 +205,18 @@ namespace DocPlus.Javascript {
             // 如果有成员。生成成员字段。
             if(dc.Variant.Count > 0) {
                 AddMembers(dc.Variant, obj, String.Empty);
+            }
+
+            if (_project.DefaultExtends != null && dc.MemberType == "class") {
+
+                DocComment dc2 ;
+
+                if (_data.DocComments.TryGetValue(_project.DefaultExtends, out dc2) && dc2.Variant != null) {
+
+                    AddMembers(dc2.Variant, obj, _project.DefaultExtends);
+                }
+
+
             }
 
             DocComment e;
