@@ -9,7 +9,7 @@ namespace DocPlus.Javascript {
     /// <summary>
     /// 表示一个变量对象。
     /// </summary>
-    public class Variant : Dictionary<string, Variant> {
+    public class Variant : SortedList<string, Variant> {
 
         /// <summary>
         /// 获取或设置此变量的注释。

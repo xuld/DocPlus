@@ -37,6 +37,7 @@ namespace DocPlus.Javascript {
             _project = project;
 
             _templatePath = project.TemplateName;
+
             _outputPath = Path.Combine(project.TargetPath, "data/");
 
             if (_project.ClearBeforeRebuild) {
@@ -252,10 +253,11 @@ namespace DocPlus.Javascript {
                     extends = e.Extends;
                 }
             }
+
             if(dc.Implements != null) {
                 foreach(string im in dc.Implements) {
                     if(_data.DocComments.TryGetValue(im, out e))
-                        GetMembersAndCopyToTmpList(e.Variant, members, statics);
+                        GetMembersAndCopyToTmpList(e.Variant, members, members);
                 }
             }
 

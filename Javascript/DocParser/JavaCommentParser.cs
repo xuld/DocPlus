@@ -252,7 +252,7 @@ namespace DocPlus.Javascript {
                     case '\n':
                     case '\u2029':
 
-                        _buffer.Append('\n');
+                        _buffer.Append(_parser.Project.NewLine);
 
                     ignoreLineBreak:
 

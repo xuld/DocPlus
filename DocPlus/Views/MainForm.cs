@@ -153,7 +153,7 @@ namespace DocPlus.GUI {
         }
 
         void UpdateUI(bool enable) {
-            miProject.Enabled = miSaveProject.Enabled = miSaveAsProject.Enabled = miCloseProject.Enabled = miBuildProject.Enabled = splitContainer1.Enabled = enable;
+            miProject.Enabled = miSaveProject.Enabled = miSaveAsProject.Enabled = miCloseProject.Enabled = miBuildProject.Enabled = btnAddDirectory.Enabled = btnAddFile.Enabled = btnMoveDown.Enabled = btnMoveUp.Enabled = btnStart.Enabled = btnRemove.Enabled = lbFiles.Enabled = btnOptions.Enabled = enable;
         }
 
         void AddItems(string[] values) {
@@ -426,15 +426,19 @@ namespace DocPlus.GUI {
             miOptions.Checked = !miOptions.Checked;
         }
 
-        private void miViewDoc_Click(object sender, EventArgs e) {
-            if (CurrentProject != null) {
+        void ExploreDoc() {
+            if(CurrentProject != null) {
                 string path = CurrentProject.TargetPath;
-                if (Directory.Exists(path)) {
+                if(Directory.Exists(path)) {
                     Utils.Explore(path);
                     return;
                 }
             }
             Hint("文档尚未生成，无法查看。");
+        }
+
+        private void miViewDoc_Click(object sender, EventArgs e) {
+            ExploreDoc();
         }
 
         private void miOutput_CheckedChanged(object sender, EventArgs e) {

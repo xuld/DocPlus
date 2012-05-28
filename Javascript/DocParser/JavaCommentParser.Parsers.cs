@@ -125,8 +125,8 @@ namespace DocPlus.Javascript {
             _defines["lends"] = "memberof";
             _defines["description"] = "summary";
 
-            _defines["value"] = "defaultvalue";
-            _defines["default"] = "defaultvalue";
+            _defines["value"] = "defaultValue";
+            _defines["default"] = "defaultValue";
 
             _defines["constant"] = "const";
             _defines["sealed"] = "final";

@@ -42,6 +42,10 @@ namespace DocPlus.Javascript {
 
                 DocComment dc = docCommentMap[i];
 
+                if(_parser.Project.UseNamingRules && dc.Name != null && dc.Name.StartsWith("_")) {
+                    dc.AutoFill(NodeNames.MemberAccess, "private");
+                }
+
                 if (dc.Ignore)
                     continue;
 

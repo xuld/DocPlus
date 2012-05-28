@@ -36,8 +36,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocPlus.Console", "DocPlus.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DocDebug", "DocDebug\DocDebug.csproj", "{3B0B51FA-EDFB-4CE7-9EC0-F24B6D74BA40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JavascriptParser", "..\CorePlus\CorePlus\JavascriptParser\JavascriptParser\JavascriptParser.csproj", "{139ACF17-8ACC-41E4-8145-FF99AFCBB2EF}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -108,16 +106,6 @@ Global
 		{3B0B51FA-EDFB-4CE7-9EC0-F24B6D74BA40}.Release|Mixed Platforms.Build.0 = Release|x86
 		{3B0B51FA-EDFB-4CE7-9EC0-F24B6D74BA40}.Release|x86.ActiveCfg = Release|x86
 		{3B0B51FA-EDFB-4CE7-9EC0-F24B6D74BA40}.Release|x86.Build.0 = Release|x86
-		{139ACF17-8ACC-41E4-8145-FF99AFCBB2EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{139ACF17-8ACC-41E4-8145-FF99AFCBB2EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{139ACF17-8ACC-41E4-8145-FF99AFCBB2EF}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{139ACF17-8ACC-41E4-8145-FF99AFCBB2EF}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{139ACF17-8ACC-41E4-8145-FF99AFCBB2EF}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{139ACF17-8ACC-41E4-8145-FF99AFCBB2EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{139ACF17-8ACC-41E4-8145-FF99AFCBB2EF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{139ACF17-8ACC-41E4-8145-FF99AFCBB2EF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{139ACF17-8ACC-41E4-8145-FF99AFCBB2EF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{139ACF17-8ACC-41E4-8145-FF99AFCBB2EF}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

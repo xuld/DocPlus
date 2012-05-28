@@ -302,18 +302,18 @@ namespace DocPlus.Javascript {
             if (memberTypeNo == 2) {
 
                 // 如果没有指定 memberOf ，程序需要自行猜测。
-                if (dc.MemberOf == null) {
+                if(dc.MemberOf == null) {
                     string parentNamspace;
                     bool parentIsClass;
 
                     // 如果现在正在 obj = {} 状态下。
                     DocComment obj = CurrentObject;
 
-                    if (obj != null) {
+                    if(obj != null) {
                         parentNamspace = obj.FullName;
                         parentIsClass = obj.MemberType == "class";
 
-                        if (obj.Ignore) {
+                        if(obj.Ignore) {
                             dc.Ignore = true;
                         }
                     } else {
@@ -323,6 +323,8 @@ namespace DocPlus.Javascript {
 
                     dc.MemberOf = parentNamspace;
                     dc.IsMember = parentIsClass && !dc.IsStatic;
+                } else {
+
                 }
 
             }
@@ -356,13 +358,12 @@ namespace DocPlus.Javascript {
 
             if (dc != null && name != null)
                 dc.AutoFill(NodeNames.Name, name);
-
         }
 
         private void AutoFillTypeByReturnValue(DocComment dc) {
             if (dc != null && ReturnValue != null) {
                 if (ReturnValue is bool) {
-                    dc.AutoFill(NodeNames.Name, "Boolean");
+                    dc.AutoFill(NodeNames.Type, "Boolean");
                     dc.AutoFill(NodeNames.DefaultValue, (bool)ReturnValue == true ? "true" : "false");
                 } else if (ReturnValue is string) {
                     dc.AutoFill(NodeNames.Type, "String");
@@ -382,14 +383,20 @@ namespace DocPlus.Javascript {
                     } else if (ReturnValue is FunctionExpression) {
                         dc.AutoFill(NodeNames.Type, "Function");
                         dc.AutoFill(NodeNames.MemberType, "method");
-                        FunctionExpression fn = (FunctionExpression)ReturnValue;
 
-                        var param = (ParamInfoCollection)dc[NodeNames.Param];
-                        if (param == null) {
-                            dc[NodeNames.Param] = param = new ParamInfoCollection();
-                            foreach (Identifier p in fn.Params) {
-                                param.Add(p.Value);
+                        if(_project.AutoCreateFunctionParam) {
+
+                            FunctionExpression fn = (FunctionExpression)ReturnValue;
+
+                            var param = (ParamInfoCollection)dc[NodeNames.Param];
+                            if(param == null) {
+                                dc[NodeNames.Param] = param = new ParamInfoCollection();
+                                foreach(Identifier p in fn.Params) {
+                                    param.Add(p.Value);
+                                }
                             }
+
+
                         }
                     }
                 }
@@ -447,6 +454,8 @@ namespace DocPlus.Javascript {
 
             IndexCallExpression e = assignmentExpression.Target as IndexCallExpression;
 
+            PropertyCallExpression e2 = null;
+
             // obj[index]
             if (e != null) {
 
@@ -458,7 +467,7 @@ namespace DocPlus.Javascript {
 
             } else {
 
-                PropertyCallExpression e2 = assignmentExpression.Target as PropertyCallExpression;
+                e2 = assignmentExpression.Target as PropertyCallExpression;
 
                 if (e2 != null) {
 
@@ -480,8 +489,15 @@ namespace DocPlus.Javascript {
 
             }
 
-            if (dc != null)
+            if(dc != null) {
                 AutoFillMemberOf(dc);
+
+                if((String.IsNullOrEmpty(dc.MemberOf) || dc.MemberOf == "window") && dc.IsMember && e2 != null) {
+
+
+                }
+
+            }
             PushObject(assignmentExpression.Value is ObjectLiteral ? dc : null);
             VisitExpression(assignmentExpression.Value);
             PopObject();
@@ -687,6 +703,7 @@ namespace DocPlus.Javascript {
             //if (dc != null) {
             //    AutoFillName(dc, propertyCallExpression.Argument);
             //}
+
             VisitExpression(propertyCallExpression.Target);
             ReturnValue = null;
         }
