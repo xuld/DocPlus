@@ -5,5 +5,6 @@
   </ItemGroup>
   <PropertyGroup>
     <TargetPath>F:\wz\JPlus\release\jplus-3.0-full\docs</TargetPath>
+    <OpenIfSuccess>false</OpenIfSuccess>
   </PropertyGroup>
 </Project>
