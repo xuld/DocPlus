@@ -46,7 +46,7 @@ public class query : IHttpHandler {
         using(OleDbConnection conn = new OleDbConnection(ConnectionString)) {
             conn.Open();
             var command = conn.CreateCommand();
-            command.CommandText = "INSERT INTO [Comments]([Url], [Contact], [Content], [DateTime], [IP]) VALUES(@Url, @Contact, @Content, @DateTime)";
+            command.CommandText = "INSERT INTO [Comments]([Url], [Contact], [Content], [DateTime], [IP]) VALUES(@Url, @Contact, @Content, @DateTime, @IP)";
             command.Parameters.AddWithValue("@Url", context.Request.QueryString["url"] ?? String.Empty);
             command.Parameters.AddWithValue("@Contact", context.Request.QueryString["contact"] ?? String.Empty);
             command.Parameters.AddWithValue("@Content", context.Request.QueryString["content"]);
@@ -87,13 +87,17 @@ public class query : IHttpHandler {
                 sb.Append(EncodeJs((string)reader["contact"]));
                 sb.Append("\", \"content\":\"");
                 sb.Append(EncodeJs((string)reader["content"]));
-                sb.Append("\", \"datetime\":\"");
+                sb.Append("\", \"date\":\"");
                 sb.Append(((DateTime)reader["datetime"]).ToString("yyyy/MM/dd HH:mm:ss"));
                 sb.Append("\", \"ip\":\"");
                 sb.Append(EncodeJs((string)reader["ip"]));
                 sb.Append("\"},");
             }
-            sb[sb.Length - 1] = ']';
+			
+			if(sb.Length > 1)
+				sb[sb.Length - 1] = ']';
+			else
+				sb.Append(']');
 
             Jsonp(context, sb.ToString());
         }
