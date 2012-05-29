@@ -249,6 +249,7 @@ namespace DocPlus.GUI {
             miFile.HideDropDown();
             CloseProject();
             CurrentProject = SystemManager.CreateProject((string)e.ClickedItem.Tag);
+            CurrentProject.ProgressReporter = new ProgressReporter(_tw);
             CurrentPath = null;
         }
 
